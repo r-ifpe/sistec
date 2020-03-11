@@ -25,7 +25,8 @@ comparar_q_sistec <- function(path = "arquivos/"){
       filter(Ciclo == ciclos[e]) %>%
       arrange(`Situação`)
   })
-
+  
+  names(a) <- ciclos
   openxlsx::write.xlsx(a, "q_sistec.xlsx")
 }
 
