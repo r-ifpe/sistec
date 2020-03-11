@@ -27,7 +27,8 @@ comparar_q_sistec <- function(path = "arquivos/"){
     dados$ifpe_dados %>%
       filter(Ciclo == ciclos[e]) %>%
       filter(`Situação` == FALSE) %>% 
-      arrange(`Situação_sistec`) 
+      arrange(`Situação_sistec`) %>% 
+      select(-`Situação`)
   })
 
   names(a) <- ciclos
