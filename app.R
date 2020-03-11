@@ -22,7 +22,7 @@ ui <- fluidPage(
         mainPanel(
             p(""),
             p(""),
-            strong(textOutput("contents")))
+            strong(htmlOutput("contents")))
     )
                )
     )
@@ -49,8 +49,24 @@ server <- function(input, output, session) {
                 path <- substr(input$file1$datapath[1], 1, last_slash)
                 
                 source("comparar_qacademico.R", encoding = "UTF-8")
-                comparar_q_sistec(path = path)
-                "Comparação entre Qacademico e Sistec realizada com sucesso!"   
+                tabela_comparacao <- comparar_q_sistec(path = path)
+
+                openxlsx::write.xlsx(tabela_comparacao$situacao, "situação.xlsx")
+                
+                total_students <- nrow(tabela_comparacao$ifpe_dados)
+                multi_vinculo <- nrow(tabela_comparacao$situacao$multi_vinculo)
+                
+                students_to_update <- sum(unlist(
+                    lapply(tabela_comparacao$situacao, nrow))) - multi_vinculo
+                
+                students_updated <- total_students - students_to_update - multi_vinculo
+
+                HTML(paste("Comparação entre Qacademico e Sistec realizada com sucesso!",
+                     "", "", "", 
+                     paste0("Situações comparadas: ", total_students),
+                     paste0("Alunos atualizados: ", students_updated,
+                           " (", round(100*students_updated/total_students, 2 ), "%)"),
+                     paste("Alunos com mais de um vínculo:", multi_vinculo), sep = '<br/>'))
             }
         }
      })
