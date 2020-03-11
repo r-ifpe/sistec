@@ -19,14 +19,21 @@ comparar_q_sistec <- function(path = "arquivos/"){
 
   ifpe_dados$`Situação` <- true
   ciclos <- ifpe_dados$Ciclo %>% unique() %>% na.omit()
+  
+  # verifying students with multi-viculum
+  dados <- multi_vinculo(ifpe_dados)
 
   a <- lapply(1:length(ciclos), function(e){
-    ifpe_dados %>%
+    dados$ifpe_dados %>%
       filter(Ciclo == ciclos[e]) %>%
       arrange(`Situação`)
   })
   
   names(a) <- ciclos
+  if(nrow(dados$multi_vinculo) > 0){
+    a$multi_vinculo <- dados$multi_vinculo
+  }
+
   openxlsx::write.xlsx(a, "q_sistec.xlsx")
 }
 
@@ -82,3 +89,16 @@ num_para_cpf <- function(num) {
               replacement = "\\1.\\2.\\3-")
 }
 
+multi_vinculo <- function(x){
+  multi_vinculo <- x %>% 
+    group_by(Cpf) %>% 
+    tally() %>% 
+    filter(n > 1)
+
+  list(ifpe_dados = x %>% 
+         filter(!(Cpf %in% multi_vinculo$Cpf)),
+       multi_vinculo = x %>% 
+         filter(Cpf %in% multi_vinculo$Cpf)
+       )
+
+}
