@@ -1,3 +1,4 @@
+#' @export
 comparar_tudo <- function(input_qacademico,input_sistec ){
 
   qacademico_path <- server_input_path(input_qacademico)
@@ -27,6 +28,7 @@ comparar_tudo <- function(input_qacademico,input_sistec ){
                          paste("Alunos com mais de um vínculo:", multi_vinculo), sep = '<br/>'))    
 }
 
+#' @export
 output_screen <- function(input_qacademico, input_sistec){
 
   if(!is.null(input_qacademico) && !is.null(input_sistec)){

@@ -1,4 +1,4 @@
-
+#' @export
 compare_q_sistec <- function(sistec_path, qacademico_path, path = "arquivos/"){
 
   library(dplyr)
@@ -38,7 +38,7 @@ compare_q_sistec <- function(sistec_path, qacademico_path, path = "arquivos/"){
  list(ifpe_dados = ifpe_dados, situation = a)
 }
 
-
+#' @export
 comparar_situacao <- function(sistec, qacademico){
 
   # existe_qacademico <- !is.na(qacademico)
@@ -62,6 +62,7 @@ status[is.na(status)] <- FALSE
 status
 }
 
+#' @export
 num_para_cpf <- function(num) {
 
   stringr::str_replace(string = num,
@@ -69,6 +70,7 @@ num_para_cpf <- function(num) {
               replacement = "\\1.\\2.\\3-")
 }
 
+#' @export
 multi_vinculo <- function(x){
   multi_vinculo <- x %>% 
     group_by(Cpf) %>% 
