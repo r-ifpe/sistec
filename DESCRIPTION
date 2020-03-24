@@ -1,0 +1,28 @@
+Package: sistec
+Type: Package
+Title: Managing Profiles on Amazon Web Service
+Version: 0.0.1.9002
+Authors@R: c(
+    person("Samuel", "Macêdo", 
+      email = "samuelmacedo@recife.ifpe.edu.br", role = c("aut", "cre"))
+    )
+Maintainer: Samuel Macêdo <samuelmacedo@recife.ifpe.edu.br>
+Description: This is an R wrapper from the AWS Command Line Interface that 
+  provides methods to manage the user configuration on Amazon Web Service. You 
+  can create as many profiles as you want, manage them, and delete them. The 
+  profiles created with this tool work with all AWS products such as S3, 
+  Glacier, and EC2. It also provides a function to automatically install 
+  AWS CLI, but you can download it and install it manually if you prefer.
+License: GPL (>= 2)
+LazyData: true
+Imports: 
+    magrittr,
+    stringr,
+    tibble,
+    utils,
+    withr
+RoxygenNote: 7.1.0
+Suggests: 
+    testthat
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
