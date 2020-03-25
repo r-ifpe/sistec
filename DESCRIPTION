@@ -16,11 +16,11 @@ Description: This is an R wrapper from the AWS Command Line Interface that
 License: GPL (>= 2)
 LazyData: true
 Imports: 
-    magrittr,
+    dplyr,
+    openxlsx,
+    shiny,
     stringr,
-    tibble,
-    utils,
-    withr
+    utils
 RoxygenNote: 7.1.0
 Suggests: 
     testthat
