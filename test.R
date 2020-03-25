@@ -10,7 +10,8 @@ a1 <- a %>%
          Curso, Cpf, Instituição, Per..Letivo.Inicial)
 
 
-
+q1 <- openxlsx::read.xlsx("arquivos/fake_data_qacademico_1.xlsx")
+q2 <- openxlsx::read.xlsx("arquivos/fake_data_qacademico_2.xlsx") 
 
 
 t <- bind_rows(b1,a1)
