@@ -1,3 +1,22 @@
+qacademico <- sistec::read_qacademico("extdata/qacademico/")
+sistec <- sistec::read_sistec("extdata/sistec/")
+
+nrow(qacademico)
+
+a <- compare_q_sistec(sistec_path = system.file("extdata/sistec", package = "sistec"),
+                 qacademico_path = system.file("extdata/qacademico", package = "sistec"))
+
+
+
+
+
+
+
+
+
+
+
+
 b <- read.csv("C:/pesquisa/dados/qacademico/ListagemdeAlunos_2020_1_1.csv", header = TRUE, sep = "")
 a <- read.csv("C:/pesquisa/dados/qacademico/ListagemdeAlunos_2019_2_1.csv", header = TRUE, sep = "")
 
