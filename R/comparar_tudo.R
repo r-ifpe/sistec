@@ -3,12 +3,9 @@ comparar_tudo <- function(input_qacademico,input_sistec ){
 
   qacademico_path <- server_input_path(input_qacademico)
   sistec_path <- server_input_path(input_sistec)
-  # slash <- stringr::str_locate_all(input$qacademico$datapath[1], "/")
-  # last_slash <- slash[[1]][nrow(slash[[1]]), 2]
-  # path <- substr(input$qacademico$datapath[1], 1, last_slash)  
-  
-  table_compared <- compare_q_sistec(qacademico_path = qacademico_path,
-                                     sistec_path = sistec_path)
+
+  table_compared <- compare_sistec_qacademico(qacademico_path = qacademico_path,
+                                              sistec_path = sistec_path)
   
   openxlsx::write.xlsx(table_compared$situation, "situação.xlsx")
   
@@ -32,9 +29,7 @@ comparar_tudo <- function(input_qacademico,input_sistec ){
 output_screen <- function(input_qacademico, input_sistec){
 
   if(!is.null(input_qacademico) && !is.null(input_sistec)){
-    source("comparar_qacademico.R", encoding = "UTF-8")
-    source("read_files.R", encoding = "UTF-8")
-    response <- comparar_tudo(input_qacademico, input_sistec)
+    response <- sistec:::comparar_tudo(input_qacademico, input_sistec)
   } else if(is.null(input_qacademico) && is.null(input_sistec)){
     response <- "Selecione os arquivos do Qacademico e Sistec."   
   } else if(is.null(input_qacademico)){

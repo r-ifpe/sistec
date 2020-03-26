@@ -1,5 +1,5 @@
-
 library(shiny)
+library(sistec)
 
 ui <- fluidPage(
     navbarPage("Sistec_app v0.0.1.9001",
@@ -43,9 +43,8 @@ server <- function(input, output, session){
     output$contents <- renderText({
 
         input$do
-        source("comparar_tudo.R", encoding = "UTF-8")
-        isolate(output_screen(input$qacademico$datapath[1],
-                              input$sistec$datapath[1])
+        isolate(sistec::output_screen(input$qacademico$datapath[1],
+                                      input$sistec$datapath[1])
             
         )
 
