@@ -1,5 +1,5 @@
 #' @export
-compare_q_sistec <- function(sistec_path, qacademico_path, path = "arquivos/"){
+compare_sistec_qacademico <- function(sistec_path, qacademico_path, path = "arquivos/"){
 
   library(dplyr)
   library(stringr)
