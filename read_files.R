@@ -2,8 +2,11 @@
 read_sistec <- function(path = "extdata"){
   temp = list.files(path = path, pattern = "*.csv")
   temp <- paste0(path, "/", temp)
+  classes <- c(NU_CPF = "character", CO_CICLO_MATRICULA = "character",
+               NO_STATUS_MATRICULA = "character")
+  
   sistec <- lapply(temp, utils::read.csv,
-                   sep = ";",  stringsAsFactors=FALSE, colClasses =rep("character", 8)) %>%
+                   sep = ";",  stringsAsFactors=FALSE, colClasses = classes) %>%
     dplyr::bind_rows() %>%
     dplyr::mutate(NO_STATUS_MATRICULA = ifelse(
       stringr::str_detect(NO_STATUS_MATRICULA, "CONCLU\xcdDA"), "CONCLUÍDA", NO_STATUS_MATRICULA),
