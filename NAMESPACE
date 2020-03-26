@@ -2,7 +2,7 @@
 
 export(comparar_situacao)
 export(comparar_tudo)
-export(compare_q_sistec)
+export(compare_sistec_qacademico)
 export(multi_vinculo)
 export(num_para_cpf)
 export(output_screen)
