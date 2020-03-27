@@ -1,3 +1,4 @@
+#' @importFrom rlang sym
 #' @export
 read_sistec <- function(path = "extdata"){
   temp = list.files(path = path, pattern = "*.csv")
@@ -30,25 +31,35 @@ server_input_path <- function(input_path){
   substr(input_path[1], 1, last_slash)
 }
 
+#' @importFrom dplyr %>% 
+#' @importFrom rlang sym
 sistec_schema_1 <- function(temp){
   classes <- c(Numero.Cpf = "character")
-  
+
   lapply(temp, utils::read.csv,
-                   sep = ";",  stringsAsFactors = FALSE, colClasses = classes, encoding = "UTF-8") %>%
+         sep = ";",  stringsAsFactors = FALSE, 
+         colClasses = classes, encoding = "UTF-8") %>%
     dplyr::bind_rows() %>%
-    dplyr::transmute(NO_ALUNO = Nome.Aluno, NU_CPF = num_para_cpf(Numero.Cpf),
-                     CO_CICLO_MATRICULA = Co.Ciclo.Matricula, 
-                     NO_STATUS_MATRICULA = `Situação.Matricula`,
-                     NO_CURSO = No.Curso, DT_DATA_INICIO = Dt.Data.Inicio)
+    dplyr::transmute(NO_ALUNO = !!sym("Nome.Aluno"), 
+                     NU_CPF = num_para_cpf(!!sym("Numero.Cpf")),
+                     CO_CICLO_MATRICULA = !!sym("Co.Ciclo.Matricula"), 
+                     NO_STATUS_MATRICULA = !!sym("Situação.Matricula"),
+                     NO_CURSO = !!sym("No.Curso"), 
+                     DT_DATA_INICIO = !!sym("Dt.Data.Inicio"))
 }
 
+#' @importFrom dplyr %>% 
+#' @importFrom rlang sym syms
 sistec_schema_2 <- function(temp){
   classes <- c(NU_CPF = "character", CO_CICLO_MATRICULA = "character",
                NO_STATUS_MATRICULA = "character")
   
+  sistec_vars <- c("NO_ALUNO", "NU_CPF", "CO_CICLO_MATRICULA", "NO_STATUS_MATRICULA")
+
   lapply(temp, utils::read.csv,
-                   sep = ";",  stringsAsFactors = FALSE, colClasses = classes, encoding = "latin1") %>%
-    dplyr::bind_rows() %>%
-    dplyr::transmute(NO_ALUNO, NU_CPF = num_para_cpf(NU_CPF), 
-                     CO_CICLO_MATRICULA, NO_STATUS_MATRICULA)
+         sep = ";",  stringsAsFactors = FALSE, 
+         colClasses = classes, encoding = "latin1") %>%
+    dplyr::bind_rows() %>% 
+    dplyr::mutate(NU_CPF =num_para_cpf(!!sym("NU_CPF"))) %>% 
+    dplyr::select(!!!syms(sistec_vars))
 }
