@@ -1,6 +1,13 @@
+#' Comparison beteween sistec and qacademico
+#' 
+#' This function runs the comparison beteween students situation in sistec and qacademico. 
+#'
+#' @param qacademico_path A list of qacademico's files path. This list, normally, comes from the app.
+#' @param sistec_path  A list of sistec's files path. This list, normally, comes from the app.
+#'
 #' @importFrom rlang sym
 #' @export
-compare_sistec_qacademico <- function(sistec_path, qacademico_path, path = "arquivos/"){
+compare_sistec_qacademico <- function(sistec_path, qacademico_path){
 
   sistec <- read_sistec(path = sistec_path)
   qacademico <- read_qacademico(path = qacademico_path)
@@ -38,7 +45,6 @@ compare_sistec_qacademico <- function(sistec_path, qacademico_path, path = "arqu
 }
 
 #' @importFrom stringr str_detect
-#' @export
 comparar_situacao <- function(sistec, qacademico){
 
   # existe_qacademico <- !is.na(qacademico)

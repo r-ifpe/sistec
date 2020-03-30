@@ -1,3 +1,12 @@
+#' Read sistec and qacademico files
+#'
+#' These functions support two kinds of schemas: from the api and from the website.
+#'
+#' @param path The sistec file's path. 
+#' @name read_files
+NULL
+
+#' @rdname read_files
 #' @importFrom rlang sym
 #' @export
 read_sistec <- function(path = "extdata"){
@@ -16,6 +25,7 @@ read_sistec <- function(path = "extdata"){
   }
 }
 
+#' @rdname read_files
 #' @importFrom rlang sym
 #' @export
 read_qacademico <- function(path = "extdata"){
