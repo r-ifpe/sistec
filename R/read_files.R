@@ -1,6 +1,7 @@
 #' @importFrom rlang sym
 #' @export
 read_sistec <- function(path = "extdata"){
+  
   temp = list.files(path = path, pattern = "*.csv")
   temp <- paste0(path, "/", temp)
 
@@ -15,13 +16,14 @@ read_sistec <- function(path = "extdata"){
   }
 }
 
+#' @importFrom rlang sym
 #' @export
 read_qacademico <- function(path = "extdata"){
   temp = list.files(path = path, pattern = "*.xlsx")
   temp <- paste0(path , "/", temp)
   lapply(temp, openxlsx::read.xlsx) %>%
     dplyr::bind_rows() %>%
-    dplyr::mutate(Cpf= num_para_cpf(Cpf))
+    dplyr::mutate(Cpf= num_para_cpf(!!sym("Cpf")))
 }
 
 
@@ -43,7 +45,7 @@ sistec_schema_1 <- function(temp){
     dplyr::transmute(NO_ALUNO = !!sym("Nome.Aluno"), 
                      NU_CPF = num_para_cpf(!!sym("Numero.Cpf")),
                      CO_CICLO_MATRICULA = !!sym("Co.Ciclo.Matricula"), 
-                     NO_STATUS_MATRICULA = !!sym("Situação.Matricula"),
+                     NO_STATUS_MATRICULA = !!sym("Situação.Matricula"), # Situação.Matricula,
                      NO_CURSO = !!sym("No.Curso"), 
                      DT_DATA_INICIO = !!sym("Dt.Data.Inicio"))
 }

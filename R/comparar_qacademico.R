@@ -10,23 +10,23 @@ compare_sistec_qacademico <- function(sistec_path, qacademico_path, path = "arqu
                      Nome_sistec = !!sym("NO_ALUNO"), 
                      Cpf = !!sym("Cpf"),
                      Ciclo = !!sym("CO_CICLO_MATRICULA"),
-                     `Situação_q` = !!sym("Situação.Matrícula"), 
+                     `Situação_q` = !!sym("Situação.Matrícula"), # Situação.Matrícula 
                      `Situação_sistec` = !!sym("NO_STATUS_MATRICULA"))
 
   true <- comparar_situacao(ifpe_dados$`Situação_sistec`, ifpe_dados$`Situação_q`)
 
   ifpe_dados$`Situação` <- true
-  ciclos <- ifpe_dados$Ciclo %>% unique() %>% na.omit()
+  ciclos <- ifpe_dados$Ciclo %>% unique() %>% stats::na.omit()
   
   # verifying students with multi-bond
   dados <- multi_vinculo(ifpe_dados)
 
   a <- lapply(1:length(ciclos), function(e){
     dados$ifpe_dados %>%
-      dplyr::filter(Ciclo == ciclos[e]) %>%
-      dplyr::filter(`Situação` == FALSE) %>% 
-      dplyr::arrange(`Situação_sistec`) %>% 
-      dplyr::select(-`Situação`)
+      dplyr::filter(!!sym("Ciclo") == ciclos[e]) %>%
+      dplyr::filter(!!sym("Situação") == FALSE) %>% # Situação
+      dplyr::arrange(!!sym("Situação_sistec")) %>% # Situação_sistec
+      dplyr::select(-!!sym("Situação")) # Situação
   })
 
   names(a) <- ciclos
