@@ -1,18 +1,17 @@
+#' @importFrom rlang sym
 #' @export
 compare_sistec_qacademico <- function(sistec_path, qacademico_path, path = "arquivos/"){
 
-  library(dplyr)
-  library(stringr)
-  library(openxlsx)
-
   sistec <- read_sistec(path = sistec_path)
   qacademico <- read_qacademico(path = qacademico_path)
-
+  
   ifpe_dados <- dplyr::full_join(qacademico, sistec, by = c("Cpf" = "NU_CPF")) %>%
-    dplyr::select(Nome, NO_ALUNO, Cpf, CO_CICLO_MATRICULA, `Situação.Matrícula`, NO_STATUS_MATRICULA) %>%
-    rename(Nome_q = Nome, Nome_sistec = NO_ALUNO, Cpf = Cpf,
-           Ciclo = CO_CICLO_MATRICULA,
-           `Situação_q` = `Situação.Matrícula`, `Situação_sistec` = NO_STATUS_MATRICULA)
+    dplyr::transmute(Nome_q = !!sym("Nome"), 
+                     Nome_sistec = !!sym("NO_ALUNO"), 
+                     Cpf = !!sym("Cpf"),
+                     Ciclo = !!sym("CO_CICLO_MATRICULA"),
+                     `Situação_q` = !!sym("Situação.Matrícula"), 
+                     `Situação_sistec` = !!sym("NO_STATUS_MATRICULA"))
 
   true <- comparar_situacao(ifpe_dados$`Situação_sistec`, ifpe_dados$`Situação_q`)
 
@@ -24,10 +23,10 @@ compare_sistec_qacademico <- function(sistec_path, qacademico_path, path = "arqu
 
   a <- lapply(1:length(ciclos), function(e){
     dados$ifpe_dados %>%
-      filter(Ciclo == ciclos[e]) %>%
-      filter(`Situação` == FALSE) %>% 
-      arrange(`Situação_sistec`) %>% 
-      select(-`Situação`)
+      dplyr::filter(Ciclo == ciclos[e]) %>%
+      dplyr::filter(`Situação` == FALSE) %>% 
+      dplyr::arrange(`Situação_sistec`) %>% 
+      dplyr::select(-`Situação`)
   })
 
   names(a) <- ciclos
@@ -38,21 +37,22 @@ compare_sistec_qacademico <- function(sistec_path, qacademico_path, path = "arqu
  list(ifpe_dados = ifpe_dados, situation = a)
 }
 
+#' @importFrom stringr str_detect
 #' @export
 comparar_situacao <- function(sistec, qacademico){
 
   # existe_qacademico <- !is.na(qacademico)
-  status_concluido <- stringr::str_detect(sistec, "CONCLUÍDA") &
+  status_concluido <- str_detect(sistec, "CONCLUÍDA") &
     str_detect(qacademico, "Concluído|Formado")
-  status_integralizada <- stringr::str_detect(sistec, "INTEGRALIZADA") &
+  status_integralizada <- str_detect(sistec, "INTEGRALIZADA") &
     str_detect(qacademico, "Concludente|ENADE|Vínculo")
-  status_abandono <- stringr::str_detect(sistec, "ABANDONO") &
+  status_abandono <- str_detect(sistec, "ABANDONO") &
     str_detect(qacademico, "Abandono")
-  status_desligado <- stringr::str_detect(sistec, "DESLIGADO") &
+  status_desligado <- str_detect(sistec, "DESLIGADO") &
     str_detect(qacademico, "Cancelamento|Jubilado")
-  status_em_curso <- stringr::str_detect(sistec, "EM_CURSO") &
+  status_em_curso <- str_detect(sistec, "EM_CURSO") &
     str_detect(qacademico, "Matriculado|Trancado")
-  status_transferido <- stringr::str_detect(sistec, "TRANSF_EXT") &
+  status_transferido <- str_detect(sistec, "TRANSF_EXT") &
     str_detect(qacademico, "Transferido Externo")
 
 status <- status_abandono | status_concluido | status_integralizada | status_desligado |
@@ -62,7 +62,6 @@ status[is.na(status)] <- FALSE
 status
 }
 
-#' @export
 num_para_cpf <- function(num) {
 
   stringr::str_replace(string = num,
@@ -70,17 +69,17 @@ num_para_cpf <- function(num) {
               replacement = "\\1.\\2.\\3-")
 }
 
-#' @export
+#' @importFrom rlang sym
 multi_vinculo <- function(x){
   multi_vinculo <- x %>% 
-    group_by(Cpf) %>% 
-    tally() %>% 
-    filter(n > 1)
+    dplyr::group_by(!!sym("Cpf")) %>% 
+    dplyr::tally() %>% 
+    dplyr::filter(!!sym("n") > 1)
 
   list(ifpe_dados = x %>% 
-         filter(!(Cpf %in% multi_vinculo$Cpf)),
+         dplyr::filter(!(!!sym("Cpf") %in% multi_vinculo$Cpf)),
        multi_vinculo = x %>% 
-         filter(Cpf %in% multi_vinculo$Cpf)
+         dplyr::filter(!!sym("Cpf") %in% multi_vinculo$Cpf)
        )
 
 }
