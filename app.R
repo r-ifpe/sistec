@@ -1,8 +1,7 @@
 library(shiny)
-library(sistec)
 
 ui <- fluidPage(
-    navbarPage("Sistec_app v0.0.1.9001",
+    navbarPage("Sistec_app v0.0.1.9003",
                tabPanel("Qacademico",
     sidebarLayout(
         sidebarPanel(

@@ -8,11 +8,13 @@ a <- compare_q_sistec(sistec_path = system.file("extdata/sistec", package = "sis
 
 
 
+a <- read.csv("C:/Pesquisa/dados/sistec/2020-03-05 IFPE.csv", sep = ";",
+              stringsAsFactors = FALSE, encoding = "UTF-8")
 
+a <- sistec::read_sistec("C:/Pesquisa/dados/sistec/")
+b <- sistec::read_sistec("C:/Pesquisa/sistec/inst/extdata/sistec")
 
-
-
-
+# no visible binding for global variable
 
 
 

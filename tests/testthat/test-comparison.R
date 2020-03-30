@@ -20,7 +20,6 @@ test_that("qacademico comparison works", {
   
   students_updated <- total_students - students_to_update - multi_vinculo
   
-
   expect_equal(total_students, 1111)
   expect_equal(multi_vinculo, 11)
   expect_equal(students_updated, 875)

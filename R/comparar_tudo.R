@@ -17,7 +17,7 @@ comparar_tudo <- function(input_qacademico,input_sistec ){
   
   students_updated <- total_students - students_to_update - multi_vinculo
   
-  HTML(paste("Comparação entre Qacademico e Sistec realizada com sucesso!",
+  shiny::HTML(paste("Comparação entre Qacademico e Sistec realizada com sucesso!",
                          "", "", "", 
                          paste0("Situações comparadas: ", total_students),
                          paste0("Alunos atualizados: ", students_updated,
@@ -29,7 +29,7 @@ comparar_tudo <- function(input_qacademico,input_sistec ){
 output_screen <- function(input_qacademico, input_sistec){
 
   if(!is.null(input_qacademico) && !is.null(input_sistec)){
-    response <- sistec:::comparar_tudo(input_qacademico, input_sistec)
+    response <- comparar_tudo(input_qacademico, input_sistec)
   } else if(is.null(input_qacademico) && is.null(input_sistec)){
     response <- "Selecione os arquivos do Qacademico e Sistec."   
   } else if(is.null(input_qacademico)){

@@ -1,3 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^situação\.xlsx$
+^situação.xlsx$
+^app.R$
+^random_data.R$
+^test.R$
