@@ -9,7 +9,7 @@ test_that("qacademico comparison works", {
   
   expect_equal(length(comparison$situation), 15) # amount of ciclos
   expect_equal(names(comparison$situation[[1]]),
-               c("Nome_q", "Nome_sistec", "Cpf", "Ciclo", "Situação_q", "Situação_sistec"))
+               c("Nome_q", "Nome_sistec", "Cpf", "Ciclo", "Status_q", "Status_sistec"))
   
   # screen output
   total_students <- nrow(comparison$ifpe_dados)

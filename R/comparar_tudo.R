@@ -7,7 +7,7 @@ comparar_tudo <- function(input_qacademico,input_sistec ){
   table_compared <- compare_sistec_qacademico(qacademico_path = qacademico_path,
                                               sistec_path = sistec_path)
   
-  openxlsx::write.xlsx(table_compared$situation, "situação.xlsx")
+  openxlsx::write.xlsx(table_compared$situation, "situa\u00e7\u00e3o.xlsx") # situação.xlsx
   
   total_students <- nrow(table_compared$ifpe_dados)
   multi_vinculo <- nrow(table_compared$situation$multi_vinculo)
@@ -17,12 +17,12 @@ comparar_tudo <- function(input_qacademico,input_sistec ){
   
   students_updated <- total_students - students_to_update - multi_vinculo
   
-  shiny::HTML(paste("Comparação entre Qacademico e Sistec realizada com sucesso!",
+  shiny::HTML(paste("Compara\u00e7\u00e3o entre Qacademico e Sistec realizada com sucesso!", # Comparação
                          "", "", "", 
-                         paste0("Situações comparadas: ", total_students),
+                         paste0("Situa\u00e7\u00f5es comparadas: ", total_students), # Situações
                          paste0("Alunos atualizados: ", students_updated,
                                 " (", round(100*students_updated/total_students, 2 ), "%)"),
-                         paste("Alunos com mais de um vínculo:", multi_vinculo), sep = '<br/>'))    
+                         paste("Alunos com mais de um v\u00edncul0:", multi_vinculo), sep = '<br/>')) # vínculo   
 }
 
 #' @export

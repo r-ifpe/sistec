@@ -4,18 +4,18 @@ compare_sistec_qacademico <- function(sistec_path, qacademico_path, path = "arqu
 
   sistec <- read_sistec(path = sistec_path)
   qacademico <- read_qacademico(path = qacademico_path)
-  
+
   ifpe_dados <- dplyr::full_join(qacademico, sistec, by = c("Cpf" = "NU_CPF")) %>%
     dplyr::transmute(Nome_q = !!sym("Nome"), 
                      Nome_sistec = !!sym("NO_ALUNO"), 
                      Cpf = !!sym("Cpf"),
                      Ciclo = !!sym("CO_CICLO_MATRICULA"),
-                     `Situação_q` = !!sym("Situação.Matrícula"), # Situação.Matrícula 
-                     `Situação_sistec` = !!sym("NO_STATUS_MATRICULA"))
+                     Status_q = !!sym("Situa\u00e7\u00e3o.Matr\u00edcula"), # Situação.Matrícula 
+                     Status_sistec = !!sym("NO_STATUS_MATRICULA"))
 
-  true <- comparar_situacao(ifpe_dados$`Situação_sistec`, ifpe_dados$`Situação_q`)
+  true <- comparar_situacao(ifpe_dados$`Status_sistec`, ifpe_dados$`Status_q`)
 
-  ifpe_dados$`Situação` <- true
+  ifpe_dados$Status <- true
   ciclos <- ifpe_dados$Ciclo %>% unique() %>% stats::na.omit()
   
   # verifying students with multi-bond
@@ -24,9 +24,9 @@ compare_sistec_qacademico <- function(sistec_path, qacademico_path, path = "arqu
   a <- lapply(1:length(ciclos), function(e){
     dados$ifpe_dados %>%
       dplyr::filter(!!sym("Ciclo") == ciclos[e]) %>%
-      dplyr::filter(!!sym("Situação") == FALSE) %>% # Situação
-      dplyr::arrange(!!sym("Situação_sistec")) %>% # Situação_sistec
-      dplyr::select(-!!sym("Situação")) # Situação
+      dplyr::filter(!!sym("Status") == FALSE) %>% # Situação
+      dplyr::arrange(!!sym("Status_sistec")) %>% # Situação_sistec
+      dplyr::select(-!!sym("Status")) # Situação
   })
 
   names(a) <- ciclos
@@ -42,10 +42,10 @@ compare_sistec_qacademico <- function(sistec_path, qacademico_path, path = "arqu
 comparar_situacao <- function(sistec, qacademico){
 
   # existe_qacademico <- !is.na(qacademico)
-  status_concluido <- str_detect(sistec, "CONCLUÍDA") &
-    str_detect(qacademico, "Concluído|Formado")
+  status_concluido <- str_detect(sistec, "CONCLU\u00cdDA") & # CONCLUÍDA
+    str_detect(qacademico, "Conclu\u00eddo|Formado") # Concluído
   status_integralizada <- str_detect(sistec, "INTEGRALIZADA") &
-    str_detect(qacademico, "Concludente|ENADE|Vínculo")
+    str_detect(qacademico, "Concludente|ENADE|V\u00ednculo") # Vínculo
   status_abandono <- str_detect(sistec, "ABANDONO") &
     str_detect(qacademico, "Abandono")
   status_desligado <- str_detect(sistec, "DESLIGADO") &
