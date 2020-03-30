@@ -15,10 +15,10 @@ test_that("read_qacademico works", {
   skip_on_cran()
   
   qacademico <- sistec::read_qacademico(system.file("extdata/qacademico", package = "sistec"))
-  
+
   expect_equal(nrow(qacademico), 931)
   expect_equal(ncol(qacademico), 3)
   expect_equal(names(qacademico), 
-               c("Nome", "Situação.Matrícula", "Cpf"))
+               c("Nome", "Situa\u00e7\u00e3o.Matr\u00edcula", "Cpf")) #   Situação.Matrícula
 })
 

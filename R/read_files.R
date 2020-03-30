@@ -45,7 +45,7 @@ sistec_schema_1 <- function(temp){
     dplyr::transmute(NO_ALUNO = !!sym("Nome.Aluno"), 
                      NU_CPF = num_para_cpf(!!sym("Numero.Cpf")),
                      CO_CICLO_MATRICULA = !!sym("Co.Ciclo.Matricula"), 
-                     NO_STATUS_MATRICULA = !!sym("Situação.Matricula"), # Situação.Matricula,
+                     NO_STATUS_MATRICULA = !!sym("Situa\u00e7\u00e3o.Matricula"), # Situação.Matricula,
                      NO_CURSO = !!sym("No.Curso"), 
                      DT_DATA_INICIO = !!sym("Dt.Data.Inicio"))
 }
