@@ -19,9 +19,9 @@ read_sistec <- function(path = "extdata"){
 
   # there are two kinds of sistec schema
   if (any(grepl("Numero.Cpf", names(sistec)))){
-    sistec_schema_1(temp)
+    sistec_api_schema(temp)
   } else {
-    sistec_schema_2(temp)
+    sistec_website_schema(temp)
   }
 }
 
@@ -45,7 +45,7 @@ server_input_path <- function(input_path){
 
 #' @importFrom dplyr %>% 
 #' @importFrom rlang sym
-sistec_schema_1 <- function(temp){
+sistec_api_schema <- function(temp){
   classes <- c(Numero.Cpf = "character")
 
   lapply(temp, utils::read.csv,
@@ -62,7 +62,7 @@ sistec_schema_1 <- function(temp){
 
 #' @importFrom dplyr %>% 
 #' @importFrom rlang sym syms
-sistec_schema_2 <- function(temp){
+sistec_website_schema <- function(temp){
   classes <- c(NU_CPF = "character", CO_CICLO_MATRICULA = "character",
                NO_STATUS_MATRICULA = "character")
   
