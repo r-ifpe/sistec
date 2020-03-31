@@ -4,3 +4,4 @@
 ^app.R$
 ^random_data.R$
 ^test.R$
+^\.travis\.yml$
