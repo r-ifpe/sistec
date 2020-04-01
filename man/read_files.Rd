@@ -6,12 +6,16 @@
 \alias{read_qacademico}
 \title{Read sistec and qacademico files}
 \usage{
-read_sistec(path = "extdata")
+read_sistec(path = "extdata", type = "simplified")
 
-read_qacademico(path = "extdata")
+read_qacademico(path = "extdata", type = "simplified")
 }
 \arguments{
 \item{path}{The sistec file's path.}
+
+\item{type}{Choose "simplified" when you download directly from the website and you just want to
+compare an specific amount of ciclos. Choose "complete" when you download from the API and you want to
+compare from the whole institute.}
 }
 \description{
 These functions support two kinds of schemas: from the api and from the website.
