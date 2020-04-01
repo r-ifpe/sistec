@@ -10,16 +10,19 @@ a <- compare_q_sistec(sistec_path = system.file("extdata/sistec", package = "sis
 
 a <- read.csv("C:/Pesquisa/dados/sistec/2020-03-05 IFPE.csv", sep = ";",
               stringsAsFactors = FALSE, encoding = "UTF-8")
+b1 <- read.csv("C:/Pesquisa/dados/qacademico/ListagemdeAlunos_2020_1_1.csv", sep = "",
+              stringsAsFactors = FALSE, encoding = "latin1")
 
-a <- sistec::read_sistec("C:/Pesquisa/dados/sistec/")
-b <- sistec::read_sistec("C:/Pesquisa/sistec/inst/extdata/sistec")
+a <- sistec::read_sistec("C:/Pesquisa/dados/sistec/", type = "complete")
+b <- sistec::read_qacademico("C:/Pesquisa/dados/qacademico/", type = "complete")
 
 # no visible binding for global variable
+b <- sistec::read_qacademico("C:/Pesquisa/dados/fake/qacademico/", type = "complete")
+a <- sistec::read_sistec("C:/Pesquisa/dados/fake/sistec/", type = "complete")
 
 
-
-
-b <- read.csv("C:/pesquisa/dados/qacademico/ListagemdeAlunos_2020_1_1.csv", header = TRUE, sep = "")
+b <- read.csv("C:/pesquisa/dados/qacademico/ListagemdeAlunos_2020_1_1.csv", header = TRUE,
+              sep = "", stringsAsFactors = FALSE)
 a <- read.csv("C:/pesquisa/dados/qacademico/ListagemdeAlunos_2019_2_1.csv", header = TRUE, sep = "")
 
 b1 <- b %>% 
