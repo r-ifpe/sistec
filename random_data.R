@@ -54,4 +54,53 @@ sistec[1:500,] %>%
   write.table("fake_data_sistec_1.csv", row.names = FALSE, sep = ";")
 
 sistec[501:1017,] %>% 
-  write.table("fake_data_sistec_2.csv", row.names = FALSE, sep = ";")  
+  write.table("fake_data_sistec_2.csv", row.names = FALSE, sep = ";") 
+
+###### complete
+
+# sistec
+a <- read.csv("C:/Pesquisa/dados/sistec/2020-03-05 IFPE.csv", sep = ";",
+              stringsAsFactors = FALSE, encoding = "UTF-8",
+              colClasses = c("Numero.Cpf" = "character")) %>% 
+dplyr::transmute(`Nome Aluno` = Nome.Aluno, 
+                `Numero Cpf` = Numero.Cpf,
+                `Co Ciclo Matricula` = Co.Ciclo.Matricula, 
+                `Situação Matricula` = Situação.Matricula, # Situação.Matricula
+                `No Curso`= No.Curso, 
+                `Dt Data Inicio` = Dt.Data.Inicio)
+
+
+
+a %>% 
+  filter(stringr::str_detect(`Dt Data Inicio`, "2020|2019")) %>%
+  write.table("fake_data_sistec_complete.csv", sep = ";", row.names = FALSE, fileEncoding = "UTF-8")
+
+# qacademico
+
+vars <- c("Matr\u00edcula", "Nome", "Situa\u00e7\u00e3o.Matr\u00edcula",
+          "Situa\u00e7\u00e3o.Per\u00edodo", "Curso", "Cpf",
+          "Institui\u00e7\u00e3o", "Per..Letivo.Inicial")
+
+path = "C:/Pesquisa/dados/qacademico"
+temp = list.files(path = path, pattern = "*.csv")
+temp <- paste0(path, "/", temp)
+
+b <- lapply(temp[15:17], utils::read.csv,
+       sep = "",  stringsAsFactors = FALSE) %>% 
+  lapply(function(e){
+    e %>% 
+      select(!!!syms(vars)) %>% 
+      filter(stringr::str_detect(Per..Letivo.Inicial, "2020|2019"))
+  }) 
+
+  lapply(1:3, function(e){
+    write.table(b[[e]],
+               paste0("fake_data_qacademico_complete",
+                      e, ".csv"), 
+               sep = "", row.names = FALSE)
+    })
+
+
+
+
+
