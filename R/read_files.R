@@ -3,49 +3,78 @@
 #' These functions support two kinds of schemas: from the api and from the website.
 #'
 #' @param path The sistec file's path. 
+#' @param type Choose "simplified" when you download directly from the website and you just want to 
+#' compare an specific amount of ciclos. Choose "complete" when you download from the API and you want to 
+#' compare from the whole institute.
 #' @name read_files
 NULL
 
 #' @rdname read_files
 #' @importFrom rlang sym
 #' @export
-read_sistec <- function(path = "extdata"){
+read_sistec <- function(path = "extdata", type = "simplified"){
   
-  temp = list.files(path = path, pattern = "*.csv")
-  temp <- paste0(path, "/", temp)
-
-  # read just the first row to infer the schema
-  sistec <- utils::read.csv(temp[1], sep = ";", stringsAsFactors = FALSE, encoding = "UTF-8")
-
-  # there are two kinds of sistec schema
-  if (any(grepl("Numero.Cpf", names(sistec)))){
-    sistec_api_schema(temp)
-  } else {
-    sistec_website_schema(temp)
+  # website
+  if(type == "simplified"){
+    read_sistec_simplified(path) # from the website
+  } else if(type == "complete"){
+    read_sistec_complete(path) # from the api
+  } else{
+    stop("The type is wrong. Choose simplified or complete")
   }
 }
 
 #' @rdname read_files
 #' @importFrom rlang sym
 #' @export
-read_qacademico <- function(path = "extdata"){
-  temp = list.files(path = path, pattern = "*.xlsx")
-  temp <- paste0(path , "/", temp)
-  lapply(temp, openxlsx::read.xlsx) %>%
-    dplyr::bind_rows() %>%
-    dplyr::mutate(Cpf= num_para_cpf(!!sym("Cpf")))
+read_qacademico <- function(path = "extdata", type = "simplified"){
+  
+  # website
+  if(type == "simplified"){
+    read_qacademico_simplified(path) # from the website
+  } else if(type == "complete"){
+    read_qacademico_complete(path) # from the api
+  } else{
+    stop("The type is wrong. Choose simplified or complete")
+  }
 }
 
+##### PAREI AQUI, PRECISO FAZER AS LEITURAS E SÓ PEGAR O STATUS MAIS ATUAL
+read_qacademico_complete <- function(path){
+  temp <-  list.files(path = path, pattern = "*.csv")
+  temp <- paste0(path , "/", temp) %>% sort(decreasing = TRUE)
 
-server_input_path <- function(input_path){
-  slash <- stringr::str_locate_all(input_path[1], "/")
-  last_slash <- slash[[1]][nrow(slash[[1]]), 2]
-  substr(input_path[1], 1, last_slash)
+  lapply(temp, function(e){
+    utils::read.csv(e, sep = "",  stringsAsFactors = FALSE, encoding = "latin1") %>% 
+        dplyr::select(Matrícula,
+                      Nome,
+                      Situação.Matrícula,
+                      Situação.Período,
+                      Curso,
+                      Cpf,
+                      Instituição,
+                      Per..Letivo.Inicial)
+    }) %>% 
+    dplyr::bind_rows() %>%
+    dplyr::mutate(Cpf= num_para_cpf(!!sym("Cpf"))) %>% 
+    dplyr::distinct(Matrícula, .keep_all = TRUE)
+}
+
+read_qacademico_simplified <- function(path){
+  temp <-  list.files(path = path, pattern = "*.xlsx")
+    temp <- paste0(path , "/", temp)
+    lapply(temp, openxlsx::read.xlsx) %>%
+      dplyr::bind_rows() %>%
+      dplyr::mutate(Cpf= num_para_cpf(!!sym("Cpf")))
 }
 
 #' @importFrom dplyr %>% 
 #' @importFrom rlang sym
-sistec_api_schema <- function(temp){
+read_sistec_complete <- function(path){
+  
+  temp = list.files(path = path, pattern = "*.csv")
+  temp <- paste0(path, "/", temp)
+  
   classes <- c(Numero.Cpf = "character")
 
   lapply(temp, utils::read.csv,
@@ -55,14 +84,18 @@ sistec_api_schema <- function(temp){
     dplyr::transmute(NO_ALUNO = !!sym("Nome.Aluno"), 
                      NU_CPF = num_para_cpf(!!sym("Numero.Cpf")),
                      CO_CICLO_MATRICULA = !!sym("Co.Ciclo.Matricula"), 
-                     NO_STATUS_MATRICULA = !!sym("Situa\u00e7\u00e3o.Matricula"), # Situação.Matricula,
+                     NO_STATUS_MATRICULA = !!sym("Situa\u00e7\u00e3o.Matricula"), # Situação.Matricula
                      NO_CURSO = !!sym("No.Curso"), 
                      DT_DATA_INICIO = !!sym("Dt.Data.Inicio"))
 }
 
 #' @importFrom dplyr %>% 
 #' @importFrom rlang sym syms
-sistec_website_schema <- function(temp){
+read_sistec_simplified <- function(path){
+  
+  temp = list.files(path = path, pattern = "*.csv")
+  temp <- paste0(path, "/", temp)
+  
   classes <- c(NU_CPF = "character", CO_CICLO_MATRICULA = "character",
                NO_STATUS_MATRICULA = "character")
   
@@ -74,4 +107,10 @@ sistec_website_schema <- function(temp){
     dplyr::bind_rows() %>% 
     dplyr::mutate(NU_CPF =num_para_cpf(!!sym("NU_CPF"))) %>% 
     dplyr::select(!!!syms(sistec_vars))
+}
+
+server_input_path <- function(input_path){
+  slash <- stringr::str_locate_all(input_path[1], "/")
+  last_slash <- slash[[1]][nrow(slash[[1]]), 2]
+  substr(input_path[1], 1, last_slash)
 }
