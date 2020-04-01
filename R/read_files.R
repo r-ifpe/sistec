@@ -39,25 +39,24 @@ read_qacademico <- function(path = "extdata", type = "simplified"){
   }
 }
 
-##### PAREI AQUI, PRECISO FAZER AS LEITURAS E SÓ PEGAR O STATUS MAIS ATUAL
+#' @importFrom rlang sym syms
 read_qacademico_complete <- function(path){
   temp <-  list.files(path = path, pattern = "*.csv")
   temp <- paste0(path , "/", temp) %>% sort(decreasing = TRUE)
-
+  
+  # Matrícula, Situação.Matrícula, Situação.Período, Instituição
+  
+  vars <- c("Matr\u00edcula", "Nome", "Situa\u00e7\u00e3o.Matr\u00edcula",
+            "Situa\u00e7\u00e3o.Per\u00edodo", "Curso", "Cpf",
+            "Institui\u00e7\u00e3o", "Per..Letivo.Inicial")
+  
   lapply(temp, function(e){
     utils::read.csv(e, sep = "",  stringsAsFactors = FALSE, encoding = "latin1") %>% 
-        dplyr::select(Matrícula,
-                      Nome,
-                      Situação.Matrícula,
-                      Situação.Período,
-                      Curso,
-                      Cpf,
-                      Instituição,
-                      Per..Letivo.Inicial)
+        dplyr::select(!!!syms(vars))
     }) %>% 
     dplyr::bind_rows() %>%
     dplyr::mutate(Cpf= num_para_cpf(!!sym("Cpf"))) %>% 
-    dplyr::distinct(Matrícula, .keep_all = TRUE)
+    dplyr::distinct(!!sym("Matr\u00edcula"), .keep_all = TRUE)
 }
 
 read_qacademico_simplified <- function(path){
