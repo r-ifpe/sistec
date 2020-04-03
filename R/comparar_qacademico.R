@@ -71,13 +71,6 @@ status[is.na(status)] <- FALSE
 status
 }
 
-num_para_cpf <- function(num) {
-
-  stringr::str_replace(string = num,
-              pattern = "([0-9]{3})([0-9]{3})([0-9]{3})",
-              replacement = "\\1.\\2.\\3-")
-}
-
 #' @importFrom rlang sym
 multi_vinculo <- function(x){
   multi_vinculo <- x %>% 
