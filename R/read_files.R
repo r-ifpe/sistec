@@ -50,8 +50,11 @@ read_qacademico_complete <- function(path){
             "Situa\u00e7\u00e3o.Per\u00edodo", "Curso", "Cpf",
             "Institui\u00e7\u00e3o", "Per..Letivo.Inicial")
   
+  classes <- c(Cpf = "character")
+  
   lapply(temp, function(e){
-    utils::read.csv(e, sep = "",  stringsAsFactors = FALSE, encoding = "latin1") %>% 
+    utils::read.csv(e, sep = "",  stringsAsFactors = FALSE, 
+                    encoding = "latin1", colClasses = classes) %>% 
         dplyr::select(!!!syms(vars))
     }) %>% 
     dplyr::bind_rows() %>%
@@ -75,11 +78,14 @@ read_sistec_complete <- function(path){
   temp <- paste0(path, "/", temp)
   
   classes <- c(Numero.Cpf = "character")
-
+  
   lapply(temp, utils::read.csv,
          sep = ";",  stringsAsFactors = FALSE, 
          colClasses = classes, encoding = "UTF-8") %>%
     dplyr::bind_rows() %>%
+    dplyr::mutate(Numero.Cpf = ifelse(stringr::str_length(!!sym("Numero.Cpf")) == 0, 
+                                      !!sym("Numero.Cpf"), # in API number zero in the beguinning is blank
+                                      stringr::str_pad(!!sym("Numero.Cpf"), 11, pad = "0"))) %>% 
     dplyr::transmute(NO_ALUNO = !!sym("Nome.Aluno"), 
                      NU_CPF = num_para_cpf(!!sym("Numero.Cpf")),
                      CO_CICLO_MATRICULA = !!sym("Co.Ciclo.Matricula"), 
@@ -108,8 +114,26 @@ read_sistec_simplified <- function(path){
     dplyr::select(!!!syms(sistec_vars))
 }
 
+num_para_cpf <- function(num) {
+  
+  stringr::str_replace(string = num,
+                       pattern = "([0-9]{3})([0-9]{3})([0-9]{3})",
+                       replacement = "\\1.\\2.\\3-")
+}
+
 server_input_path <- function(input_path){
   slash <- stringr::str_locate_all(input_path[1], "/")
   last_slash <- slash[[1]][nrow(slash[[1]]), 2]
   substr(input_path[1], 1, last_slash)
+}
+
+complete_cpf <- function(cpf){
+  browser()
+  if(stringr::str_length(cpf)  == 11|stringr::str_length(cpf)  == 0){
+    cpf
+  } else {
+    zeros <- 11 - stringr::str_length(cpf)  # a cpf always have 11 numbers
+    zeros <- paste0(zeros, collapse = "")
+    paste0(zeros, cpf)
+  }
 }
