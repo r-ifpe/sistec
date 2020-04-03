@@ -4,12 +4,16 @@
 \alias{compare_sistec_qacademico}
 \title{Comparison beteween sistec and qacademico}
 \usage{
-compare_sistec_qacademico(sistec_path, qacademico_path)
+compare_sistec_qacademico(sistec_path, qacademico_path, type = "simplified")
 }
 \arguments{
 \item{sistec_path}{A list of sistec's files path. This list, normally, comes from the app.}
 
 \item{qacademico_path}{A list of qacademico's files path. This list, normally, comes from the app.}
+
+\item{type}{Choose "simplified" when you download directly from the website and you just want to
+compare an specific amount of ciclos. Choose "complete" when you download from the API and you want to
+compare from the whole institute.}
 }
 \description{
 This function runs the comparison beteween students situation in sistec and qacademico.

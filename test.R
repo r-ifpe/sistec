@@ -1,3 +1,12 @@
+# no visible binding for global variable
+b <- sistec::read_qacademico("C:/Pesquisa/dados/fake/qacademico/", type = "complete")
+a <- sistec::read_sistec("C:/Pesquisa/dados/fake/sistec/", type = "complete")
+
+b <- sistec::read_qacademico("C:/Pesquisa/dados/qacademico/", type = "complete")
+a <- sistec::read_sistec("C:/Pesquisa/dados/sistec/", type = "complete")
+
+
+
 qacademico <- sistec::read_qacademico("extdata/qacademico/")
 sistec <- sistec::read_sistec("extdata/sistec/")
 
@@ -10,16 +19,19 @@ a <- compare_q_sistec(sistec_path = system.file("extdata/sistec", package = "sis
 
 a <- read.csv("C:/Pesquisa/dados/sistec/2020-03-05 IFPE.csv", sep = ";",
               stringsAsFactors = FALSE, encoding = "UTF-8")
+b1 <- read.csv("C:/Pesquisa/dados/qacademico/ListagemdeAlunos_2020_1_1.csv", sep = "",
+              stringsAsFactors = FALSE, encoding = "latin1")
 
-a <- sistec::read_sistec("C:/Pesquisa/dados/sistec/")
-b <- sistec::read_sistec("C:/Pesquisa/sistec/inst/extdata/sistec")
+a <- sistec::read_sistec("C:/Pesquisa/dados/sistec/", type = "complete")
+b <- sistec::read_qacademico("C:/Pesquisa/dados/qacademico/", type = "complete")
 
 # no visible binding for global variable
+b <- sistec::read_qacademico("C:/Pesquisa/dados/fake/qacademico/", type = "complete")
+a <- sistec::read_sistec("C:/Pesquisa/dados/fake/sistec/", type = "complete")
 
 
-
-
-b <- read.csv("C:/pesquisa/dados/qacademico/ListagemdeAlunos_2020_1_1.csv", header = TRUE, sep = "")
+b <- read.csv("C:/pesquisa/dados/qacademico/ListagemdeAlunos_2020_1_1.csv", header = TRUE,
+              sep = "", stringsAsFactors = FALSE)
 a <- read.csv("C:/pesquisa/dados/qacademico/ListagemdeAlunos_2019_2_1.csv", header = TRUE, sep = "")
 
 b1 <- b %>% 
@@ -34,48 +46,23 @@ a1 <- a %>%
 q1 <- openxlsx::read.xlsx("arquivos/fake_data_qacademico_1.xlsx")
 q2 <- openxlsx::read.xlsx("arquivos/fake_data_qacademico_2.xlsx") 
 
-
-t <- bind_rows(b1,a1)
-
-Matrícula
-Nome
-Situação.Matrícula
-Situação.Periodo
-Curso
-Cpf
-Instituiãção
-Per..Letivo.Inicial  
-
-a1 <- a %>% 
-  select(Matrícula, Nome, Situação.Matrícula, Situação.Período,  
-         Per..Letivo.Inicial, Curso, Cpf, Instituição)
+a <- read.csv("C:/Pesquisa/dados/sistec/2020-03-05 IFPE.csv",
+              sep = ";",  stringsAsFactors = FALSE,  encoding = "UTF-8",
+              colClasses = c("Numero.Cpf" = "character")) %>% 
+  mutate(Numero.Cpf = ifelse(str_length(Numero.Cpf) == 0,
+                                  Numero.Cpf,
+                                  str_pad(Numero.Cpf, 11, pad = "0")))
 
 
-b1 <- b %>% 
-  select(Matrícula, Nome, Situação.Matrícula, Situação.Período,  
-         Per..Letivo.Inicial, Curso, Cpf, Instituição)
+complete_cpf <- function(cpf){
+  browser()
+  cpf_length <- stringr::str_length(cpf) 
+  if(cpf_length == 11|cpf_length == 0){
+    cpf
+  } else {
+    zeros <- 11 - cpf_length # a cpf always have 11 numbers
+    zeros <- paste0(zeros, collapse = "")
+    paste0(zeros, cpf)
+  }
+}
 
-t <- bind_rows(a1,b1)
-
-t %>% 
-  tidyr::separate( Per..Letivo.Inicial, sep = "/", c("ano_inicial", "periodo_inicial"),
-                   remove = FALSE) %>% 
-  select(Per..Letivo.Inicial, ano_inicial, periodo_inicial)
- 
-
-sistec <- read.csv("C:/Pesquisa/dados/sistec/2020-03-05 IFPE.csv", header = TRUE,
-                   encoding = "UTF-8")
-
-# no sistec
-`Co Ciclo Matricula`
-`Dt Data Inicio` 
-`No Curso`
-`Nome Aluno` 
-`Numero Cpf`
-`Situação Matricula` 
-
-
-# alunos sem cpf
-# alunos com matricula diferente do formate 20201XXXXXXX
-# renomear arquivos de modo que a maior data seja o nome do arquivo. Ex
-#   Se a maior data for 2019 e semestre 1, sei que é um arquivo de 2019.1 

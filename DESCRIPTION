@@ -1,7 +1,7 @@
 Package: sistec
 Type: Package
 Title: Managing Profiles on Amazon Web Service
-Version: 0.0.1.9003
+Version: 0.0.1.9005
 Authors@R: c(
     person("Samuel", "Macêdo", 
       email = "samuelmacedo@recife.ifpe.edu.br", role = c("aut", "cre"))

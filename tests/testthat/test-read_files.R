@@ -3,7 +3,8 @@ context("read_files")
 test_that("read_sistec works", {
   skip_on_cran()
   
-  sistec <- sistec::read_sistec(system.file("extdata/sistec", package = "sistec"))
+  sistec <- sistec::read_sistec(system.file("extdata/sistec", package = "sistec"),
+                                type = "simplified")
   
   expect_equal(nrow(sistec), 1017)
   expect_equal(ncol(sistec), 4)
@@ -14,7 +15,8 @@ test_that("read_sistec works", {
 test_that("read_qacademico works", {
   skip_on_cran()
   
-  qacademico <- sistec::read_qacademico(system.file("extdata/qacademico", package = "sistec"))
+  qacademico <- sistec::read_qacademico(system.file("extdata/qacademico", package = "sistec"),
+                                        type = "simplified")
 
   expect_equal(nrow(qacademico), 936)
   expect_equal(ncol(qacademico), 3)
