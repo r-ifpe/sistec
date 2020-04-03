@@ -100,7 +100,9 @@ b <- lapply(temp[15:17], utils::read.csv,
                sep = "", row.names = FALSE)
     })
 
-
-
+################## fake data for read_* complete
+  b <- sistec::read_qacademico("C:/Pesquisa/dados/fake/qacademico/", type = "complete")
+  a <- sistec::read_sistec("C:/Pesquisa/dados/fake/sistec/", type = "complete")
+  
 
 
