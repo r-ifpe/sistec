@@ -5,7 +5,8 @@ a <- sistec::read_sistec("C:/Pesquisa/dados/fake/sistec/", type = "complete")
 b <- sistec::read_qacademico("C:/Pesquisa/dados/qacademico/", type = "complete")
 a <- sistec::read_sistec("C:/Pesquisa/dados/sistec/", type = "complete")
 
-
+a <- sistec::compare_sistec_qacademico_complete("C:/Pesquisa/dados/sistec/",
+                                                "C:/Pesquisa/dados/qacademico/")
 
 qacademico <- sistec::read_qacademico("extdata/qacademico/")
 sistec <- sistec::read_sistec("extdata/sistec/")
