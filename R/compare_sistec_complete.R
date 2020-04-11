@@ -60,7 +60,7 @@ compare_sistec_qacademico_complete <- function(sistec_path, qacademico_path,
 
   list(sistec_without_cpf = sistec_without_cpf,
        sistec_without_link = sistec_without_link,
-       sistec_without_link = sistec_without_qacademico,
+       sistec_without_qacademico = sistec_without_qacademico,
        qacademico_without_cpf = qacademico_without_cpf,
        qacademico_without_link = qacademico_without_link,
        qacademico_without_sistec = qacademico_without_sistec,
