@@ -21,8 +21,7 @@ Imports:
     rlang,
     shiny,
     stringr,
-    utils,
-    stats
+    utils
 RoxygenNote: 7.1.0
 Suggests: 
     testthat
