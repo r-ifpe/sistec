@@ -1,8 +1,9 @@
+#' @importFrom rlang sym
 filter_cpf_qacademico <- function(x){
   invalid <- c("", "   .   .   -  ", "___.___.___-__")
-  
-  qacademico_without_cpf <- dplyr::filter(x, Cpf %in% invalid)
-  qacademico <- dplyr::filter(x, !Cpf %in% invalid)
+
+  qacademico_without_cpf <- dplyr::filter(x, !!sym("Cpf") %in% invalid)
+  qacademico <- dplyr::filter(x, !(!!sym("Cpf") %in% invalid))
   
   list(qacademico = qacademico, qacademico_without_cpf = qacademico_without_cpf)
 }

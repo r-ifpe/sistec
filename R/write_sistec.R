@@ -9,7 +9,7 @@ write_sistec <- function(sistec, path, folder, file){
   for(i in 1:length(campus)){
     
     sistec_campus <- sistec %>% 
-      dplyr::filter(NO_CAMPUS == campus[i])
+      dplyr::filter(!!sym("NO_CAMPUS") == campus[i])
     
     if(nrow(sistec_campus) == 0) next()
     
@@ -19,7 +19,7 @@ write_sistec <- function(sistec, path, folder, file){
     for(j in 1:length(cursos)){
       
       sistec_campus_curso <- sistec_campus %>% 
-        dplyr::filter(NO_CURSO == cursos[j])
+        dplyr::filter(!!sym("NO_CURSO") == cursos[j])
       
       if(nrow(sistec_campus_curso) == 0) next()
       

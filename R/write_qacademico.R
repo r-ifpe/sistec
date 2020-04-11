@@ -8,7 +8,7 @@ write_qacademico <- function(qacademico, path, folder, file){
   for(i in 1:length(campus)){
     
     qacademico_campus <- qacademico %>% 
-      dplyr::filter(Campus == campus[i])
+      dplyr::filter(!!sym("Campus") == campus[i])
     
     if(nrow(qacademico_campus) == 0) next()
     
@@ -18,7 +18,7 @@ write_qacademico <- function(qacademico, path, folder, file){
     for(j in 1:length(cursos)){
       
       qacademico_campus_curso <- qacademico_campus %>% 
-        dplyr::filter(Curso == cursos[j])
+        dplyr::filter(!!sym("Curso") == cursos[j])
       
       if(nrow(qacademico_campus_curso) == 0) next()
       

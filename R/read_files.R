@@ -45,7 +45,6 @@ read_qacademico_complete <- function(path){
   temp <- paste0(path , "/", temp) %>% sort(decreasing = TRUE)
   
   # Matrícula, Situação.Matrícula, Situação.Período, Instituição
-  
   vars <- c("Matr\u00edcula", "Nome", "Situa\u00e7\u00e3o.Matr\u00edcula",
             "Curso", "Cpf", "Institui\u00e7\u00e3o", "Per..Letivo.Inicial")
   

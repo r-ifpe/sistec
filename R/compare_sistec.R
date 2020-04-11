@@ -1,4 +1,3 @@
-#' @export
 compare_sistec <- function (x, y, type = "complete") {
   UseMethod("compare_sistec", x)
 }

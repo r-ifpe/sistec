@@ -1,3 +1,16 @@
+#' Comparison between sistec and qacademico
+#'
+#' Compare and save the student situation and the inconsistecies in the datasets.
+#' 
+#' 
+#' @param sistec_path Path to the sistec files or the sistec dataset read by `read_sistec()`. 
+#' @param qacademico_path Path to the qacademico files or the qacademico.
+#' dataset read by `read_qacademmico()`.
+#' @param type Use "complete" to compare.
+#' @param write_output_path The path where to save the the output in xlsx. If you don't specify the 
+#' path, the files won't be saved.
+#' @param institute The name of your Institute.
+#'
 #' @export
 compare_sistec_qacademico_complete <- function(sistec_path, qacademico_path,
                                                type = "complete",
@@ -7,7 +20,7 @@ compare_sistec_qacademico_complete <- function(sistec_path, qacademico_path,
   # read files
   sistec <- read_sistec(path = sistec_path, type = type)
   qacademico <- read_qacademico(path = qacademico_path, type = type) %>% # I found this problem 
-    dplyr::mutate(Campus = ifelse(Campus == "", "SEM CAMPUS", Campus))   # in qacademico
+    dplyr::mutate(Campus = ifelse(!!sym("Campus") == "", "SEM CAMPUS", !!sym("Campus")))   # in qacademico
 
   # remove invalid cpf
   x <- filter_cpf_sistec(sistec)

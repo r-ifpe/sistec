@@ -10,7 +10,7 @@ write_status_comparison <- function(x, path, folder, file){
   
   qacademico <- x %>% 
     dplyr::ungroup() %>% 
-    dplyr::filter(Status == FALSE) %>% 
+    dplyr::filter(!!sym("Status") == FALSE) %>% 
     dplyr::select(!!!syms(vars))
 
   campus <- qacademico$Campus_q %>% unique()
@@ -18,7 +18,7 @@ write_status_comparison <- function(x, path, folder, file){
   for(i in 1:length(campus)){
     
     qacademico_campus <- qacademico %>% 
-      dplyr::filter(Campus_q == campus[i])
+      dplyr::filter(!!sym("Campus_q") == campus[i])
     
     if(nrow(qacademico_campus) == 0) next()
 
@@ -28,7 +28,7 @@ write_status_comparison <- function(x, path, folder, file){
     for(j in 1:length(cursos)){
      
       qacademico_campus_curso <- qacademico_campus %>% 
-        dplyr::filter(Curso_q == cursos[j])
+        dplyr::filter(!!sym("Curso_q") == cursos[j])
       
       if(nrow(qacademico_campus_curso) == 0) next()
       

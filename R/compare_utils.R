@@ -33,14 +33,15 @@ join_sistec_qacademico <- function(sistec, qacademico){
 #' @importFrom dplyr %>% 
 linked_courses_sistec_qacademico <- function(x){
   x %>% 
-    dplyr::filter(Inicio_q_semestre == Inicio_sistec_semestre) %>% 
-    dplyr::group_by(Curso_q, Curso_sistec) %>% 
+    dplyr::filter(!!sym("Inicio_q_semestre") == !!sym("Inicio_sistec_semestre")) %>% 
+    dplyr::group_by(!!sym("Curso_q"), !!sym("Curso_sistec")) %>% 
     dplyr::tally() %>% 
-    dplyr::arrange(Curso_q, -n) %>% 
-    dplyr::distinct(Curso_q, .keep_all = TRUE) %>% 
-    dplyr::rename(Curso_sistec_link = Curso_sistec, Qtd_alunos = n) %>% 
+    dplyr::arrange(!!sym("Curso_q"), dplyr::desc(!!sym("n"))) %>% 
+    dplyr::distinct(!!sym("Curso_q"), .keep_all = TRUE) %>% 
+    dplyr::rename(Curso_sistec_link = !!sym("Curso_sistec"), Qtd_alunos = !!sym("n")) %>% 
     dplyr::right_join(x, by = "Curso_q") %>% 
-    dplyr::filter(Curso_sistec == Curso_sistec_link, Qtd_alunos >= 6) # 6 is experimental
+    dplyr::filter(!!sym("Curso_sistec") == !!sym("Curso_sistec_link"),
+                  !!sym("Qtd_alunos") >= 6) # 6 is experimental
 }
 
 #' @importFrom stringr str_detect
