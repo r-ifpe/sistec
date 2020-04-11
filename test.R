@@ -5,6 +5,15 @@ a <- sistec::read_sistec("C:/Pesquisa/dados/fake/sistec/", type = "complete")
 b <- sistec::read_qacademico("C:/Pesquisa/dados/qacademico/", type = "complete")
 a <- sistec::read_sistec("C:/Pesquisa/dados/sistec/", type = "complete")
 
+a <- sistec::compare_sistec_qacademico_complete("C:/Pesquisa/dados/sistec/",
+                                                "C:/Pesquisa/dados/qacademico/",
+                                                write_output_path = "C:/Users/dmmad/Desktop/")
+
+# Browse[1]> nrow(sistec)
+# [1] 95067
+# Browse[1]> nrow(qacademico)
+# [1] 85447
+
 
 
 qacademico <- sistec::read_qacademico("extdata/qacademico/")

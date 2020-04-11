@@ -45,10 +45,8 @@ read_qacademico_complete <- function(path){
   temp <- paste0(path , "/", temp) %>% sort(decreasing = TRUE)
   
   # Matrícula, Situação.Matrícula, Situação.Período, Instituição
-  
   vars <- c("Matr\u00edcula", "Nome", "Situa\u00e7\u00e3o.Matr\u00edcula",
-            "Situa\u00e7\u00e3o.Per\u00edodo", "Curso", "Cpf",
-            "Institui\u00e7\u00e3o", "Per..Letivo.Inicial")
+            "Curso", "Cpf", "Institui\u00e7\u00e3o", "Per..Letivo.Inicial")
   
   classes <- c(Cpf = "character")
   
@@ -58,7 +56,8 @@ read_qacademico_complete <- function(path){
         dplyr::select(!!!syms(vars))
     }) %>% 
     dplyr::bind_rows() %>%
-    dplyr::mutate(Cpf= num_para_cpf(!!sym("Cpf"))) %>% 
+    dplyr::mutate(Cpf = num_para_cpf(!!sym("Cpf")),
+                  Campus = stringr::str_sub(!!sym("Institui\u00e7\u00e3o"),8)) %>% 
     dplyr::distinct(!!sym("Matr\u00edcula"), .keep_all = TRUE)
 }
 
@@ -80,8 +79,8 @@ read_sistec_complete <- function(path){
   classes <- c(Numero.Cpf = "character")
   
   lapply(temp, utils::read.csv,
-         sep = ";",  stringsAsFactors = FALSE, 
-         colClasses = classes, encoding = "UTF-8") %>%
+                   sep = ";",  stringsAsFactors = FALSE, 
+                   colClasses = classes, encoding = "UTF-8") %>%
     dplyr::bind_rows() %>%
     dplyr::mutate(Numero.Cpf = ifelse(stringr::str_length(!!sym("Numero.Cpf")) == 0, 
                                       !!sym("Numero.Cpf"), # in API number zero in the beguinning is blank
@@ -91,7 +90,11 @@ read_sistec_complete <- function(path){
                      CO_CICLO_MATRICULA = !!sym("Co.Ciclo.Matricula"), 
                      NO_STATUS_MATRICULA = !!sym("Situa\u00e7\u00e3o.Matricula"), # Situação.Matricula
                      NO_CURSO = !!sym("No.Curso"), 
-                     DT_DATA_INICIO = !!sym("Dt.Data.Inicio"))
+                     DT_DATA_INICIO = !!sym("Dt.Data.Inicio"),
+                     NO_CAMPUS = stringr::str_sub(!!sym("Unidade.Ensino"), 42))
+  
+  # class(sistec) <- c(class(sistec), "sistec_complete")
+  # sistec
 }
 
 #' @importFrom dplyr %>% 
@@ -128,7 +131,6 @@ server_input_path <- function(input_path){
 }
 
 complete_cpf <- function(cpf){
-  browser()
   if(stringr::str_length(cpf)  == 11|stringr::str_length(cpf)  == 0){
     cpf
   } else {
