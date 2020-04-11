@@ -57,7 +57,8 @@ read_qacademico_complete <- function(path){
         dplyr::select(!!!syms(vars))
     }) %>% 
     dplyr::bind_rows() %>%
-    dplyr::mutate(Cpf= num_para_cpf(!!sym("Cpf"))) %>% 
+    dplyr::mutate(Cpf = num_para_cpf(!!sym("Cpf")),
+                  Campus = stringr::str_sub(!!sym("Institui\u00e7\u00e3o"),8)) %>% 
     dplyr::distinct(!!sym("Matr\u00edcula"), .keep_all = TRUE)
 }
 

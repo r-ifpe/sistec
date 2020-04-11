@@ -1,4 +1,4 @@
-unlinked_students_sistec_qacademico <- function(sistec, qacademico){
+unlinked_cpf_sistec_qacademico <- function(sistec, qacademico){
   qacademico_without_sistec <- dplyr::anti_join(qacademico, sistec, by = c("Cpf" = "NU_CPF"))
   sistec_without_qacademico <- dplyr::anti_join(sistec, qacademico, by = c("NU_CPF" = "Cpf"))
   
@@ -17,9 +17,9 @@ join_sistec_qacademico <- function(sistec, qacademico){
     dplyr::transmute(Cpf = !!sym("Cpf"),
                      Matricula_q = !!sym("Matr\u00edcula"),
                      Nome_q = !!sym("Nome"), 
-                     Status_q_mat = !!sym("Situa\u00e7\u00e3o.Matr\u00edcula"), # Situação.Matrícula 
+                     Status_q = !!sym("Situa\u00e7\u00e3o.Matr\u00edcula"), # Situação.Matrícula 
                      Curso_q = !!sym("Curso"), 
-                     Campus_q = gsub("IFPE / ", "", !!sym("Institui\u00e7\u00e3o")), # Instituição
+                     Campus_q = !!sym("Campus"),
                      Inicio_q_semestre = !!sym("Per..Letivo.Inicial"),
                      Nome_sistec = !!sym("NO_ALUNO"),
                      Ciclo_sistec = !!sym("CO_CICLO_MATRICULA"),
@@ -76,3 +76,24 @@ convert_date_sistec_qacademico <- function(date){
 }
 
 
+unlinked_course_sistec_qacademico <- function(sistec, qacademico, joined_data){
+  
+  sistec_without_link <- dplyr::anti_join(sistec, joined_data,
+                                          by = c("NU_CPF" = "Cpf",
+                                                 "NO_CURSO" = "Curso_sistec"))
+  
+  qacademico_without_link <- dplyr::anti_join(qacademico, joined_data,
+                                              by = c("Cpf", "Curso" = "Curso_q"))
+  
+  sistec <- dplyr::anti_join(sistec, sistec_without_link,
+                             by = c("NU_CPF", "NO_CURSO"))
+  qacademico <- dplyr::anti_join(qacademico, qacademico_without_link,
+                                 by = c("Cpf", "Curso"))
+
+  
+  list(sistec = sistec,
+       sistec_without_link = sistec_without_link,
+       qacademico = qacademico,
+       qacademico_without_link = qacademico_without_link)
+}
+ 
