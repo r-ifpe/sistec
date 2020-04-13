@@ -7,7 +7,23 @@ a <- sistec::read_sistec("C:/Pesquisa/dados/sistec/", type = "complete")
 
 a <- sistec::compare_sistec_qacademico_complete("C:/Pesquisa/dados/sistec/",
                                                 "C:/Pesquisa/dados/qacademico/",
-                                                write_output_path = "C:/Users/dmmad/Desktop/")
+                                                write_output_path = "C:/Users/dmmad/Desktop/", 
+                                                  )
+
+aa <- sistec::compare_sistec_qacademico_complete("C:/Pesquisa/dados/fake/sistec/",
+                                                "C:/Pesquisa/dados/fake/qacademico/",
+                                                write_output_path = "C:/Pesquisa/dados/fake/",
+                                                institute = "IFPE"
+)
+
+bb <- sistec::compare_sistec_qacademico_complete("C:/Pesquisa/dados/fake/sistec1/",
+                                                "C:/Pesquisa/dados/fake/qacademico1/",
+                                                write_output_path = "C:/Pesquisa/dados/fake/",
+                                                institute = "IFPE1"
+)
+
+
+
 
 # Browse[1]> nrow(sistec)
 # [1] 95067
