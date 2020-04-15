@@ -1,24 +1,43 @@
-#' Comparison between sistec and a student registration dataset
+#' Comparison between Sistec and a student registration dataset
 #'
-#' Compare and save the student situation and the inconsistecies in the datasets.
+#' A generic function to compare and save the student situation. This function also 
+#' shows inconsistecies in the datasets. You can pass the folder's file path or 
+#' a data frame read by `sistec::read_*()` functions.
 #' 
-#' 
-#' @param sistec A Sistec data frame read by `sistec::read_sistec()`function. 
-#' @param x A data frame read by `sistec::read_*()`functions. 
-#' @param output_path Specify a path if you want to save the comparison. The results will be 
-#' saved in a folder named by `output_folder_name` parameter. The files created will be saved in 
-#' xlsx format.
-#' @param output_folder_name The folder name where the comparison will be saved. If not specified,
-#' the folder name will be "Sistec". This parameter is useless if `output_path` was not specified.
+#' @param sistec The folder's path to Sistec files or the Sistec data frame
+#' read by `sistec::read_sistec()`function.  
+#' @param student_registration The folder's path to students reagistration datasets or a 
+#' data frame read by `sistec::read_*()`functions. 
+#' @param output_path Specify a path if you want to save the comparison. The results will 
+#' be saved in a folder named by `output_folder_name` parameter. The files created will be 
+#' saved in xlsx format.
+#' @param output_folder_name The folder name where the comparison will be saved. If not 
+#' specified, the folder name will be "Sistec". This parameter is useless if `output_path` was not specified.
 #' 
 #' @export
-compare_sistec <- function (x, sistec,
-                            write_output_path = NULL,
-                            institute = "Sistec") {
-  UseMethod("compare_sistec", x)
+compare_sistec <- function (sistec, student_registration,
+                            output_path = NULL,
+                            output_folder_name = "Sistec") {
+  UseMethod("compare_sistec", student_registration)
 }
 
-compare_sistec.qacademico_data_frame <- function(qacademico, sistec){
-  compare_sistec_qacademico(qacademico, sistec)
+#' @export
+compare_sistec.qacademico_data_frame <- function(sistec, qacademico,
+                                                 output_path = NULL,
+                                                 output_folder_name = "Sistec"){
+  browser()
+  compare_sistec_qacademico(sistec, qacademico)
 }
 
+#' @export
+compare_sistec.character <- function(sistec_path, student_registration_path,
+                                     output_path = NULL,
+                                     output_folder_name = "Sistec"){
+  
+  # We only have qacademico yet. This function will be modified when we 
+  # have other registration system
+  browser()
+  sistec <- sistec::read_sistec(sistec_path)
+  qacademico <- sistec::read_qacademico(student_registration_path)
+  compare_sistec_qacademico(sistec, qacademico)
+}
