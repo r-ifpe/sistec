@@ -1,7 +1,7 @@
-compare_sistec_qacademico <- function(qacademico, sistec,
-                                      write_output_path = "",
-                                      institute = "IFPE"){
-  
+compare_sistec_qacademico <- function(sistec, qacademico,
+                                      output_path = NULL,
+                                      output_folder_name = "Sistec"){
+
   # remove invalid cpf
   x <- filter_cpf_sistec(sistec)
   sistec <- x$sistec
@@ -36,8 +36,8 @@ compare_sistec_qacademico <- function(qacademico, sistec,
                                                           situation_to_update$Status_q)
   
   # write results
-  if(write_output_path != "") {
-    path <- paste0(write_output_path, "/", institute)
+  if(!is.null(output_path)) {
+    path <- paste0(output_path, "/", output_folder_name)
 
     write_sistec(sistec_without_cpf, path, "Retificar CPF/Sistec", "sem cpf")
     write_sistec(sistec_without_link, path, "Retificar Curso/Sistec", "curso com erro")
