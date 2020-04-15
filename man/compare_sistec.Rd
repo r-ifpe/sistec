@@ -23,7 +23,8 @@ be saved in a folder named by \code{output_folder_name} parameter. The files cre
 saved in xlsx format.}
 
 \item{output_folder_name}{The folder name where the comparison will be saved. If not
-specified, the folder name will be "Sistec". This parameter is useless if \code{output_path} was not specified.}
+specified, the folder name will be "Sistec". This parameter is useless if \code{output_path}
+was not specified.}
 }
 \description{
 A generic function to compare and save the student situation. This function also
