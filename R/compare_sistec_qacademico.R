@@ -1,6 +1,9 @@
 compare_sistec_qacademico <- function(sistec, qacademico,
                                       output_path = NULL,
                                       output_folder_name = "Sistec"){
+  
+  sistec_complete <- sistec
+  qacademico_complete <- qacademico
 
   # remove invalid cpf
   x <- filter_cpf_sistec(sistec)
@@ -51,9 +54,11 @@ compare_sistec_qacademico <- function(sistec, qacademico,
                             "Retificar Situa\u00e7\u00e3o", "alterar situa\u00e7\u00e3o") 
   }
 
-  list(sistec_without_cpf = sistec_without_cpf,
+  list(sistec_complete = sistec_complete,
+       sistec_without_cpf = sistec_without_cpf,
        sistec_without_link = sistec_without_link,
        sistec_without_qacademico = sistec_without_qacademico,
+       qacademico_complete = qacademico_complete,
        qacademico_without_cpf = qacademico_without_cpf,
        qacademico_without_link = qacademico_without_link,
        qacademico_without_sistec = qacademico_without_sistec,
