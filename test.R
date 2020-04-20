@@ -1,10 +1,22 @@
-# no visible binding for global variable
-b <- sistec::read_qacademico("C:/Pesquisa/dados/fake/qacademico/", type = "complete")
+a <- sistec::compare_sistec("C:/Pesquisa/sistec/inst/extdata/test_datasets/sistec/",
+                            "C:/Pesquisa/sistec/inst/extdata/test_datasets/qacademico/")
+
+
+
+b <- sistec::read_qacademico("C:/Pesquisa/dados/qacademico/")
 a <- sistec::read_sistec("C:/Pesquisa/dados/fake/sistec/", type = "complete")
 
 b <- sistec::read_qacademico("C:/Pesquisa/dados/qacademico/", type = "complete")
 a <- sistec::read_sistec("C:/Pesquisa/dados/sistec/")
 a <- sistec::read_sistec("C:/Pesquisa/dados/sistec/web/")
+
+
+a <- sistec::compare_sistec("C:/Pesquisa/sistec/inst/extdata/test_datasets/sistec/",
+                            "C:/Pesquisa/sistec/inst/extdata/test_datasets/qacademico/",
+                            output_path = "C:/Users/dmmad/Desktop/",
+                            output_folder_name = "Sistec1")
+
+
 
 a <- sistec::compare_sistec_qacademico_complete("C:/Pesquisa/dados/sistec/",
                                                 "C:/Pesquisa/dados/qacademico/",
