@@ -1,26 +1,9 @@
-#' Comparison between sistec and qacademico
-#'
-#' Compare and save the student situation and the inconsistecies in the datasets.
-#' 
-#' 
-#' @param sistec_path Path to the sistec files or the sistec dataset read by `read_sistec()`. 
-#' @param qacademico_path Path to the qacademico files or the qacademico.
-#' dataset read by `read_qacademmico()`.
-#' @param type Use "complete" to compare.
-#' @param write_output_path The path where to save the the output in xlsx. If you don't specify the 
-#' path, the files won't be saved.
-#' @param institute The name of your Institute.
-#'
-#' @export
-compare_sistec_qacademico_complete <- function(sistec_path, qacademico_path,
-                                               type = "complete",
-                                               write_output_path = "",
-                                               institute = "IFPE"){
+compare_sistec_qacademico <- function(sistec, qacademico,
+                                      output_path = NULL,
+                                      output_folder_name = "Sistec"){
   
-  # read files
-  sistec <- read_sistec(path = sistec_path, type = type)
-  qacademico <- read_qacademico(path = qacademico_path, type = type) %>% # I found this problem 
-    dplyr::mutate(Campus = ifelse(!!sym("Campus") == "", "SEM CAMPUS", !!sym("Campus")))   # in qacademico
+  sistec_complete <- sistec
+  qacademico_complete <- qacademico
 
   # remove invalid cpf
   x <- filter_cpf_sistec(sistec)
@@ -56,8 +39,8 @@ compare_sistec_qacademico_complete <- function(sistec_path, qacademico_path,
                                                           situation_to_update$Status_q)
   
   # write results
-  if(write_output_path != "") {
-    path <- paste0(write_output_path, "/", institute)
+  if(!is.null(output_path)) {
+    path <- paste0(output_path, "/", output_folder_name)
 
     write_sistec(sistec_without_cpf, path, "Retificar CPF/Sistec", "sem cpf")
     write_sistec(sistec_without_link, path, "Retificar Curso/Sistec", "curso com erro")
@@ -71,9 +54,11 @@ compare_sistec_qacademico_complete <- function(sistec_path, qacademico_path,
                             "Retificar Situa\u00e7\u00e3o", "alterar situa\u00e7\u00e3o") 
   }
 
-  list(sistec_without_cpf = sistec_without_cpf,
+  list(sistec_complete = sistec_complete,
+       sistec_without_cpf = sistec_without_cpf,
        sistec_without_link = sistec_without_link,
        sistec_without_qacademico = sistec_without_qacademico,
+       qacademico_complete = qacademico_complete,
        qacademico_without_cpf = qacademico_without_cpf,
        qacademico_without_link = qacademico_without_link,
        qacademico_without_sistec = qacademico_without_sistec,

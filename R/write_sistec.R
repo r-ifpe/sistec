@@ -31,7 +31,6 @@ write_sistec <- function(sistec, path, folder, file){
       openxlsx::write.xlsx(sistec_campus_curso %>% dplyr::select(!!!syms(vars)),
                            paste0(path_campus_curso, "/",
                                   file, ".xlsx")) 
-      
     }
   }
 }

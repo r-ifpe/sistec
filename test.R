@@ -1,9 +1,22 @@
-# no visible binding for global variable
-b <- sistec::read_qacademico("C:/Pesquisa/dados/fake/qacademico/", type = "complete")
+a <- sistec::compare_sistec("C:/Pesquisa/sistec/inst/extdata/test_datasets/sistec/",
+                            "C:/Pesquisa/sistec/inst/extdata/test_datasets/qacademico/")
+
+
+
+b <- sistec::read_qacademico("C:/Pesquisa/dados/qacademico/")
 a <- sistec::read_sistec("C:/Pesquisa/dados/fake/sistec/", type = "complete")
 
 b <- sistec::read_qacademico("C:/Pesquisa/dados/qacademico/", type = "complete")
-a <- sistec::read_sistec("C:/Pesquisa/dados/sistec/", type = "complete")
+a <- sistec::read_sistec("C:/Pesquisa/dados/sistec/")
+a <- sistec::read_sistec("C:/Pesquisa/dados/sistec/web/")
+
+
+a <- sistec::compare_sistec("C:/Pesquisa/sistec/inst/extdata/test_datasets/sistec/",
+                            "C:/Pesquisa/sistec/inst/extdata/test_datasets/qacademico/",
+                            output_path = "C:/Users/dmmad/Desktop/",
+                            output_folder_name = "Sistec1")
+
+
 
 a <- sistec::compare_sistec_qacademico_complete("C:/Pesquisa/dados/sistec/",
                                                 "C:/Pesquisa/dados/qacademico/",
@@ -22,8 +35,16 @@ bb <- sistec::compare_sistec_qacademico_complete("C:/Pesquisa/dados/fake/sistec1
                                                 institute = "IFPE1"
 )
 
+sistec <- utils::read.csv("C:/Pesquisa/dados/sistec/setec/Extração_dados_SISTEC_com CPF.csv", sep = ";",  stringsAsFactors = FALSE, 
+                          encoding = "UTF-8", check.names = FALSE)
 
+sistec <- utils::read.csv("C:/Pesquisa/dados/sistec/2020-03-05 IFPE.csv", sep = ";",  stringsAsFactors = FALSE, 
+                          encoding = "UTF-8", check.names = FALSE)
 
+sistec1 %>% distinct() %>%
+  mutate(`Unidade Ensino` = stringr::str_sub(`Unidade Ensino`, 42)) %>% 
+  mutate(`Unidade Ensino` = stringr::str_replace(`Unidade Ensino`, "REU ", "ABREU ")) %>% 
+  write.csv("Co_unidade_ensino.csv", row.names = FALSE)
 
 # Browse[1]> nrow(sistec)
 # [1] 95067
@@ -90,4 +111,9 @@ complete_cpf <- function(cpf){
     paste0(zeros, cpf)
   }
 }
+
+
+sistec %>% 
+  select(NO_CICLO_MATRICULA) %>% 
+  mutate(NO_CICLO_MATRICULA1 = stringr::str_remove(NO_CICLO_MATRICULA, " - .*$")) 
 

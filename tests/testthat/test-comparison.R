@@ -1,26 +1,25 @@
 context("sistec compare")
 
-test_that("qacademico comparison works", {
+test_that("compare_sistec_qacademico works", {
   skip_on_cran()
   
-  comparison <- compare_sistec_qacademico(sistec_path = system.file("extdata/sistec", package = "sistec"),
-                        qacademico_path = system.file("extdata/qacademico", package = "sistec"))
+  sistec_path <- system.file("extdata/test_datasets/sistec", package = "sistec")
+  qacademico_path <- system.file("extdata/test_datasets/qacademico", package = "sistec")
   
+  comparison <- compare_sistec(sistec_path, qacademico_path)
+
+  expect_equal(names(comparison),
+               c("sistec_complete", "sistec_without_cpf", "sistec_without_link",
+                 "sistec_without_qacademico", "qacademico_complete",
+                 "qacademico_without_cpf", "qacademico_without_link", 
+                 "qacademico_without_sistec", "situation_to_update" ))
   
-  expect_equal(length(comparison$situation), 15) # amount of ciclos
-  expect_equal(names(comparison$situation[[1]]),
-               c("Nome_q", "Nome_sistec", "Cpf", "Ciclo", "Status_q", "Status_sistec"))
-  
-  # screen output
-  total_students <- nrow(comparison$ifpe_dados)
-  multi_vinculo <- nrow(comparison$situation$multi_vinculo)
-  
-  students_to_update <- sum(unlist(
-    lapply(comparison$situation, nrow))) - multi_vinculo
-  
-  students_updated <- total_students - students_to_update - multi_vinculo
-  
-  expect_equal(total_students, 1032)
-  expect_equal(multi_vinculo, 23)
-  expect_equal(students_updated, 870)
+  check_sistec_table(comparison$sistec_complete, expect_nrow = 11099)
+  check_sistec_table(comparison$sistec_without_cpf, expect_nrow = 88)
+  check_sistec_table(comparison$sistec_without_link, expect_nrow = 165)
+  check_sistec_table(comparison$sistec_without_qacademico, expect_nrow = 528)
+  check_qacademico_table(comparison$qacademico_complete, expect_nrow = 14366)
+  check_qacademico_table(comparison$qacademico_without_cpf, expect_nrow = 6)
+  check_qacademico_table(comparison$qacademico_without_link, expect_nrow = 225)
+  check_qacademico_table(comparison$qacademico_without_sistec, expect_nrow = 3773)
 })

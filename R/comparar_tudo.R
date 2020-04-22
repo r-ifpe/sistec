@@ -28,8 +28,10 @@ comparar_tudo <- function(input_qacademico,input_sistec ){
   qacademico_path <- server_input_path(input_qacademico)
   sistec_path <- server_input_path(input_sistec)
 
-  table_compared <- compare_sistec_qacademico(qacademico_path = qacademico_path,
-                                              sistec_path = sistec_path)
+  table_compared <- compare_sistec_qacademico(sistec = sistec_path,
+                                              qacademico = qacademico_path,
+                                              output_path = NULL,
+                                              output_folder_name = "Sistec")
   
   openxlsx::write.xlsx(table_compared$situation, "situa\u00e7\u00e3o.xlsx") # situação.xlsx
   

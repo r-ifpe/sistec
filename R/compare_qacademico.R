@@ -1,19 +1,8 @@
-#' Comparison beteween sistec and qacademico
-#' 
-#' This function runs the comparison beteween students situation in sistec and qacademico. 
-#'
-#' @param qacademico_path A list of qacademico's files path. This list, normally, comes from the app.
-#' @param sistec_path  A list of sistec's files path. This list, normally, comes from the app.
-#' @param type Choose "simplified" when you download directly from the website and you just want to 
-#' compare an specific amount of ciclos. Choose "complete" when you download from the API and you want to 
-#' compare from the whole institute.
-#' 
-#' @importFrom rlang sym
-#' @export
-compare_sistec_qacademico <- function(sistec_path, qacademico_path, type = "simplified"){
+# this function will be deprecated
+compare_sistec_qacademico_simplified <- function(sistec_path, qacademico_path){
 
-  sistec <- read_sistec(path = sistec_path, type = type)
-  qacademico <- read_qacademico(path = qacademico_path, type = type)
+  sistec <- read_sistec(path = sistec_path)
+  qacademico <- read_qacademico(path = qacademico_path)
 
   ifpe_dados <- dplyr::full_join(qacademico, sistec, by = c("Cpf" = "NU_CPF")) %>%
     dplyr::transmute(Nome_q = !!sym("Nome"), 
@@ -48,12 +37,3 @@ compare_sistec_qacademico <- function(sistec_path, qacademico_path, type = "simp
 
  list(ifpe_dados = ifpe_dados, situation = a)
 }
-
-
-
-
-
-
-
-
-
