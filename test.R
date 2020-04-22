@@ -1,3 +1,15 @@
+a <- sistec::read_sistec("C:/Pesquisa/sistec/inst/extdata/test_datasets/sistec/")
+b <- sistec::read_qacademico("C:/Pesquisa/sistec/inst/extdata/test_datasets/qacademico/")
+
+
+sistec_path <- system.file("extdata/test_datasets/sistec", package = "sistec")
+qacademico_path <- system.file("extdata/test_datasets/qacademico", package = "sistec")
+
+comparison <- compare_sistec(sistec_path, qacademico_path)
+
+
+
+
 a <- sistec::compare_sistec("C:/Pesquisa/sistec/inst/extdata/test_datasets/sistec/",
                             "C:/Pesquisa/sistec/inst/extdata/test_datasets/qacademico/")
 
