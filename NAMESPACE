@@ -3,7 +3,6 @@
 S3method(compare_sistec,character)
 S3method(compare_sistec,qacademico_data_frame)
 export(compare_sistec)
-export(output_screen)
 export(read_qacademico)
 export(read_sistec)
 importFrom(dplyr,"%>%")
