@@ -27,27 +27,27 @@ compare_sistec_qacademico <- function(sistec, qacademico,
   # linked courses between qacademico and sistec
   situation_to_update <- linked_courses_sistec_qacademico(situation_to_update)
 
-  # remove cases without linked course
+  # remove cases unlinked course
   x <- unlinked_course_sistec_qacademico(sistec, qacademico, situation_to_update)
   sistec <- x$sistec
-  sistec_without_link <- x$sistec_without_link
+  sistec_without_qacademico <- dplyr::bind_rows(sistec_without_qacademico,
+                                                x$sistec_without_link)
   qacademico <- x$qacademico
-  qacademico_without_link <- x$qacademico_without_link
+  qacademico_without_sistec <- dplyr::bind_rows(qacademico_without_sistec,
+                                                x$qacademico_without_link)
 
   # compare student situation
   situation_to_update$Status <- compare_situation_sistec_qacademico(situation_to_update$Status_sistec,
-                                                          situation_to_update$Status_q)
+                                                                    situation_to_update$Status_q)
   
   # write results
   if(!is.null(output_path)) {
     path <- paste0(output_path, "/", output_folder_name)
 
     write_sistec(sistec_without_cpf, path, "Retificar CPF/Sistec", "sem cpf")
-    write_sistec(sistec_without_link, path, "Retificar Curso/Sistec", "curso com erro")
     write_sistec(sistec_without_qacademico, path, "Inserir no Qacademico", "sem qacademico")
     
     write_qacademico(qacademico_without_cpf, path, "Retificar CPF/Qacademico", "sem cpf")
-    write_qacademico(qacademico_without_link, path, "Retificar Curso/Qacademico", "curso com erro")
     write_qacademico(qacademico_without_sistec, path, "Inserir no Sistec", "sem sistec")
 
     write_status_comparison(situation_to_update, path,
@@ -56,13 +56,9 @@ compare_sistec_qacademico <- function(sistec, qacademico,
 
   list(sistec_complete = sistec_complete,
        sistec_without_cpf = sistec_without_cpf,
-       sistec_without_link = sistec_without_link,
        sistec_without_qacademico = sistec_without_qacademico,
        qacademico_complete = qacademico_complete,
        qacademico_without_cpf = qacademico_without_cpf,
-       qacademico_without_link = qacademico_without_link,
        qacademico_without_sistec = qacademico_without_sistec,
        situation_to_update = situation_to_update)
 }
-
-

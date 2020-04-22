@@ -135,7 +135,7 @@ read_sistec_web <- function(path){
     dplyr::bind_rows() %>%
     dplyr::mutate(NU_CPF = num_para_cpf(
                     ifelse(stringr::str_length(!!sym("NU_CPF")) == 0, 
-                           !!sym("NU_CPF"), # in API number zero in the beguinning is blank
+                           !!sym("NU_CPF"), # in API, number zero in the beginning is blank
                            stringr::str_pad(!!sym("NU_CPF"), 11, pad = "0")))) %>% 
     dplyr::mutate(DT_DATA_INICIO = stringr::str_remove(!!sym("DT_DATA_INICIO"),
                                                        " .*$")) %>% 
@@ -173,32 +173,13 @@ read_sistec_setec <- function(path){
                      NO_STATUS_MATRICULA = !!sym("Situa\u00e7\u00e3o.Matricula"), # Situação.Matricula
                      NO_CURSO = !!sym("No.Curso"), 
                      DT_DATA_INICIO = !!sym("Dt.Data.Inicio"),
-                     NO_CAMPUS = stringr::str_sub(!!sym("Unidade.Ensino"), 42))
+                     NO_CAMPUS = stringr::str_sub(!!sym("Unidade.Ensino"), 42)) %>% 
+    dplyr::mutate(NO_CAMPUS = ifelse(!!sym("NO_CAMPUS") == "REU E LIMA",  # Register name is wrong  
+                                     "ABREU E LIMA", !!sym("NO_CAMPUS"))) # in setec
   
   class(sistec) <- c(class(sistec), "sistec_data_frame")
   sistec
 }
-
-# # será removido depois
-# #' @importFrom dplyr %>% 
-# #' @importFrom rlang sym syms
-# read_sistec_simplified <- function(path){
-#   
-#   temp = list.files(path = path, pattern = "*.csv")
-#   temp <- paste0(path, "/", temp)
-#   
-#   classes <- c(NU_CPF = "character", CO_CICLO_MATRICULA = "character",
-#                NO_STATUS_MATRICULA = "character")
-#   
-#   sistec_vars <- c("NO_ALUNO", "NU_CPF", "CO_CICLO_MATRICULA", "NO_STATUS_MATRICULA")
-# 
-#   lapply(temp, utils::read.csv,
-#          sep = ";",  stringsAsFactors = FALSE, 
-#          colClasses = classes, encoding = "latin1") %>%
-#     dplyr::bind_rows() %>% 
-#     dplyr::mutate(NU_CPF =num_para_cpf(!!sym("NU_CPF"))) %>% 
-#     dplyr::select(!!!syms(sistec_vars))
-# }
 
 num_para_cpf <- function(num) {
   

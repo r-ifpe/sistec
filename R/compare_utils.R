@@ -32,7 +32,7 @@ join_sistec_qacademico <- function(sistec, qacademico){
 
 #' @importFrom dplyr %>% 
 linked_courses_sistec_qacademico <- function(x){
-  x %>% 
+   x %>% 
     dplyr::filter(!!sym("Inicio_q_semestre") == !!sym("Inicio_sistec_semestre")) %>% 
     dplyr::group_by(!!sym("Curso_q"), !!sym("Curso_sistec")) %>% 
     dplyr::tally() %>% 
@@ -40,8 +40,7 @@ linked_courses_sistec_qacademico <- function(x){
     dplyr::distinct(!!sym("Curso_q"), .keep_all = TRUE) %>% 
     dplyr::rename(Curso_sistec_link = !!sym("Curso_sistec"), Qtd_alunos = !!sym("n")) %>% 
     dplyr::right_join(x, by = "Curso_q") %>% 
-    dplyr::filter(!!sym("Curso_sistec") == !!sym("Curso_sistec_link"),
-                  !!sym("Qtd_alunos") >= 6) # 6 is experimental
+    dplyr::filter(!!sym("Curso_sistec") == !!sym("Curso_sistec_link"))
 }
 
 #' @importFrom stringr str_detect
@@ -78,7 +77,6 @@ convert_date_sistec_qacademico <- function(date){
 
 
 unlinked_course_sistec_qacademico <- function(sistec, qacademico, joined_data){
-  
   sistec_without_link <- dplyr::anti_join(sistec, joined_data,
                                           by = c("NU_CPF" = "Cpf",
                                                  "NO_CURSO" = "Curso_sistec"))
