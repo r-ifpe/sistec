@@ -7,7 +7,7 @@ test_that("compare_sistec_qacademico works", {
   qacademico_path <- system.file("extdata/test_datasets/qacademico", package = "sistec")
   
   comparison <- compare_sistec(sistec_path, qacademico_path)
-
+  
   expect_equal(names(comparison),
                c("sistec_complete", "sistec_without_cpf", "sistec_without_qacademico",
                  "qacademico_complete", "qacademico_without_cpf", "qacademico_without_sistec", 

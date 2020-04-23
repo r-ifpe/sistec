@@ -1,6 +1,37 @@
 a <- sistec::read_sistec("C:/Pesquisa/sistec/inst/extdata/test_datasets/sistec/")
 b <- sistec::read_qacademico("C:/Pesquisa/sistec/inst/extdata/test_datasets/qacademico/")
 
+## criando o exemplo
+
+#sistec
+a1 <- a %>% 
+  filter(grepl("2019", DT_DATA_INICIO),
+         NO_CAMPUS == "RECIFE") %>% 
+  arrange(NO_ALUNO) %>% 
+  head(200) %>% 
+  mutate(NO_CAMPUS = paste0("INSTITUTO FEDERAL DE PERNAMBUCO - CAMPUS ", NO_CAMPUS))
+
+names(a1) <- c("Nome Aluno", "Numero Cpf", "Co Ciclo Matricula", 
+  "Situa\u00e7\u00e3o Matricula", "No Curso", "Dt Data Inicio",
+  "Unidade Ensino")
+
+a1 %>% 
+  write.table("fake_data_sistec_1.csv",  sep = ";", row.names = FALSE, fileEncoding = "UTF-8")
+
+# qacademico
+b1 <- b %>% 
+  filter(grepl("2019", Per..Letivo.Inicial),
+         Campus == "RECIFE") %>% 
+  select(!Campus) %>% 
+  arrange(Nome) %>% 
+  head(200) 
+
+names(b1) <- c("Matr\u00edcula", "Nome", "Situa\u00e7\u00e3o Matr\u00edcula",
+               "Curso", "Cpf", "Institui\u00e7\u00e3o", "Per. Letivo Inicial")
+b1 %>% 
+  write.table(paste0("fake_data_qacademico.csv"),
+              row.names = FALSE, fileEncoding = "latin1", sep = "")
+
 
 sistec_path <- system.file("extdata/test_datasets/sistec", package = "sistec")
 qacademico_path <- system.file("extdata/test_datasets/qacademico", package = "sistec")

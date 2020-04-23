@@ -5,3 +5,4 @@
 ^random_data.R$
 ^test.R$
 ^\.travis\.yml$
+^inst/extdata/test_datasets$

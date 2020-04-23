@@ -93,6 +93,7 @@ for(i in 1:3){
   e %>% 
     select(!!!syms(vars)) %>% 
     filter(stringr::str_detect(`Per. Letivo Inicial`, "2020|2019")) %>% 
+    
     write.table(paste0("fake_data_qacademico_complete_",i, ".csv"),
                 row.names = FALSE, fileEncoding = "latin1", sep = "")
   

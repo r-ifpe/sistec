@@ -26,8 +26,22 @@ saved in xlsx format.}
 specified, the folder name will be "Sistec". This parameter is useless if \code{output_path}
 was not specified.}
 }
+\value{
+A list of data frames.
+}
 \description{
 A generic function to compare and save the student situation. This function also
 shows inconsistecies in the datasets. You can pass the folder's file path or
 a data frame read by \verb{sistec::read_*()} functions.
+}
+\examples{
+
+# these datasets are not real. It is just for test purpose.
+qacademico <- read_qacademico(system.file("extdata/examples/qacademico",
+                                          package = "sistec"))
+sistec <- read_sistec(system.file("extdata/examples/sistec",
+                                  package = "sistec"))
+                                  
+compare_sistec(sistec, qacademico)                                   
+
 }
