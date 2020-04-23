@@ -15,6 +15,18 @@
 #' specified, the folder name will be "Sistec". This parameter is useless if `output_path` 
 #' was not specified.
 #' 
+#' @return  A list of data frames. 
+#' 
+#' @examples 
+#' 
+#' # these datasets are not real. It is just for test purpose.
+#' qacademico <- read_qacademico(system.file("extdata/examples/qacademico",
+#'                                           package = "sistec"))
+#' sistec <- read_sistec(system.file("extdata/examples/sistec",
+#'                                   package = "sistec"))
+#'                                   
+#' compare_sistec(sistec, qacademico)                                   
+#' 
 #' @export
 compare_sistec <- function(sistec, student_registration,
                            output_path = NULL,

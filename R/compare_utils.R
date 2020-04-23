@@ -32,7 +32,7 @@ join_sistec_qacademico <- function(sistec, qacademico){
 
 #' @importFrom dplyr %>% 
 linked_courses_sistec_qacademico <- function(x){
-   x %>% 
+  x %>% 
     dplyr::filter(!!sym("Inicio_q_semestre") == !!sym("Inicio_sistec_semestre")) %>% 
     dplyr::group_by(!!sym("Curso_q"), !!sym("Curso_sistec")) %>% 
     dplyr::tally() %>% 
