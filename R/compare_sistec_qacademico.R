@@ -1,6 +1,4 @@
-compare_sistec_qacademico <- function(sistec, qacademico,
-                                      output_path = NULL,
-                                      output_folder_name = "Sistec"){
+compare_sistec_qacademico <- function(sistec, qacademico){
   
   sistec_complete <- sistec
   qacademico_complete <- qacademico
@@ -40,20 +38,6 @@ compare_sistec_qacademico <- function(sistec, qacademico,
   situation_to_update$Status <- compare_situation_sistec_qacademico(situation_to_update$Status_sistec,
                                                                     situation_to_update$Status_q)
   
-  # write results
-  if(!is.null(output_path)) {
-    path <- paste0(output_path, "/", output_folder_name)
-
-    write_sistec(sistec_without_cpf, path, "Retificar CPF/Sistec", "sem cpf")
-    write_sistec(sistec_without_qacademico, path, "Inserir no Qacademico", "sem qacademico")
-    
-    write_qacademico(qacademico_without_cpf, path, "Retificar CPF/Qacademico", "sem cpf")
-    write_qacademico(qacademico_without_sistec, path, "Inserir no Sistec", "sem sistec")
-
-    write_status_comparison(situation_to_update, path,
-                            "Retificar Situa\u00e7\u00e3o", "alterar situa\u00e7\u00e3o") 
-  }
-
   list(sistec_complete = sistec_complete,
        sistec_without_cpf = sistec_without_cpf,
        sistec_without_qacademico = sistec_without_qacademico,

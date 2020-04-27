@@ -2,7 +2,7 @@ context("download test datasets")
 
 test_that("test_datasets exists", {
   skip_on_cran()
-  browser()
+
   test_datasets_path <- "extdata/test_datasets"
   download_test_datasets(test_datasets_path)
   
