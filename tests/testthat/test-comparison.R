@@ -14,7 +14,7 @@ test_that("compare_sistec_qacademico works", {
                  "situation_to_update" ))
   
   check_sistec_table(comparison$sistec_complete, expect_nrow = 11099)
-  check_sistec_table(comparison$sistec_without_cpf, expect_nrow = 88)
+  check_sistec_table(comparison$sistec_without_cpf, expect_nrow = 188) # 88
   check_sistec_table(comparison$sistec_without_qacademico, expect_nrow = 689)
   check_qacademico_table(comparison$qacademico_complete, expect_nrow = 14366)
   check_qacademico_table(comparison$qacademico_without_cpf, expect_nrow = 6)
