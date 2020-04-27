@@ -4,12 +4,7 @@
 \alias{compare_sistec}
 \title{Comparison between Sistec and a student registration dataset}
 \usage{
-compare_sistec(
-  sistec,
-  student_registration,
-  output_path = NULL,
-  output_folder_name = "Sistec"
-)
+compare_sistec(sistec, student_registration)
 }
 \arguments{
 \item{sistec}{The folder's path to Sistec files or the Sistec data frame
@@ -17,14 +12,6 @@ read by \code{sistec::read_sistec()}function.}
 
 \item{student_registration}{The folder's path to students reagistration datasets or a
 data frame read by \verb{sistec::read_*()}functions.}
-
-\item{output_path}{Specify a path if you want to save the comparison. The results will
-be saved in a folder named by \code{output_folder_name} parameter. The files created will be
-saved in xlsx format.}
-
-\item{output_folder_name}{The folder name where the comparison will be saved. If not
-specified, the folder name will be "Sistec". This parameter is useless if \code{output_path}
-was not specified.}
 }
 \value{
 A list of data frames.

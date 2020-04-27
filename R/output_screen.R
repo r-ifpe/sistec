@@ -1,7 +1,8 @@
-output_screen <- function(input_sistec, input_qacademico){
+output_screen <- function(input_sistec, input_qacademico,
+                          comparison){
   
   if(!is.null(input_qacademico) && !is.null(input_sistec)){
-    response <- qacademico_screen(input_qacademico, input_sistec)
+    response <- qacademico_screen(comparison)
   } else if(is.null(input_qacademico) && is.null(input_sistec)){
     response <- "Selecione os arquivos do Qacademico e Sistec."   
   } else if(is.null(input_qacademico)){
@@ -14,16 +15,8 @@ output_screen <- function(input_sistec, input_qacademico){
 }
 
 
-qacademico_screen <- function(input_sistec, input_qacademico){
-  qacademico_path <- server_input_path(input_qacademico)
-  sistec_path <- server_input_path(input_sistec)
+qacademico_screen <- function(comparison){
 
-  comparison <- compare_sistec(sistec = sistec_path,
-                               student_registration = qacademico_path,
-                               output_path = NULL,
-                               output_folder_name = "Sistec")
-
-  
  shiny::HTML(paste("Compara\u00e7\u00e3o entre Sistec e Qacademico realizada com sucesso!", # Comparação
                     "", "",
                     "Alunos sem CPF:",
