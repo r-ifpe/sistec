@@ -61,8 +61,14 @@ sistec_app <- function(output_folder_name = "Sistec_app"){
       input$download
       
       if(is.list(isolate(comparison$x))){
-        output_path <- utils::choose.dir()
-        output_path <- gsub("\\\\", "/",output_path)
+        if_windows <- tolower(Sys.getenv("SystemRoot"))
+        if (grepl("windows", if_windows)){
+          output_path <- utils::choose.dir()
+          output_path <- gsub("\\\\", "/",output_path)
+        } else {
+          output_path <- tcltk::tk_choose.dir()
+        }
+
         write_output(output_path = output_path,
                      output_folder_name = "Sistec_app",
                      comparison = isolate(comparison$x))
