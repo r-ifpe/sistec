@@ -6,3 +6,8 @@
 ^test.R$
 ^\.travis\.yml$
 ^inst/extdata/test_datasets$
+^README\.Rmd$
+^README_files$
+^README_images$
+^cran-comments\.md$
+^CRAN-RELEASE$
