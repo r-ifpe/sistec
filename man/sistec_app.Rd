@@ -2,7 +2,7 @@
 % Please edit documentation in R/sistec_app.R
 \name{sistec_app}
 \alias{sistec_app}
-\title{Run Sistec_app}
+\title{Sistec web application}
 \usage{
 sistec_app(output_folder_name = "Sistec_app")
 }

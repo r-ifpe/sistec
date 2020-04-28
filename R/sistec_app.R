@@ -1,4 +1,4 @@
-#' Run Sistec_app
+#' Sistec web application
 #' 
 #' This is the web application using the sistec package. It was created to ease the 
 #' work using the package, but you can have the same results reading the 
