@@ -1,7 +1,7 @@
 #' Comparison between Sistec and a student registration dataset
 #'
 #' A generic function to compare and save the student situation. This function also 
-#' shows inconsistecies in the datasets. You can pass the folder's file path or 
+#' shows inconsistencies in the datasets. You can pass the folder's file path or 
 #' a data frame read by `sistec::read_*()` functions.
 #' 
 #' @param sistec The folder's path to Sistec files or the Sistec data frame
@@ -12,7 +12,6 @@
 #' @return  A list of data frames. 
 #' 
 #' @examples 
-#' 
 #' # these datasets are not real. It is just for test purpose.
 #' qacademico <- read_qacademico(system.file("extdata/examples/qacademico",
 #'                                           package = "sistec"))
