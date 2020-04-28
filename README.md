@@ -89,7 +89,7 @@ write_output(output_path = "your_folder",
              comparison = comparison)
 ```
 
-# Web interface
+## Web interface
 
 You also can use all those tools using the web interface, run
 `sistec::sistec_app()`.
