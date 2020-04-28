@@ -10,13 +10,27 @@ read_qacademico(path = "")
 \item{path}{The Qacademico file's path.}
 }
 \value{
-A data frame
+A data frame.
 }
 \description{
-This function support two kinds of schemas: from the api and from the website.
+This function support two kinds of schemas: from the api and the website. See Details
+if you need help to download the Qacademico data.
+}
+\details{
+To download the student's data, go to your proper account on Qacademico and
+follow:
+\itemize{
+\item "Relatorio de Alunos" -> "Listagem de Alunos" (choose year and period)
+\item Click on "visualizar"
+\item Using F10 shortcut and save in .csv format
+\item Rename the including year and period (example2020_1.csv)
+}
+
+Be sure that your data has the variables: "Matricula", "Nome", "Situacao Matricula",
+"Curso", "Cpf", "Instituicao", "Per. Letivo Inicial".
 }
 \examples{
-
+ 
 # this dataset is not a real one. It is just for test purpose.
 qacademico <- read_qacademico(system.file("extdata/examples/qacademico",
                                           package = "sistec"))
