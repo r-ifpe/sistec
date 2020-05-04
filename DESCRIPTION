@@ -1,6 +1,6 @@
 Package: sistec
 Type: Package
-Title: R Interface for Sistec
+Title: Tools to analyze 'Sistec' datasets
 Version: 0.0.2
 Authors@R: c(
     person("Samuel", "Macêdo", email = "samuelmacedo@recife.ifpe.edu.br", role = c("aut", "cre")),
@@ -9,8 +9,8 @@ Authors@R: c(
     person("Clécio", "Santos", email = "cleciogsantos@vitoria.ifpe.edu.br", role = "aut")
     )
 Maintainer: Samuel Macêdo <samuelmacedo@recife.ifpe.edu.br>
-Description: R interface to Sistec, the Brazilian system for diploma registration and validation 
-    on technical and superior courses, see <https://sistec.mec.gov.br/>. This package provides 
+Description: The Brazilian system for diploma registration and validation on technical and superior
+    courses are managing by 'Sistec' platform, see <https://sistec.mec.gov.br/>. This package provides 
     tools for Brazilian institutions to update the student's registration and make data analysis 
     about their situation, retention and drop out.
 License: GPL (>= 2)
