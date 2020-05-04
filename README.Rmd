@@ -1,5 +1,5 @@
 ---
-title: "sistec: Tools to analyze Sistec datasets"
+title: "sistec: Tools to Analyze Sistec Datasets"
 output:
   github_document:
     fig_width: 9

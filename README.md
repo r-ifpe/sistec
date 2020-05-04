@@ -1,4 +1,4 @@
-sistec: Tools to analyze Sistec datasets
+sistec: Tools to Analyze Sistec Datasets
 ================
 
 [![Travis build
