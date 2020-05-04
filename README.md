@@ -1,10 +1,10 @@
-sistec: R interface for Sistec
+sistec: Tools to analyze Sistec datasets
 ================
 
 [![Travis build
 status](https://travis-ci.org/r-ifpe/sistec.svg?branch=master)](https://travis-ci.org/r-ifpe/sistec)
 
-The [Sistec](https://sistec.mec.gov.br/) is a Brazilian system for
+The [Sistec](https://sistec.mec.gov.br/) is the Brazilian system for
 diploma registration and validation on technical and superior courses.
 The sistec package provides tools for Brazilian institutions to update
 the student’s registration and make data analysis about their situation,
@@ -29,7 +29,7 @@ or [web](https://sistec.mec.gov.br/). Be sure that your data has these
 variables:
 
   - On setec: “Nome Aluno”, “Numero Cpf”, “Co Ciclo Matricula”,
-    “Situacao Matricula” , “No Curso”, “Dt Data Inicio” and “Unidade
+    “Situacao Matricula”, “No Curso”, “Dt Data Inicio” and “Unidade
     Ensino”.
 
   - On web: “NO\_ALUNO”, “NU\_CPF”, “CO\_CICLO\_MATRICULA”,

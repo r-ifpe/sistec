@@ -1,5 +1,5 @@
 ---
-title: "sistec: R interface for Sistec"
+title: "sistec: Tools to analyze Sistec datasets"
 output:
   github_document:
     fig_width: 9
@@ -13,7 +13,7 @@ knitr::opts_chunk$set(eval = TRUE)
 knitr::opts_chunk$set(warning = FALSE)
 ```
 
-The [Sistec](https://sistec.mec.gov.br/) is a Brazilian system for diploma registration and validation on technical and superior courses. The sistec package provides tools for Brazilian institutions to update the student's registration and make data analysis about their situation, 
+The [Sistec](https://sistec.mec.gov.br/) is the Brazilian system for diploma registration and validation on technical and superior courses. The sistec package provides tools for Brazilian institutions to update the student's registration and make data analysis about their situation, 
 retention and drop out. 
 
 ## Installation
