@@ -6,10 +6,11 @@
 ## R CMD check results
 There were no ERRORs or WARNINGs. 
 
-## Possibly mis-spelled words in DESCRIPTION:
+## Possibly mis-spelled words in DESCRIPTION
 * Sistec (https://sistec.mec.gov.br/)
 
 ## Notes
 * Included quotes on Sistec name
 * Fixed R redundant name on the title
 * Fixed the package name from the description beginning 
+* Fixed title in title case
