@@ -24,6 +24,7 @@
 #' 
 #' qacademico
 #' @importFrom rlang sym
+#' @importFrom dplyr %>% 
 #' @export
 read_qacademico <- function(path = ""){
   
@@ -47,6 +48,7 @@ read_qacademico <- function(path = ""){
 }
 
 #' @importFrom rlang sym syms
+#' @importFrom dplyr %>% 
 read_qacademico_web <- function(path){
   temp <-  list.files(path = path, pattern = "*.csv")
   temp <- paste0(path , "/", temp) %>% sort(decreasing = TRUE)
