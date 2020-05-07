@@ -13,3 +13,17 @@ shiny_comparison <- function(sistec_path, qacademico_path){
     FALSE
   }
 }
+
+shiny_output_path <- function(output_path){
+  if(is.null(output_path)){
+    if_windows <- tolower(Sys.getenv("SystemRoot"))
+    if (grepl("windows", if_windows)){
+      output_path <- utils::choose.dir()
+      output_path <- gsub("\\\\", "/",output_path)
+    } else {
+      output_path <- tcltk::tk_choose.dir()
+    }
+  } 
+  
+  output_path
+}
