@@ -4,10 +4,21 @@
 \alias{sistec_app}
 \title{Sistec web application}
 \usage{
-sistec_app(output_folder_name = "Sistec_app")
+sistec_app(
+  output_path = NULL,
+  output_folder_name = "Sistec_app",
+  max_file_size = 100
+)
 }
 \arguments{
+\item{output_path}{The folder where you want to save the results.}
+
 \item{output_folder_name}{The folder's name you want to save the results.}
+
+\item{max_file_size}{The maximum file size in megabytes.}
+}
+\value{
+A web application.
 }
 \description{
 This is the web application using the sistec package. It was created to ease the
