@@ -7,7 +7,7 @@
 #' @param output_folder_name The folder's name you want to save the results.
 #' @param comparison A data frame returned by compare_sistec().
 #' 
-#' @return Save the results in your computer.
+#' @return None.
 #' 
 #' @export
 write_output <- function(output_path = NULL, 
