@@ -14,3 +14,5 @@ There were no ERRORs or WARNINGs.
 * Fixed R redundant name on the title
 * Fixed the package name from the description beginning 
 * Fixed title in title case
+* Included /value in all .Rd
+* Included on.exit in sistec_app()
