@@ -6,7 +6,7 @@
 #' See Details if you need help to download the data from Sistec. 
 #'
 #' @param path The sistec file's path. 
-#' @return A data frame 
+#' @return A data frame.
 #' 
 #' @details You can download the Sistec's student registration using your proper account on 
 #' Sistec.  Be sure that your data has these variables: 

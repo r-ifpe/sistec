@@ -10,7 +10,7 @@ read_sistec(path = "")
 \item{path}{The sistec file's path.}
 }
 \value{
-A data frame
+A data frame.
 }
 \description{
 The package provides support if your data comes
