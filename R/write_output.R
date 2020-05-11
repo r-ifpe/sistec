@@ -7,8 +7,10 @@
 #' @param output_folder_name The folder's name you want to save the results.
 #' @param comparison A data frame returned by compare_sistec().
 #' 
+#' @return None.
+#' 
 #' @export
-write_output <- function(output_path, 
+write_output <- function(output_path = NULL, 
                          output_folder_name = "Sistec_app",
                          comparison){
 
@@ -28,5 +30,7 @@ if(!is.null(output_path)) {
   
   write_status_comparison(comparison$situation_to_update, path,
                           "Retificar Situa\u00e7\u00e3o", "alterar situa\u00e7\u00e3o") 
+} else {
+  stop("Please, select a folder to download the results.")
 }
 }

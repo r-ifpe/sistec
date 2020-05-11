@@ -15,7 +15,11 @@ check_qacademico_table <- function(x, expect_nrow){
   expect_equal(nrow(x), expect_nrow)
 }
 
-download_test_datasets <- function(test_datasets_folder){
+download_test_datasets <- function(test_datasets_folder = NULL){
+  
+  if(is.null(test_datasets_folder)){
+    stop("You need to specify a path.")
+  }
   
   if(system.file(test_datasets_folder, package = "sistec") == ""){
     

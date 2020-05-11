@@ -1,17 +1,25 @@
-#' Run Sistec_app
+#' Sistec web application
 #' 
 #' This is the web application using the sistec package. It was created to ease the 
 #' work using the package, but you can have the same results reading the 
 #' files (sistec::read_*()), comparing the results (sistec::compare_sistec()) and write 
 #' the outputs (sistec::write_output())
 #' 
+#' @param output_path The folder where you want to save the results.
 #' @param output_folder_name The folder's name you want to save the results.
+#' @param max_file_size The maximum file size in megabytes.
+#' 
+#' @return A web application.
 #'
 #' @import shiny
 #' @export
-sistec_app <- function(output_folder_name = "Sistec_app"){
+sistec_app <- function(output_path = NULL,
+                       output_folder_name = "Sistec_app",
+                       max_file_size = 100){
   
-  options(shiny.maxRequestSize = 100*1024^2) 
+  opt <- options(shiny.maxRequestSize = max_file_size*1024^2) 
+  on.exit(options(opt))
+  
   description_path <- system.file("DESCRIPTION", package = "sistec")
   version <- as.character(read.dcf(description_path, fields = "Version"))
   
@@ -61,16 +69,11 @@ sistec_app <- function(output_folder_name = "Sistec_app"){
       input$download
       
       if(is.list(isolate(comparison$x))){
-        if_windows <- tolower(Sys.getenv("SystemRoot"))
-        if (grepl("windows", if_windows)){
-          output_path <- utils::choose.dir()
-          output_path <- gsub("\\\\", "/",output_path)
-        } else {
-          output_path <- tcltk::tk_choose.dir()
-        }
+        
+        output_path <- shiny_output_path(output_path)
 
         write_output(output_path = output_path,
-                     output_folder_name = "Sistec_app",
+                     output_folder_name = output_folder_name,
                      comparison = isolate(comparison$x))
         
         "Download realizado com sucesso!"
@@ -78,11 +81,9 @@ sistec_app <- function(output_folder_name = "Sistec_app"){
       } else {
         "" 
       }
-      
     })
     
     output$contents <- renderText({
-      
       input$do
       
       comparison$x <- isolate(
@@ -95,14 +96,9 @@ sistec_app <- function(output_folder_name = "Sistec_app"){
       isolate(output_screen(input$qacademico$datapath[1],
                             input$sistec$datapath[1],
                             comparison$x)
-              
       )
-      
     })
   }
   
   shinyApp(ui, server)
 } 
-
-
-

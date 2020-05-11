@@ -4,7 +4,7 @@
 \alias{write_output}
 \title{Save the comparison results}
 \usage{
-write_output(output_path, output_folder_name = "Sistec_app", comparison)
+write_output(output_path = NULL, output_folder_name = "Sistec_app", comparison)
 }
 \arguments{
 \item{output_path}{The folder where you want to save the results.}
@@ -12,6 +12,9 @@ write_output(output_path, output_folder_name = "Sistec_app", comparison)
 \item{output_folder_name}{The folder's name you want to save the results.}
 
 \item{comparison}{A data frame returned by compare_sistec().}
+}
+\value{
+Save the results in your computer.
 }
 \description{
 You can use this function to save the results saparated by campus. The resutls will be

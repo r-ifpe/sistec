@@ -18,11 +18,10 @@ A list of data frames.
 }
 \description{
 A generic function to compare and save the student situation. This function also
-shows inconsistecies in the datasets. You can pass the folder's file path or
+shows inconsistencies in the datasets. You can pass the folder's file path or
 a data frame read by \verb{sistec::read_*()} functions.
 }
 \examples{
-
 # these datasets are not real. It is just for test purpose.
 qacademico <- read_qacademico(system.file("extdata/examples/qacademico",
                                           package = "sistec"))
