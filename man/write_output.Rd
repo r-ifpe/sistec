@@ -14,7 +14,7 @@ write_output(output_path = NULL, output_folder_name = "Sistec_app", comparison)
 \item{comparison}{A data frame returned by compare_sistec().}
 }
 \value{
-Save the results in your computer.
+None.
 }
 \description{
 You can use this function to save the results saparated by campus. The resutls will be
