@@ -7,6 +7,8 @@ output:
 ---
 
   [![Travis build status](https://travis-ci.org/r-ifpe/sistec.svg?branch=master)](https://travis-ci.org/r-ifpe/sistec)
+  [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/sistec)](https://cran.r-project.org/package=sistec)
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(eval = FALSE)
@@ -17,6 +19,13 @@ The [Sistec](https://sistec.mec.gov.br/) is the Brazilian system for diploma reg
 retention and drop out. 
 
 ## Installation
+
+You can install the sistec package from
+[CRAN](https://CRAN.r-project.org) as follows:
+
+``` r
+install.packages("sistec")
+```
 
 To upgrade to the latest version of sistec, run the following command and restart your r session:
 
