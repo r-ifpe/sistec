@@ -70,7 +70,7 @@ read_qacademico_web <- function(path){
     dplyr::distinct(!!sym("Matr\u00edcula"), .keep_all = TRUE) %>% # I found this problem 
     dplyr::mutate(Campus = ifelse(!!sym("Campus") == "", "SEM CAMPUS", !!sym("Campus"))) 
   
-  class(qacademico) <- c(class(qacademico), "qacademico_data_frame")
+  class(qacademico) <- c("qacademico_data_frame", class(qacademico))
 
   qacademico
 }
