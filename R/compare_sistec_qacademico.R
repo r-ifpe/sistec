@@ -1,5 +1,4 @@
 compare_sistec_qacademico <- function(sistec, qacademico){
-  
   sistec_complete <- sistec
   qacademico_complete <- qacademico
 

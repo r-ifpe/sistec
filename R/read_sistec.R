@@ -100,14 +100,11 @@ read_sistec_web <- function(path){
     dplyr::mutate(NO_CURSO = stringr::str_remove(!!sym("NO_CICLO_MATRICULA"), " - .*$")) %>% 
     dplyr::select(!!!syms(vars)) %>% 
     dplyr::left_join(co_unidade_ensino, by = "CO_UNIDADE_ENSINO") %>% 
-    dplyr::select(-(!!sym("CO_UNIDADE_ENSINO")))
+    dplyr::select(-(!!sym("CO_UNIDADE_ENSINO"))) 
   
-  class(sistec) <- c(class(sistec), "sistec_data_frame")
+  class(sistec) <- c("sistec_data_frame", class(sistec))
   sistec
 }
-
-
-
 
 #' @importFrom dplyr %>% 
 #' @importFrom rlang sym
@@ -134,7 +131,7 @@ read_sistec_setec <- function(path){
                      NO_CAMPUS = stringr::str_sub(!!sym("Unidade.Ensino"), 42)) %>% 
     dplyr::mutate(NO_CAMPUS = ifelse(!!sym("NO_CAMPUS") == "REU E LIMA",  # Register name is wrong  
                                      "ABREU E LIMA", !!sym("NO_CAMPUS"))) # in setec
-  
-  class(sistec) <- c(class(sistec), "sistec_data_frame")
+
+  class(sistec) <- c("sistec_data_frame", class(sistec))
   sistec
 }
