@@ -8,6 +8,12 @@
 #' @param output_path The folder where you want to save the results.
 #' @param output_folder_name The folder's name you want to save the results.
 #' @param max_file_size The maximum file size in megabytes.
+#' @param options_port The TCP port that the application should listen on, usually 8888.
+#' @param options_launch_browser If true, the system's default web browser will be 
+#' launched automatically after the app is started. 
+#' @param test_mode Use FALSE in production and TRUE when you are testing. In production,
+#' when you close the browser ,the app and the R session will be closed. In test, only the app will 
+#' close when you close the browser.
 #' 
 #' @return A web application.
 #'
@@ -15,14 +21,17 @@
 #' @export
 sistec_app <- function(output_path = NULL,
                        output_folder_name = "Sistec_app",
-                       max_file_size = 100){
+                       max_file_size = 100,
+                       options_port = 8888,
+                       options_launch_browser = TRUE,
+                       test_mode = TRUE){
   
   opt <- options(shiny.maxRequestSize = max_file_size*1024^2) 
   on.exit(options(opt))
   
   description_path <- system.file("DESCRIPTION", package = "sistec")
   version <- as.character(read.dcf(description_path, fields = "Version"))
-  
+
   ui <- fluidPage(
     navbarPage(paste0("Sistec_app v", version),
                tabPanel("Qacademico",
@@ -43,8 +52,8 @@ sistec_app <- function(output_path = NULL,
                                                  "text/comma-separated-values,text/plain",
                                                  ".csv")),
                             actionButton("do", "Comparar"),
-                            actionButton("download", "Salvar resultados")
-                            
+                            actionButton("download", "Salvar resultados"),
+                            if(test_mode) checkboxInput("test_mode", "Test mode", TRUE)
                           ),
                           mainPanel(
                             strong(htmlOutput("contents")),
@@ -54,24 +63,28 @@ sistec_app <- function(output_path = NULL,
                         )
                )
     )
-    
   )
   
   server <- function(input, output, session){
-    # # close the R session when Chrome closes
-    #  session$onSessionEnded(function() {
-    #      stopApp()
-    #      q("no")
-    #  })
+    # close the R session when Chrome closes
+    session$onSessionEnded(function() {
+      if(is.null(isolate(input$test_mode))){
+        stopApp()
+        q("no")
+      } else {
+        stopApp()
+      }
+    })
+    
     comparison <- reactiveValues(x = FALSE)
     
     output$download <- renderText({
       input$download
-      
+
       if(is.list(isolate(comparison$x))){
         
         output_path <- shiny_output_path(output_path)
-
+        
         write_output(output_path = output_path,
                      output_folder_name = output_folder_name,
                      comparison = isolate(comparison$x))
@@ -100,5 +113,6 @@ sistec_app <- function(output_path = NULL,
     })
   }
   
-  shinyApp(ui, server)
+  shinyApp(ui, server, options = list(port = options_port,
+                                      launch.browser = options_launch_browser))
 } 
