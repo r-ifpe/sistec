@@ -12,7 +12,7 @@
 #' @param options_launch_browser If true, the system's default web browser will be 
 #' launched automatically after the app is started. 
 #' @param test_mode Use FALSE in production and TRUE when you are testing. In production,
-#' when you close the browser the app and the R session will be closed. In test, only the app will 
+#' when you close the browser ,the app and the R session will be closed. In test, only the app will 
 #' close when you close the browser.
 #' 
 #' @return A web application.
