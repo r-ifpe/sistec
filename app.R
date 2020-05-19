@@ -22,7 +22,10 @@ ui <- fluidPage(
                           "text/comma-separated-values,text/plain",
                           ".csv")),
             actionButton("do", "Comparar"),
-            actionButton("download", "Salvar resultados")
+            actionButton("download", "Salvar resultados"),
+            if(FALSE){
+                selectInput("test", "Test mode", TRUE)
+            }
 
         ),
         mainPanel(
@@ -37,11 +40,15 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session){
-   # # close the R session when Chrome closes
-   #  session$onSessionEnded(function() {
-   #      stopApp()
-   #      q("no")
-   #  })
+   # close the R session when Chrome closes
+    session$onSessionEnded(function() {
+        if(is.null(isolate(input$test))){
+            stopApp()
+            q("no")
+        }
+    })
+    
+
     comparison <- reactiveValues(x = FALSE)
     
     output$download <- renderText({

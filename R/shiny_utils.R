@@ -24,6 +24,5 @@ shiny_output_path <- function(output_path){
       output_path <- tcltk::tk_choose.dir()
     }
   } 
-  
   output_path
 }

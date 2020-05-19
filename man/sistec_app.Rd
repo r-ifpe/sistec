@@ -7,7 +7,10 @@
 sistec_app(
   output_path = NULL,
   output_folder_name = "Sistec_app",
-  max_file_size = 100
+  max_file_size = 100,
+  options_port = 8888,
+  options_launch_browser = TRUE,
+  test_mode = TRUE
 )
 }
 \arguments{
@@ -16,6 +19,15 @@ sistec_app(
 \item{output_folder_name}{The folder's name you want to save the results.}
 
 \item{max_file_size}{The maximum file size in megabytes.}
+
+\item{options_port}{The TCP port that the application should listen on, usually 8888.}
+
+\item{options_launch_browser}{If true, the system's default web browser will be
+launched automatically after the app is started.}
+
+\item{test_mode}{Use FALSE in production and TRUE when you are testing. In production,
+when you close the browser the app and the R session will be closed. In test, only the app will
+close when you close the browser.}
 }
 \value{
 A web application.
