@@ -4,13 +4,13 @@
 \alias{compare_sistec}
 \title{Comparison between Sistec and a student registration dataset}
 \usage{
-compare_sistec(sistec, student_registration)
+compare_sistec(sistec, rfept)
 }
 \arguments{
 \item{sistec}{The folder's path to Sistec files or the Sistec data frame
 read by \code{sistec::read_sistec()}function.}
 
-\item{student_registration}{The folder's path to students reagistration datasets or a
+\item{rfept}{The folder's path to students reagistration datasets or a
 data frame read by \verb{sistec::read_*()}functions.}
 }
 \value{
@@ -23,11 +23,13 @@ a data frame read by \verb{sistec::read_*()} functions.
 }
 \examples{
 # these datasets are not real. It is just for test purpose.
-qacademico <- read_qacademico(system.file("extdata/examples/qacademico",
-                                          package = "sistec"))
+
 sistec <- read_sistec(system.file("extdata/examples/sistec",
                                   package = "sistec"))
                                   
+qacademico <- read_qacademico(system.file("extdata/examples/qacademico",
+                                          package = "sistec"))
+                                          
 compare_sistec(sistec, qacademico)                                   
 
 }
