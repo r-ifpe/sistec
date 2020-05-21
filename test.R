@@ -1,6 +1,9 @@
 a <- sistec::read_sistec("C:/Pesquisa/sistec/inst/extdata/test_datasets/sistec/")
 b <- sistec::read_qacademico("C:/Pesquisa/sistec/inst/extdata/test_datasets/qacademico/")
 
+d <- compare_sistec(a,b)
+b <- sistec::read_sistec("C:/Pesquisa/dados/sistec/web/")
+
 ## criando o exemplo
 
 #sistec

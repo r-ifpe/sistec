@@ -47,30 +47,41 @@ read_qacademico <- function(path = ""){
   }
 }
 
-#' @importFrom rlang sym syms
+#' @importFrom rlang sym
 #' @importFrom dplyr %>% 
 read_qacademico_web <- function(path){
   temp <-  list.files(path = path, pattern = "*.csv")
   temp <- paste0(path , "/", temp) %>% sort(decreasing = TRUE)
   
-  # Matrícula, Situação.Matrícula, Situação.Período, Instituição
-  vars <- c("Matr\u00edcula", "Nome", "Situa\u00e7\u00e3o.Matr\u00edcula",
-            "Curso", "Cpf", "Institui\u00e7\u00e3o", "Per..Letivo.Inicial")
-  
   classes <- c(Cpf = "character")
+
+  qacademico <- lapply(temp,  utils::read.csv,
+                sep = "",  stringsAsFactors = FALSE, 
+                colClasses = classes, encoding = "latin1") %>% 
+    dplyr::bind_rows() %>% 
+    dplyr::distinct(!!sym("Matr\u00edcula"), .keep_all = TRUE) %>% # Take the most recent 
+    dplyr::transmute(R_NO_ALUNO = !!sym("Nome"),
+                     R_NU_CPF = num_para_cpf(!!sym("Cpf")),
+                     R_CO_CICLO_MATRICULA = "", # unitl now a RFEPT doesn't have ciclo
+                     R_NO_STATUS_MATRICULA = !!sym("Situa\u00e7\u00e3o.Matr\u00edcula"),
+                     R_NO_CURSO = !!sym("Curso"),
+                     R_DT_INICIO_CURSO = qacademico_convert_beginning_date(!!sym("Per..Letivo.Inicial")),
+                     R_NO_CAMPUS = qacademico_campus_name(!!sym("Institui\u00e7\u00e3o")))
   
-  qacademico <- lapply(temp, function(e){
-    utils::read.csv(e, sep = "",  stringsAsFactors = FALSE, 
-                    encoding = "latin1", colClasses = classes) %>% 
-        dplyr::select(!!!syms(vars))
-    }) %>% 
-    dplyr::bind_rows() %>%
-    dplyr::mutate(Cpf = num_para_cpf(!!sym("Cpf")),
-                  Campus = stringr::str_sub(!!sym("Institui\u00e7\u00e3o"),8)) %>% 
-    dplyr::distinct(!!sym("Matr\u00edcula"), .keep_all = TRUE) %>% # I found this problem 
-    dplyr::mutate(Campus = ifelse(!!sym("Campus") == "", "SEM CAMPUS", !!sym("Campus"))) 
-  
-  class(qacademico) <- c("qacademico_data_frame", class(qacademico))
+  class(qacademico) <- c("rfept_data_frame", class(qacademico))
 
   qacademico
+}
+
+qacademico_convert_beginning_date <- function(date){
+  stringr::str_replace(date, "/", ".")
+}
+
+qacademico_campus_name <- function(campus){
+  campus <- stringr::str_sub(campus,8)
+  qacademico_correct_campus_name(campus)
+}
+
+qacademico_correct_campus_name <- function(campus){
+  dplyr::if_else(campus == "", "SEM CAMPUS", campus)
 }

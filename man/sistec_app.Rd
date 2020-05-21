@@ -26,7 +26,7 @@ sistec_app(
 launched automatically after the app is started.}
 
 \item{test_mode}{Use FALSE in production and TRUE when you are testing. In production,
-when you close the browser the app and the R session will be closed. In test, only the app will
+when you close the browser ,the app and the R session will be closed. In test, only the app will
 close when you close the browser.}
 }
 \value{
