@@ -72,7 +72,7 @@ read_sistec <- function(path = ""){
 }
 
 #' @importFrom dplyr %>% 
-#' @importFrom rlang sym syms
+#' @importFrom rlang sym
 read_sistec_web <- function(path){
   temp = list.files(path = path, pattern = "*.csv")
   temp <- paste0(path, "/", temp)
@@ -90,7 +90,7 @@ read_sistec_web <- function(path){
                      S_CO_CICLO_MATRICULA = !!sym("CO_CICLO_MATRICULA"),
                      S_NO_STATUS_MATRICULA = !!sym("NO_STATUS_MATRICULA"),
                      S_NO_CURSO = sistec_course_name(!!sym("NO_CICLO_MATRICULA")),
-                     S_DT_INICIO_CURSO = convert_sistec_beginning_date(!!sym("DT_DATA_INICIO")),
+                     S_DT_INICIO_CURSO = sistec_convert_beginning_date(!!sym("DT_DATA_INICIO")),
                      S_NO_CAMPUS = !!sym("S_NO_CAMPUS"))
   
   class(sistec) <- c("sistec_data_frame", class(sistec))
@@ -115,14 +115,14 @@ read_sistec_setec <- function(path){
                      S_CO_CICLO_MATRICULA = !!sym("Co.Ciclo.Matricula"), 
                      S_NO_STATUS_MATRICULA = !!sym("Situa\u00e7\u00e3o.Matricula"), # Situação.Matricula
                      S_NO_CURSO = !!sym("No.Curso"), 
-                     S_DT_INICIO_CURSO = convert_sistec_beginning_date(!!sym("Dt.Data.Inicio")),
+                     S_DT_INICIO_CURSO = sistec_convert_beginning_date(!!sym("Dt.Data.Inicio")),
                      S_NO_CAMPUS = sistec_campus_name(!!sym("Unidade.Ensino")))
 
   class(sistec) <- c("sistec_data_frame", class(sistec))
   sistec
 }
 
-convert_sistec_beginning_date <- function(date){
+sistec_convert_beginning_date <- function(date){
   year <- stringr::str_sub(date, 7, 10)
   month <- as.numeric(stringr::str_sub(date, 4, 5))
   semester <- ifelse(month > 6, 2, 1)
