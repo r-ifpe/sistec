@@ -77,30 +77,21 @@ read_sistec_web <- function(path){
   temp = list.files(path = path, pattern = "*.csv")
   temp <- paste0(path, "/", temp)
   
-  vars <- c("NO_ALUNO", "NU_CPF", "CO_CICLO_MATRICULA",
-            "NO_STATUS_MATRICULA","NO_CURSO",
-            "DT_DATA_INICIO", "CO_UNIDADE_ENSINO")
-  
-  co_unidade_ensino <- utils::read.csv(system.file("extdata/co_unidade_ensino/ifpe.csv",
-                                                   package = "sistec"),
-                                       colClasses = "character")
-  
+  co_unidade_ensino <- co_unidade_ensino()
   classes <- c(NU_CPF = "character", CO_UNIDADE_ENSINO = "character")
-  
+
   sistec <- lapply(temp, utils::read.csv,
                    sep = ";",  stringsAsFactors = FALSE, 
                    colClasses = classes, encoding = "latin1") %>%
     dplyr::bind_rows() %>%
-    dplyr::mutate(NU_CPF = num_para_cpf(
-      ifelse(stringr::str_length(!!sym("NU_CPF")) == 0, 
-             !!sym("NU_CPF"), # in API, number zero in the beginning is blank
-             stringr::str_pad(!!sym("NU_CPF"), 11, pad = "0")))) %>% 
-    dplyr::mutate(DT_DATA_INICIO = stringr::str_remove(!!sym("DT_DATA_INICIO"),
-                                                       " .*$")) %>% 
-    dplyr::mutate(NO_CURSO = stringr::str_remove(!!sym("NO_CICLO_MATRICULA"), " - .*$")) %>% 
-    dplyr::select(!!!syms(vars)) %>% 
     dplyr::left_join(co_unidade_ensino, by = "CO_UNIDADE_ENSINO") %>% 
-    dplyr::select(-(!!sym("CO_UNIDADE_ENSINO"))) 
+    dplyr::transmute(S_NO_ALUNO = !!sym("NO_ALUNO"),
+                     S_NU_CPF = num_para_cpf(!!sym("NU_CPF")),
+                     S_CO_CICLO_MATRICULA = !!sym("CO_CICLO_MATRICULA"),
+                     S_NO_STATUS_MATRICULA = !!sym("NO_STATUS_MATRICULA"),
+                     S_NO_CURSO = sistec_course_name(!!sym("NO_CICLO_MATRICULA")),
+                     S_DT_INICIO_CURSO = convert_sistec_beginning_date(!!sym("DT_DATA_INICIO")),
+                     S_NO_CAMPUS = !!sym("S_NO_CAMPUS"))
   
   class(sistec) <- c("sistec_data_frame", class(sistec))
   sistec
@@ -114,24 +105,39 @@ read_sistec_setec <- function(path){
   temp <- paste0(path, "/", temp)
   
   classes <- c(Numero.Cpf = "character")
-  
+
   sistec <- lapply(temp, utils::read.csv,
                    sep = ";",  stringsAsFactors = FALSE, 
                    colClasses = classes, encoding = "UTF-8") %>%
     dplyr::bind_rows() %>%
-    dplyr::mutate(Numero.Cpf = ifelse(stringr::str_length(!!sym("Numero.Cpf")) == 0, 
-                                      !!sym("Numero.Cpf"), # in API number zero in the beguinning is blank
-                                      stringr::str_pad(!!sym("Numero.Cpf"), 11, pad = "0"))) %>% 
-    dplyr::transmute(NO_ALUNO = !!sym("Nome.Aluno"), 
-                     NU_CPF = num_para_cpf(!!sym("Numero.Cpf")),
-                     CO_CICLO_MATRICULA = !!sym("Co.Ciclo.Matricula"), 
-                     NO_STATUS_MATRICULA = !!sym("Situa\u00e7\u00e3o.Matricula"), # Situação.Matricula
-                     NO_CURSO = !!sym("No.Curso"), 
-                     DT_DATA_INICIO = !!sym("Dt.Data.Inicio"),
-                     NO_CAMPUS = stringr::str_sub(!!sym("Unidade.Ensino"), 42)) %>% 
-    dplyr::mutate(NO_CAMPUS = ifelse(!!sym("NO_CAMPUS") == "REU E LIMA",  # Register name is wrong  
-                                     "ABREU E LIMA", !!sym("NO_CAMPUS"))) # in setec
+    dplyr::transmute(S_NO_ALUNO = !!sym("Nome.Aluno"), 
+                     S_NU_CPF = num_para_cpf(!!sym("Numero.Cpf")),
+                     S_CO_CICLO_MATRICULA = !!sym("Co.Ciclo.Matricula"), 
+                     S_NO_STATUS_MATRICULA = !!sym("Situa\u00e7\u00e3o.Matricula"), # Situação.Matricula
+                     S_NO_CURSO = !!sym("No.Curso"), 
+                     S_DT_INICIO_CURSO = convert_sistec_beginning_date(!!sym("Dt.Data.Inicio")),
+                     S_NO_CAMPUS = sistec_campus_name(!!sym("Unidade.Ensino")))
 
   class(sistec) <- c("sistec_data_frame", class(sistec))
   sistec
+}
+
+convert_sistec_beginning_date <- function(date){
+  year <- stringr::str_sub(date, 7, 10)
+  month <- as.numeric(stringr::str_sub(date, 4, 5))
+  semester <- ifelse(month > 6, 2, 1)
+  paste0(year, ".", semester )
+}
+
+sistec_course_name <- function(course){
+  stringr::str_remove(course, " - .*$")
+}
+
+sistec_campus_name <- function(campus){
+  campus <- stringr::str_sub(campus, 42)
+  sistec_correct_campus_name(campus)
+}
+
+sistec_correct_campus_name <- function(campus){
+  stringr::str_replace(campus, "REU E LIMA", "ABREU E LIMA")
 }

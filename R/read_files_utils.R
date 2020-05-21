@@ -1,17 +1,14 @@
-
-num_para_cpf <- function(num) {
+num_para_cpf <- function(cpf) {
   
-  stringr::str_replace(string = num,
+  cpf <- stringr::str_pad(cpf, 11, pad = "0")
+  stringr::str_replace(string = cpf,
                        pattern = "([0-9]{3})([0-9]{3})([0-9]{3})",
                        replacement = "\\1.\\2.\\3-")
 }
 
-complete_cpf <- function(cpf){
-  if(stringr::str_length(cpf)  == 11|stringr::str_length(cpf)  == 0){
-    cpf
-  } else {
-    zeros <- 11 - stringr::str_length(cpf)  # a cpf always have 11 numbers
-    zeros <- paste0(zeros, collapse = "")
-    paste0(zeros, cpf)
-  }
+
+
+co_unidade_ensino <- function(){
+  utils::read.csv(system.file("extdata/co_unidade_ensino/ifpe.csv", package = "sistec"),
+                              colClasses = "character")
 }
