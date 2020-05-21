@@ -1,16 +1,15 @@
 check_sistec_table <- function(x, expect_nrow){
   expect_equal(colnames(x),
-               c("NO_ALUNO", "NU_CPF", "CO_CICLO_MATRICULA", "NO_STATUS_MATRICULA",
-                 "NO_CURSO", "DT_DATA_INICIO", "NO_CAMPUS"))
+               c("S_NO_ALUNO", "S_NU_CPF", "S_CO_CICLO_MATRICULA", "S_NO_STATUS_MATRICULA",
+                 "S_NO_CURSO", "S_DT_INICIO_CURSO", "S_NO_CAMPUS"))
   
   expect_equal(nrow(x), expect_nrow)
 }
 
-check_qacademico_table <- function(x, expect_nrow){
+check_rfept_table <- function(x, expect_nrow){
   expect_equal(colnames(x),
-               c("Matr\u00edcula", "Nome", "Situa\u00e7\u00e3o.Matr\u00edcula",
-                 "Curso", "Cpf", "Institui\u00e7\u00e3o",
-                 "Per..Letivo.Inicial", "Campus"))
+               c("R_NO_ALUNO", "R_NU_CPF", "R_CO_CICLO_MATRICULA", "R_NO_STATUS_MATRICULA",
+                 "R_NO_CURSO", "R_DT_INICIO_CURSO", "R_NO_CAMPUS"))
   
   expect_equal(nrow(x), expect_nrow)
 }
