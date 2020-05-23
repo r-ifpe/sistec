@@ -1,57 +1,51 @@
-#' @importFrom rlang sym
-filter_cpf_rfept <- function(x){
-  invalid <- c("", "   .   .   -  ", "___.___.___-__")
-  
-  rfept_without_cpf <- dplyr::filter(x, !!sym("R_NU_CPF") %in% invalid)
-  rfept <- dplyr::filter(x, !(!!sym("R_NU_CPF") %in% invalid))
-  
-  list(rfept = rfept, rfept_without_cpf = rfept_without_cpf)
-}
-
-#' @importFrom rlang sym
-filter_cpf_sistec <- function(x){
-  sistec_without_cpf <- dplyr::filter(x, !!sym("S_NU_CPF") == "000.000.000-00")
-  sistec <- dplyr::filter(x, !!sym("S_NU_CPF") != "000.000.000-00") 
-  
-  list(sistec = sistec, sistec_without_cpf = sistec_without_cpf)
-}
-
-unlinked_cpf_sistec_rfept <- function(sistec, rfept){
-  rfept_without_sistec <- dplyr::anti_join(rfept, sistec, by = c("R_NU_CPF" = "S_NU_CPF"))
-  sistec_without_rfept <- dplyr::anti_join(sistec, rfept, by = c("S_NU_CPF" = "R_NU_CPF"))
-  
-  rfept <- dplyr::anti_join(rfept, rfept_without_sistec, by = "R_NU_CPF")
-  sistec <- dplyr::anti_join(sistec, sistec_without_rfept, by = "S_NU_CPF") 
+create_sistec_rfept_list <- function(sistec, rfept){
   
   list(sistec = sistec,
-       sistec_without_rfept = sistec_without_rfept,
+       sistec_complete = sistec,
+       sistec_without_cpf = data.frame(),
+       sistec_without_rfept = data.frame(),
        rfept = rfept,
-       rfept_without_sistec = rfept_without_sistec)
+       rfept_complete = rfept,
+       rfept_without_cpf = data.frame(),
+       rfept_without_sistec = data.frame(),
+       situation_updated = data.frame(),
+       situation_to_update = data.frame(),
+       sistec_rfept_linked = data.frame(),
+       linked_courses = data.frame())
 }
 
 #' @importFrom rlang sym
-join_sistec_rfept <- function(sistec, rfept){
-  dplyr::inner_join(sistec, rfept, by = c("S_NU_CPF" = "R_NU_CPF"))
+remove_invalid_cpf <- function(x){
+  
+  rfept_invalid <- c("", "   .   .   -  ", "___.___.___-__")
+  x$rfept_without_cpf <- dplyr::filter(x$rfept, !!sym("R_NU_CPF") %in% rfept_invalid)
+  x$rfept <- dplyr::filter(x$rfept, !(!!sym("R_NU_CPF") %in% rfept_invalid))
+  
+  sistec_invalid <- c("000.000.000-00")
+  x$sistec_without_cpf <- dplyr::filter(x$sistec, !!sym("S_NU_CPF") == sistec_invalid)
+  x$sistec <- dplyr::filter(x$sistec, !!sym("S_NU_CPF") != sistec_invalid) 
+  
+  x
 }
 
-#' @importFrom dplyr %>% 
-linked_courses_sistec_rfept <- function(x){
-  x %>% 
-    dplyr::filter(!!sym("R_DT_INICIO_CURSO") == !!sym("S_DT_INICIO_CURSO")) %>% 
-    dplyr::group_by(!!sym("R_NO_CURSO"), !!sym("S_NO_CURSO")) %>% 
-    dplyr::tally() %>% 
-    dplyr::arrange(!!sym("R_NO_CURSO"), dplyr::desc(!!sym("n"))) %>% 
-    dplyr::distinct(!!sym("R_NO_CURSO"), .keep_all = TRUE) %>% 
-    dplyr::rename(S_NO_CURSO_LINKED = !!sym("S_NO_CURSO"), S_QTD_ALUNOS_LINKED = !!sym("n")) %>% 
-    dplyr::right_join(x, by = "R_NO_CURSO") %>% 
-    dplyr::filter(!!sym("S_NO_CURSO") == !!sym("S_NO_CURSO_LINKED"))
+remove_unliked_cpf <- function(x){
+  x$rfept_without_sistec <- dplyr::anti_join(x$rfept, x$sistec,
+                                             by = c("R_NU_CPF" = "S_NU_CPF"))
+  x$sistec_without_rfept <- dplyr::anti_join(x$sistec, x$rfept,
+                                             by = c("S_NU_CPF" = "R_NU_CPF"))
+  
+  x$rfept <- dplyr::anti_join(x$rfept, x$rfept_without_sistec, by = "R_NU_CPF")
+  x$sistec <- dplyr::anti_join(x$sistec, x$sistec_without_rfept, by = "S_NU_CPF")
+  
+  x
 }
+
 
 #' @importFrom stringr str_detect
-compare_situation_sistec_rfept <- function(situation_to_update){
-  
-  sistec <- situation_to_update$S_NO_STATUS_MATRICULA
-  rfept <- situation_to_update$R_NO_STATUS_MATRICULA
+compare_situation <- function(x){
+
+  sistec <- x$sistec_rfept_linked$S_NO_STATUS_MATRICULA
+  rfept <- x$sistec_rfept_linked$R_NO_STATUS_MATRICULA
   
   # existe_rfept <- !is.na(rfept)
   status_concluido <- str_detect(sistec, "CONCLU\u00cdDA") & # CONCLUÍDA
@@ -71,24 +65,36 @@ compare_situation_sistec_rfept <- function(situation_to_update){
     status_em_curso | status_transferido
   
   status[is.na(status)] <- FALSE
-  status
+  x$sistec_rfept_linked$S_NO_STATUS_IGUAL <- status
+  x
 }
 
-unlinked_course_sistec_rfept <- function(sistec, rfept, joined_data){
+split_situation <- function(x){
 
-  sistec_without_link <- dplyr::anti_join(sistec, joined_data,
-                                          by = c("S_NU_CPF", "S_NO_CURSO"))
- 
-  rfept_without_link <- dplyr::anti_join(rfept, joined_data, # R_NU_CPF is removed in join
-                                         by = c("R_NU_CPF" = "S_NU_CPF", "R_NO_CURSO"))
+  x$situation_updated <- x$sistec_rfept_linked %>% 
+    dplyr::filter( !!sym("S_NO_STATUS_IGUAL") == TRUE)
   
-  sistec <- dplyr::anti_join(sistec, sistec_without_link,
-                             by = c("S_NU_CPF", "S_NO_CURSO"))
-  rfept <- dplyr::anti_join(rfept, rfept_without_link,
-                            by = c("R_NU_CPF", "R_NO_CURSO"))
+  x$situation_to_update <- x$sistec_rfept_linked %>% 
+    dplyr::filter( !!sym("S_NO_STATUS_IGUAL") == FALSE)
   
-  list(sistec = sistec,
-       sistec_without_link = sistec_without_link,
-       rfept = rfept,
-       rfept_without_link = rfept_without_link)
+  # there is no reason to use this table because 
+  # the situation were already divided
+  x$sistec_rfept_linked <- NULL # clean memory
+  
+  x
+}
+
+#' @importFrom dplyr %>% 
+#' @importFrom rlang syms
+linked_courses_data_frame <- function(x){
+
+  select_vars <- c("R_DT_INICIO_CURSO", "R_NO_CURSO", "S_NO_CURSO_LINKED", "S_CO_CICLO_MATRICULA")
+  arrange_vars <- c("R_NO_CURSO", "R_DT_INICIO_CURSO")
+  
+  x$linked_courses <- x$situation_updated %>% 
+    dplyr::select(!!!syms(select_vars)) %>% 
+    dplyr::distinct() %>% 
+    dplyr::arrange(!!!syms(arrange_vars))
+  
+  x
 }
