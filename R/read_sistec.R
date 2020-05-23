@@ -30,7 +30,7 @@
 read_sistec <- function(path = ""){
   
   if(path == "") stop("You need to specify the path.")
-  
+
   temp = list.files(path = path, pattern = "*.csv")
   temp <- paste0(path, "/", temp)
   
