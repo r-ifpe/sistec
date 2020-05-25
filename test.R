@@ -1,11 +1,13 @@
 a <- sistec::read_sistec("C:/Pesquisa/sistec/inst/extdata/test_datasets/sistec/")
 b <- sistec::read_qacademico("C:/Pesquisa/sistec/inst/extdata/test_datasets/qacademico/")
 
-d <- compare_sistec(a,b)
+d <- sistec::compare_sistec(a,b)
 b <- sistec::read_sistec("C:/Pesquisa/dados/sistec/web/")
 
-## criando o exemplo
-
+sistec_rfept_linked_courses %>% 
+  select(R_DT_INICIO_CURSO, R_NO_CURSO, S_NO_CURSO_LINKED, S_CO_CICLO_MATRICULA) %>% 
+  distinct() %>% 
+  arrange(R_NO_CURSO, R_DT_INICIO_CURSO)
 #sistec
 a1 <- a %>% 
   filter(grepl("2019", DT_DATA_INICIO),
