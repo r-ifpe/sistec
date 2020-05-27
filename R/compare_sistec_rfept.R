@@ -9,6 +9,7 @@ compare_sistec_rfept <- function(sistec, rfept){
     split_situation()
   
   sistec_rfept <- linked_courses_data_frame(sistec_rfept)
+  class(sistec_rfept) <- c("comparison_list", class(sistec_rfept))
 
   sistec_rfept
 }
