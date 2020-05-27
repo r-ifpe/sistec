@@ -7,7 +7,7 @@
 write_output(x, output_path = NULL, output_folder_name = "Sistec_app")
 }
 \arguments{
-\item{x}{A list returned by \code{compare_sistec()} or a data frame reutned by}
+\item{x}{A list returned by \code{compare_sistec()}.}
 
 \item{output_path}{The folder where you want to save the results.}
 
