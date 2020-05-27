@@ -85,9 +85,9 @@ sistec_app <- function(output_path = NULL,
         
         output_path <- shiny_output_path(output_path)
         
-        write_output(output_path = output_path,
-                     output_folder_name = output_folder_name,
-                     comparison = isolate(comparison$x))
+        write_output(x = isolate(comparison$x),
+                     output_path = output_path,
+                     output_folder_name = output_folder_name)
         
         "Download realizado com sucesso!"
         
