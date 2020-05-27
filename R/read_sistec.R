@@ -131,7 +131,7 @@ sistec_convert_beginning_date <- function(date){
 
 sistec_course_name <- function(course){
   course <- stringr::str_remove(course, " - .*$")  
-  gsub("/|:| \\.", "_", course)
+  course <- stringr::str_replace_all(course,"/|:|\\?|\\.", "_" )
 }
 
 sistec_campus_name <- function(campus){
