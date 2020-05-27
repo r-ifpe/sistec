@@ -37,4 +37,4 @@ save_with_subfolders <- function(x, grid, path, file){
                            dplyr::select(!!!syms(vars)),
                          paste0(paths[e], "/", file, ".xlsx"))
   }))
-}
+ }
