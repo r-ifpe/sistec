@@ -62,13 +62,14 @@ read_qacademico_web <- function(path){
     dplyr::distinct(!!sym("Matr\u00edcula"), .keep_all = TRUE) %>% # Take the most recent 
     dplyr::transmute(R_NO_ALUNO = !!sym("Nome"),
                      R_NU_CPF = num_para_cpf(!!sym("Cpf")),
+                     R_CO_MATRICULA = !!sym("Matr\u00edcula"),
                      R_CO_CICLO_MATRICULA = "", # unitl now a RFEPT doesn't have ciclo
                      R_NO_STATUS_MATRICULA = !!sym("Situa\u00e7\u00e3o.Matr\u00edcula"),
-                     R_NO_CURSO = !!sym("Curso"),
+                     R_NO_CURSO = qacademico_course_name(!!sym("Curso")),
                      R_DT_INICIO_CURSO = qacademico_convert_beginning_date(!!sym("Per..Letivo.Inicial")),
                      R_NO_CAMPUS = qacademico_campus_name(!!sym("Institui\u00e7\u00e3o")))
   
-  class(qacademico) <- c("rfept_data_frame", class(qacademico))
+  class(qacademico) <- c("rfept_data_frame", "qacademico_table", class(qacademico))
 
   qacademico
 }
@@ -84,4 +85,8 @@ qacademico_campus_name <- function(campus){
 
 qacademico_correct_campus_name <- function(campus){
   dplyr::if_else(campus == "", "SEM CAMPUS", campus)
+}
+
+qacademico_course_name <- function(course){ 
+  gsub("/|:| \\.", "_", course)
 }
