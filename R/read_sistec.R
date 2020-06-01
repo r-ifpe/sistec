@@ -114,7 +114,7 @@ read_sistec_setec <- function(path){
                      S_NU_CPF = num_para_cpf(!!sym("Numero.Cpf")),
                      S_CO_CICLO_MATRICULA = !!sym("Co.Ciclo.Matricula"), 
                      S_NO_STATUS_MATRICULA = !!sym("Situa\u00e7\u00e3o.Matricula"), # Situação.Matricula
-                     S_NO_CURSO = !!sym("No.Curso"), 
+                     S_NO_CURSO = sistec_course_name(!!sym("No.Curso")), 
                      S_DT_INICIO_CURSO = sistec_convert_beginning_date(!!sym("Dt.Data.Inicio")),
                      S_NO_CAMPUS = sistec_campus_name(!!sym("Unidade.Ensino")))
 
@@ -130,7 +130,8 @@ sistec_convert_beginning_date <- function(date){
 }
 
 sistec_course_name <- function(course){
-  stringr::str_remove(course, " - .*$")
+  course <- stringr::str_remove(course, " - .*$")  
+  course <- stringr::str_replace_all(course,"/|:|\\?|\\.", "_" )
 }
 
 sistec_campus_name <- function(campus){

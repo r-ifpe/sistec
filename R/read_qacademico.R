@@ -23,8 +23,7 @@
 #'                                           package = "sistec"))
 #' 
 #' qacademico
-#' @importFrom rlang sym
-#' @importFrom dplyr %>% 
+#' @importFrom dplyr %>% sym 
 #' @export
 read_qacademico <- function(path = ""){
   
@@ -32,14 +31,14 @@ read_qacademico <- function(path = ""){
   
   temp <-  list.files(path = path, pattern = "*.csv")
   temp <- paste0(path , "/", temp) %>% sort(decreasing = TRUE)
-  
+
   qacademico <- utils::read.csv(temp[1], sep = "",  stringsAsFactors = FALSE, 
                                 encoding = "latin1", nrows = 1, check.names = FALSE)
   
-  vars <- c("Matr\u00edcula", "Nome", "Situa\u00e7\u00e3o Matr\u00edcula",
+  vars <- c("Matr\u00edcula", "Nome", "Situa\u00e7\u00e3o Matr\u00edcula", "Cota",
             "Curso", "Cpf", "Institui\u00e7\u00e3o", "Per. Letivo Inicial")
   
-  if(sum(names(qacademico) %in% vars) == 7){
+  if(sum(names(qacademico) %in% vars) == 8){
     read_qacademico_web(path)
   } else{
     stop(paste("Not found:",
@@ -47,28 +46,29 @@ read_qacademico <- function(path = ""){
   }
 }
 
-#' @importFrom rlang sym
-#' @importFrom dplyr %>% 
+#' @importFrom dplyr %>% sym
 read_qacademico_web <- function(path){
   temp <-  list.files(path = path, pattern = "*.csv")
   temp <- paste0(path , "/", temp) %>% sort(decreasing = TRUE)
   
-  classes <- c(Cpf = "character")
+  classes <- c(Cpf = "character", `Percentual Frequencia` = "character")
 
   qacademico <- lapply(temp,  utils::read.csv,
-                sep = "",  stringsAsFactors = FALSE, 
-                colClasses = classes, encoding = "latin1") %>% 
+                sep = "",  stringsAsFactors = FALSE, colClasses = classes,
+                encoding = "latin1", check.names = FALSE) %>% 
     dplyr::bind_rows() %>% 
     dplyr::distinct(!!sym("Matr\u00edcula"), .keep_all = TRUE) %>% # Take the most recent 
     dplyr::transmute(R_NO_ALUNO = !!sym("Nome"),
                      R_NU_CPF = num_para_cpf(!!sym("Cpf")),
+                     R_CO_MATRICULA = !!sym("Matr\u00edcula"),
                      R_CO_CICLO_MATRICULA = "", # unitl now a RFEPT doesn't have ciclo
-                     R_NO_STATUS_MATRICULA = !!sym("Situa\u00e7\u00e3o.Matr\u00edcula"),
-                     R_NO_CURSO = !!sym("Curso"),
-                     R_DT_INICIO_CURSO = qacademico_convert_beginning_date(!!sym("Per..Letivo.Inicial")),
-                     R_NO_CAMPUS = qacademico_campus_name(!!sym("Institui\u00e7\u00e3o")))
+                     R_NO_STATUS_MATRICULA = !!sym("Situa\u00e7\u00e3o Matr\u00edcula"),
+                     R_NO_CURSO = qacademico_course_name(!!sym("Curso")),
+                     R_DT_INICIO_CURSO = qacademico_convert_beginning_date(!!sym("Per. Letivo Inicial")),
+                     R_NO_CAMPUS = qacademico_campus_name(!!sym("Institui\u00e7\u00e3o")),
+                     R_NO_COTA = qacademico_cota(!!sym("Cota")))
   
-  class(qacademico) <- c("rfept_data_frame", class(qacademico))
+  class(qacademico) <- c("rfept_data_frame", "qacademico_table", class(qacademico))
 
   qacademico
 }
@@ -84,4 +84,17 @@ qacademico_campus_name <- function(campus){
 
 qacademico_correct_campus_name <- function(campus){
   dplyr::if_else(campus == "", "SEM CAMPUS", campus)
+}
+
+qacademico_cota <- function(cota){
+  dplyr::if_else(grepl("N\u00e3o possui|Ampla Concorr\u00eancia$", cota), 
+                 "N\u00c3O COTISTA",
+                 dplyr::if_else(cota == "",
+                                "SEM INFORMA\u00c7\u00c3O",
+                                "COTISTA"))
+}
+
+qacademico_course_name <- function(course){ 
+  course <- stringr::str_replace_all(course,"/|:|\\?|\\.", "_" )
+  dplyr::if_else(course == "", "SEM CURSO", course)
 }

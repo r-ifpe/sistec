@@ -31,7 +31,8 @@ link_courses <- function(x){
     dplyr::distinct(!!sym("R_NO_CURSO"), .keep_all = TRUE) %>% 
     dplyr::rename(S_NO_CURSO_LINKED = !!sym("S_NO_CURSO"), S_QT_ALUNOS_LINKED = !!sym("n")) %>% 
     dplyr::right_join(x, by = "R_NO_CURSO") %>% 
-    dplyr::filter(!!sym("S_NO_CURSO") == !!sym("S_NO_CURSO_LINKED"))
+    dplyr::filter(!!sym("S_NO_CURSO") == !!sym("S_NO_CURSO_LINKED")) %>% 
+    dplyr::ungroup()
 }
 
 #' @importFrom rlang sym

@@ -4,14 +4,14 @@
 \alias{write_output}
 \title{Save the comparison results}
 \usage{
-write_output(output_path = NULL, output_folder_name = "Sistec_app", comparison)
+write_output(x, output_path = NULL, output_folder_name = "Sistec_app")
 }
 \arguments{
+\item{x}{A list returned by \code{compare_sistec()}.}
+
 \item{output_path}{The folder where you want to save the results.}
 
 \item{output_folder_name}{The folder's name you want to save the results.}
-
-\item{comparison}{A data frame returned by compare_sistec().}
 }
 \value{
 None.
