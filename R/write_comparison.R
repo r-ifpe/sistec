@@ -12,7 +12,7 @@ write_comparison <- function(x, path){
   write_sistec(x$sistec_without_rfept, path, subfolder = TRUE,
                paste("Inserir no", rfept_table), 
                paste("sem", stringr::str_to_lower(rfept_table)))
-  
+
   write_rfept(x$rfept_without_cpf, path, subfolder = TRUE,
               paste0("Retificar CPF/", rfept_table), "sem cpf")
   write_rfept(x$rfept_without_sistec, path, subfolder = TRUE,

@@ -41,9 +41,9 @@ read_sistec <- function(path = ""){
   vars_web <- c("NO_ALUNO", "NU_CPF", "CO_CICLO_MATRICULA", 
                 "NO_STATUS_MATRICULA", "NO_CICLO_MATRICULA", "DT_DATA_INICIO",
                 "CO_UNIDADE_ENSINO")
-  
+
   sistec <- utils::read.csv(temp[1], sep = ";",  stringsAsFactors = FALSE, 
-                            encoding = "UTF-8", check.names = FALSE, nrows = 1)
+                            encoding = "UTF-8", check.names = FALSE, nrows = 100)
   
   num_vars_setec <- sum(names(sistec) %in% vars_setec)
   num_vars_web <- sum(names(sistec) %in% vars_web)
@@ -54,7 +54,8 @@ read_sistec <- function(path = ""){
                  paste(vars_setec[!vars_setec %in% names(sistec)], collapse = ", ")))
       
     } else{
-      sistec <- read_sistec_setec(path)
+      encoding <- sistec_web_encoding(sistec)
+      sistec <- read_sistec_setec(path, encoding)
     }
   } else if(num_vars_web > 0){
     if(num_vars_web < 7){ 
@@ -62,7 +63,8 @@ read_sistec <- function(path = ""){
                  paste(vars_web[!vars_web %in% names(sistec)], collapse = ", ")))
       
     } else{
-      sistec <- read_sistec_web(path)
+      encoding <- sistec_web_encoding(sistec)
+      sistec <- read_sistec_web(path, encoding)
     }
   } else {
     stop("Not found Sistec variables in your file.")
@@ -73,16 +75,16 @@ read_sistec <- function(path = ""){
 
 #' @importFrom dplyr %>% 
 #' @importFrom rlang sym
-read_sistec_web <- function(path){
+read_sistec_web <- function(path, encoding){
   temp = list.files(path = path, pattern = "*.csv")
   temp <- paste0(path, "/", temp)
-  
+
   co_unidade_ensino <- co_unidade_ensino()
   classes <- c(NU_CPF = "character", CO_UNIDADE_ENSINO = "character")
 
   sistec <- lapply(temp, utils::read.csv,
                    sep = ";",  stringsAsFactors = FALSE, 
-                   colClasses = classes, encoding = "latin1") %>%
+                   colClasses = classes, encoding = encoding) %>%
     dplyr::bind_rows() %>%
     dplyr::left_join(co_unidade_ensino, by = "CO_UNIDADE_ENSINO") %>% 
     dplyr::transmute(S_NO_ALUNO = !!sym("NO_ALUNO"),
@@ -90,7 +92,7 @@ read_sistec_web <- function(path){
                      S_CO_CICLO_MATRICULA = !!sym("CO_CICLO_MATRICULA"),
                      S_NO_STATUS_MATRICULA = !!sym("NO_STATUS_MATRICULA"),
                      S_NO_CURSO = sistec_course_name(!!sym("NO_CICLO_MATRICULA")),
-                     S_DT_INICIO_CURSO = sistec_convert_beginning_date(!!sym("DT_DATA_INICIO")),
+                     S_DT_INICIO_CURSO = sistec_convert_beginning_date(!!sym("DT_DATA_INICIO"), encoding),
                      S_NO_CAMPUS = !!sym("S_NO_CAMPUS"))
   
   class(sistec) <- c("sistec_data_frame", class(sistec))
@@ -99,7 +101,7 @@ read_sistec_web <- function(path){
 
 #' @importFrom dplyr %>% 
 #' @importFrom rlang sym
-read_sistec_setec <- function(path){
+read_sistec_setec <- function(path, encoding){
   
   temp = list.files(path = path, pattern = "*.csv")
   temp <- paste0(path, "/", temp)
@@ -115,18 +117,26 @@ read_sistec_setec <- function(path){
                      S_CO_CICLO_MATRICULA = !!sym("Co.Ciclo.Matricula"), 
                      S_NO_STATUS_MATRICULA = !!sym("Situa\u00e7\u00e3o.Matricula"), # Situação.Matricula
                      S_NO_CURSO = sistec_course_name(!!sym("No.Curso")), 
-                     S_DT_INICIO_CURSO = sistec_convert_beginning_date(!!sym("Dt.Data.Inicio")),
+                     S_DT_INICIO_CURSO = sistec_convert_beginning_date(!!sym("Dt.Data.Inicio"), encoding),
                      S_NO_CAMPUS = sistec_campus_name(!!sym("Unidade.Ensino")))
 
   class(sistec) <- c("sistec_data_frame", class(sistec))
   sistec
 }
 
-sistec_convert_beginning_date <- function(date){
-  year <- stringr::str_sub(date, 7, 10)
-  month <- as.numeric(stringr::str_sub(date, 4, 5))
-  semester <- ifelse(month > 6, 2, 1)
-  paste0(year, ".", semester )
+sistec_convert_beginning_date <- function(date, encoding){
+  
+  if (encoding == "latin1"){
+    year <- stringr::str_sub(date, 7, 10)
+    month <- as.numeric(stringr::str_sub(date, 4, 5))
+    semester <- ifelse(month > 6, 2, 1)
+    paste0(year, ".", semester )
+  } else{
+    year <- stringr::str_sub(date, 1, 4)
+    month <- as.numeric(stringr::str_sub(date, 5, 6))
+    semester <- ifelse(month > 6, 2, 1)
+    paste0(year, ".", semester )
+  }
 }
 
 sistec_course_name <- function(course){
@@ -141,4 +151,15 @@ sistec_campus_name <- function(campus){
 
 sistec_correct_campus_name <- function(campus){
   stringr::str_replace(campus, "REU E LIMA", "ABREU E LIMA")
+}
+
+sistec_web_encoding <- function(x){
+  utf <- any(stringr::str_detect(x$NO_STATUS_MATRICULA,
+                                 "CONCLU\u00cdDA"))
+  encoding <- if(utf){
+    "UTF-8"
+  } else{
+    "latin1"
+  }
+  encoding
 }

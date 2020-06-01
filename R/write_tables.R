@@ -1,6 +1,8 @@
 #' @importFrom dplyr %>% sym
 write_sistec <- function(x, path, subfolder, folder, file){
   
+  if (nrow(x) == 0) return(NULL)
+  
   path <- paste0(path,"/", folder)
   
   sistec <- x %>% 
@@ -22,6 +24,8 @@ write_sistec <- function(x, path, subfolder, folder, file){
 #' @importFrom dplyr %>% sym
 write_rfept <- function(x, path, folder, subfolder, file){
   
+  if (nrow(x) == 0) return(NULL)
+  
   path <- paste0(path,"/", folder)
   
   rfept <- x %>% 
@@ -42,6 +46,9 @@ write_rfept <- function(x, path, folder, subfolder, file){
 
 #' @importFrom dplyr %>% sym
 write_status_comparison <- function(x, table, path, subfolder, folder, file){
+  
+  if (nrow(x) == 0) return(NULL)
+  
   path <- paste0(path,"/", folder)
   rfept_matricula <- paste0("MATRICULA_", stringr::str_to_upper(table))
   rfept_status <- paste0("STATUS_", stringr::str_to_upper(table))
@@ -67,6 +74,8 @@ write_status_comparison <- function(x, table, path, subfolder, folder, file){
 
 #' @importFrom dplyr %>% sym
 write_linked_courses <- function(x, rfept_table, path, folder, file){
+  
+  if (nrow(x) == 0) return(NULL)
   
   path <- paste0(path,"/", folder)
   rfept_course <- paste0("CURSO_", stringr::str_to_upper(rfept_table))

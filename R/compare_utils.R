@@ -40,35 +40,6 @@ remove_unliked_cpf <- function(x){
   x
 }
 
-
-#' @importFrom stringr str_detect
-compare_situation <- function(x){
-
-  sistec <- x$sistec_rfept_linked$S_NO_STATUS_MATRICULA
-  rfept <- x$sistec_rfept_linked$R_NO_STATUS_MATRICULA
-  
-  # existe_rfept <- !is.na(rfept)
-  status_concluido <- str_detect(sistec, "CONCLU\u00cdDA") & # CONCLUÍDA
-    str_detect(rfept, "Conclu\u00eddo|Formado") # Concluído
-  status_integralizada <- str_detect(sistec, "INTEGRALIZADA") &
-    str_detect(rfept, "Concludente|ENADE|V\u00ednculo") # Vínculo
-  status_abandono <- str_detect(sistec, "ABANDONO") &
-    str_detect(rfept, "Abandono")
-  status_desligado <- str_detect(sistec, "DESLIGADO") &
-    str_detect(rfept, "Cancelamento|Jubilado")
-  status_em_curso <- str_detect(sistec, "EM_CURSO") &
-    str_detect(rfept, "Matriculado|Trancado")
-  status_transferido <- str_detect(sistec, "TRANSF_EXT") &
-    str_detect(rfept, "Transferido Externo")
-  
-  status <- status_abandono | status_concluido | status_integralizada | status_desligado |
-    status_em_curso | status_transferido
-  
-  status[is.na(status)] <- FALSE
-  x$sistec_rfept_linked$S_NO_STATUS_IGUAL <- status
-  x
-}
-
 split_situation <- function(x){
 
   x$situation_updated <- x$sistec_rfept_linked %>% 
@@ -84,14 +55,13 @@ split_situation <- function(x){
   x
 }
 
-#' @importFrom dplyr %>% 
-#' @importFrom rlang syms
-linked_courses_data_frame <- function(x){
+#' @importFrom dplyr %>% syms
+create_linked_courses_data_frame <- function(x){
 
   select_vars <- c("R_DT_INICIO_CURSO", "R_NO_CURSO", "S_NO_CURSO_LINKED", "S_CO_CICLO_MATRICULA")
   arrange_vars <- c("R_NO_CURSO", "R_DT_INICIO_CURSO")
   
-  x$linked_courses <- x$situation_updated %>% 
+  x$linked_courses <- x$sistec_rfept_linked %>% 
     dplyr::select(!!!syms(select_vars)) %>% 
     dplyr::distinct() %>% 
     dplyr::arrange(!!!syms(arrange_vars))

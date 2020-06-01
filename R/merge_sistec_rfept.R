@@ -7,16 +7,17 @@ merge_sistec_rfept <- function(x){
 
 #' @importFrom dplyr %>% 
 link_students <- function(x){
+
   x$sistec_rfept_linked <- dplyr::inner_join(x$sistec, x$rfept,
                                              by = c("S_NU_CPF" = "R_NU_CPF")) %>% 
     link_courses() %>% 
-    link_ciclos()
+    link_ciclos() %>% 
+    complete_campus()
   
   x
 }
 
-#' @importFrom dplyr %>% 
-#' @importFrom rlang sym
+#' @importFrom dplyr %>% sym
 link_courses <- function(x){
   # to link a course, they must initiate at the same time and 
   # have the majority of the students point to the same course
@@ -35,8 +36,7 @@ link_courses <- function(x){
     dplyr::ungroup()
 }
 
-#' @importFrom rlang sym
-#' @importFrom dplyr %>% 
+#' @importFrom dplyr %>% sym
 link_ciclos <- function(x){
   # sometimes a same ciclo can point to different courses in rfept, choose
   # that ciclo with the majority of students
@@ -47,6 +47,15 @@ link_ciclos <- function(x){
     dplyr::arrange(!!sym("S_CO_CICLO_MATRICULA") ,desc(!!sym("n"))) %>% 
     dplyr::distinct(!!sym("S_CO_CICLO_MATRICULA"), .keep_all = TRUE) %>% 
     dplyr::semi_join(x, ., by = c("S_CO_CICLO_MATRICULA", "S_QT_ALUNOS_LINKED"))
+}
+
+#' @importFrom dplyr sym
+complete_campus <- function(x){
+  # some student registraion doesn't have information about campus
+  # we complete this part using information in sistec
+  dplyr::mutate(x, R_NO_CAMPUS = ifelse(!!sym("R_NO_CAMPUS") == "SEM CAMPUS",
+                          !!sym("S_NO_CAMPUS"),
+                          !!sym("R_NO_CAMPUS")))
 }
 
 #' @importFrom dplyr %>% 

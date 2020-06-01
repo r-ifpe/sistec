@@ -1,5 +1,7 @@
 write_cpf_extraction <- function(x, path, folder, file){
 
+  if (nrow(x) == 0) return(NULL)
+  
   cpf_extraction <- x %>% 
     dplyr::select(NOME = !!sym("R_NO_ALUNO"),
                   CPF = !!sym("R_NU_CPF"),
