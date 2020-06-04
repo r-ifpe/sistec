@@ -6,15 +6,50 @@ b <- sistec::read_sigaa("C:/Pesquisa/dados/ifsc/sigaa/") %>%
 d <- sistec::compare_sistec(a,b)
 sistec::write_output(d, "C:/Users/dmmad/Desktop", "TEST_SC")
 
-a <- sistec::read_sistec("C:/Pesquisa/dados/sistec/web") %>% 
+
+a <- read_sistec("C:/Pesquisa/dados/sistec/") %>% 
   dplyr::filter(S_DT_INICIO_CURSO >= "2019.1")
-b <- sistec::read_qacademico("C:/Pesquisa/dados/qacademico/amostra/") %>% 
+b <- read_qacademico("C:/Pesquisa/dados/qacademico/amostra/") %>% 
   dplyr::filter(R_DT_INICIO_CURSO >= "2019.1")
 
-d <- sistec::compare_sistec(a,b)
+d <- compare_sistec(a,b)
+
+write_output(d, "C:/Users/dmmad/Desktop", "TEST_2")
+
+tesst <- function(){
+  a <- read_sistec("C:/Pesquisa/dados/sistec/") %>% 
+    dplyr::filter(S_DT_INICIO_CURSO >= "2019.1")
+  b <- read_qacademico("C:/Pesquisa/dados/qacademico/amostra/") %>% 
+    dplyr::filter(R_DT_INICIO_CURSO >= "2019.1")
+  
+  d <- compare_sistec(a,b)
+  
+  write_output(d, "C:/Users/dmmad/Desktop", "TEST_2")
+}
+#########################
 
 
 
+t1 <- t %>% 
+  group_nest(R_NO_CAMPUS, R_NO_CURSO)
+
+rename_sistec_data_frame <- function(x){
+  x %>% 
+    dplyr::select(NOME = !!sym("S_NO_ALUNO"),
+                  CPF = !!sym("S_NU_CPF"),
+                  CICLO = !!sym("S_CO_CICLO_MATRICULA"),
+                  CAMPUS = !!sym("S_NO_CAMPUS"),
+                  CURSO = !!sym("S_NO_CURSO"))
+}
+
+
+t1 <- lapply(d[2:3], function(e){
+  e %>% filter(S_NO_CAMPUS == "RECIFE", S_NO_CURSO == "MATEMÁTICA")
+})
+
+t2 <- lapply(d[5:6], function(e){
+  e %>% filter(R_NO_CAMPUS == "RECIFE", R_NO_CURSO == "MATEMÁTICA")
+})
 
 
 
