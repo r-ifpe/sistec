@@ -8,8 +8,9 @@ check_sistec_table <- function(x, expect_nrow){
 
 check_rfept_table <- function(x, expect_nrow){
   expect_equal(colnames(x),
-               c("R_NO_ALUNO", "R_NU_CPF", "R_CO_CICLO_MATRICULA", "R_NO_STATUS_MATRICULA",
-                 "R_NO_CURSO", "R_DT_INICIO_CURSO", "R_NO_CAMPUS", "R_NO_COTA"))
+               c("R_NO_ALUNO", "R_NU_CPF", "R_CO_MATRICULA", "R_CO_CICLO_MATRICULA",
+                 "R_NO_STATUS_MATRICULA", "R_NO_CURSO", "R_DT_INICIO_CURSO", 
+                 "R_NO_CAMPUS", "R_NO_COTA"))
   
   expect_equal(nrow(x), expect_nrow)
 }
@@ -18,8 +19,9 @@ check_situation_table <- function(x, expect_nrow){
   expect_equal(colnames(x),
                c("R_NO_CURSO", "S_NO_CURSO_LINKED", "S_QT_ALUNOS_LINKED", "S_NO_ALUNO",           
                  "S_NU_CPF", "S_CO_CICLO_MATRICULA", "S_NO_STATUS_MATRICULA", "S_NO_CURSO",           
-                 "S_DT_INICIO_CURSO", "S_NO_CAMPUS", "R_NO_ALUNO", "R_CO_CICLO_MATRICULA", 
-                 "R_NO_STATUS_MATRICULA", "R_DT_INICIO_CURSO", "R_NO_CAMPUS", "S_NO_STATUS_IGUAL"))
+                 "S_DT_INICIO_CURSO", "S_NO_CAMPUS", "R_NO_ALUNO",  "R_CO_MATRICULA",       
+                 "R_CO_CICLO_MATRICULA", "R_NO_STATUS_MATRICULA", "R_DT_INICIO_CURSO",
+                 "R_NO_CAMPUS", "R_NO_COTA", "S_NO_STATUS_IGUAL" ))
   
   expect_equal(nrow(x), expect_nrow)
 }
