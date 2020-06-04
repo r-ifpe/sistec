@@ -31,6 +31,8 @@ compare_situation <- function(x){
   
   status[is.na(status)] <- FALSE
   x$sistec_rfept_linked$S_NO_STATUS_IGUAL <- status
+  class(x$sistec_rfept_linked) <- c("comparison_data_frame", class(x$rfept_complete)[-1])
+
   x
 }
 
