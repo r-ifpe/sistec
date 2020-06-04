@@ -9,7 +9,7 @@ check_sistec_table <- function(x, expect_nrow){
 check_rfept_table <- function(x, expect_nrow){
   expect_equal(colnames(x),
                c("R_NO_ALUNO", "R_NU_CPF", "R_CO_CICLO_MATRICULA", "R_NO_STATUS_MATRICULA",
-                 "R_NO_CURSO", "R_DT_INICIO_CURSO", "R_NO_CAMPUS"))
+                 "R_NO_CURSO", "R_DT_INICIO_CURSO", "R_NO_CAMPUS", "R_NO_COTA"))
   
   expect_equal(nrow(x), expect_nrow)
 }

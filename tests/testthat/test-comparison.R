@@ -21,5 +21,5 @@ test_that("compare_sistec works", {
   check_rfept_table(comparison$rfept_without_sistec, expect_nrow = 4020)
   check_situation_table(comparison$situation_updated, expect_nrow = 9516)
   check_situation_table(comparison$situation_to_update, expect_nrow = 817)
-  check_linked_courses_table(comparison$linked_courses, expect_nrow = 242)
+  check_linked_courses_table(comparison$linked_courses, expect_nrow = 244)
 })
