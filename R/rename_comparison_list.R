@@ -46,6 +46,7 @@ rename_rfept_comnplete_data_frame <- function(x){
 }
 
 #' @importFrom dplyr %>% sym
+#' @importFrom rlang :=
 rename_comparison_data_frame <- function(x){
   
   rfept_table <- rfept_table(x)
