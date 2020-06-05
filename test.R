@@ -32,6 +32,16 @@ write.table(qacademico5, "fake_data_qacademico_2019_2.csv",
             row.names = FALSE, fileEncoding = "latin1", sep = "")
 
 
+qacademico_example <- utils::read.csv("inst/extdata/examples/qacademico/fake_data_qacademico.csv", sep = "",  stringsAsFactors = FALSE, 
+                                      encoding = "latin1", check.names = FALSE) 
+
+qacademico_test2 <- utils::read.csv("inst/extdata/test_datasets/qacademico/fake_data_qacademico_2019_2.csv", sep = "",  stringsAsFactors = FALSE, 
+                                      encoding = "latin1", check.names = FALSE) 
+
+qacademico_test1 <- utils::read.csv("inst/extdata/test_datasets/qacademico/fake_data_qacademico_2019_1.csv", sep = "",  stringsAsFactors = FALSE, 
+                                    encoding = "latin1", check.names = FALSE) 
+write.table(t1, "fake_data_qacademico.csv",
+            row.names = FALSE, fileEncoding = "latin1", sep = "")
 
 ############
 a <- read_sistec("C:/Pesquisa/sistec2/inst/extdata/test_datasets/sistec/") %>% 
