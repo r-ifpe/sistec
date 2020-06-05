@@ -7,6 +7,7 @@ if you want to run the app in production or in test mode. (#29)
 
 ### Refactoring
 
+- Write performace improved in 5x (#34)
 - Creation of `rfept_data_frame`. This is useful because we don't need to change code
 for every student registration. Now, we just need to create a `read_*()` function that 
 converts to a `rfept_data_frame`. 

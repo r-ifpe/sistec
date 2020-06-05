@@ -51,7 +51,7 @@ read_qacademico_web <- function(path){
   temp <-  list.files(path = path, pattern = "*.csv")
   temp <- paste0(path , "/", temp) %>% sort(decreasing = TRUE)
   
-  classes <- c(Cpf = "character", `Percentual Frequencia` = "character")
+  classes <- "character"
 
   qacademico <- lapply(temp,  utils::read.csv,
                 sep = "",  stringsAsFactors = FALSE, colClasses = classes,

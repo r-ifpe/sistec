@@ -29,8 +29,3 @@ follow:
 Be sure that your data has the variables: "Matricula", "Nome", "Situacao Matricula",
 "Curso", "Cpf", "Instituicao", "Per. Letivo Inicial".
 }
-\examples{
- 
-# this dataset is not a real one. It is just for test purpose.
-sigaa
-}

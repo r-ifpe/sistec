@@ -40,13 +40,14 @@ link_courses <- function(x){
 link_ciclos <- function(x){
   # sometimes a same ciclo can point to different courses in rfept, choose
   # that ciclo with the majority of students
-  
-  x %>%
+
+  ciclos <- x %>%
     dplyr::group_by(!!sym("S_CO_CICLO_MATRICULA"), !!sym("S_QT_ALUNOS_LINKED")) %>% 
     dplyr::tally() %>% 
-    dplyr::arrange(!!sym("S_CO_CICLO_MATRICULA") ,desc(!!sym("n"))) %>% 
-    dplyr::distinct(!!sym("S_CO_CICLO_MATRICULA"), .keep_all = TRUE) %>% 
-    dplyr::semi_join(x, ., by = c("S_CO_CICLO_MATRICULA", "S_QT_ALUNOS_LINKED"))
+    dplyr::arrange(!!sym("S_CO_CICLO_MATRICULA") , dplyr::desc(!!sym("n"))) %>% 
+    dplyr::distinct(!!sym("S_CO_CICLO_MATRICULA"), .keep_all = TRUE)
+  
+  dplyr::semi_join(x, ciclos, by = c("S_CO_CICLO_MATRICULA", "S_QT_ALUNOS_LINKED"))
 }
 
 #' @importFrom dplyr sym
