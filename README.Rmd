@@ -56,7 +56,7 @@ the student's data, go to your proper account on Qacademico and follow
  - Using f10 shortcut and save in .csv format.
  - Rename the including year and period (example2020_1.csv) 
 
-Be sure that your data has the variables: "Matricula", "Nome", "Situacao Matricula", "Curso", "Cpf", "Instituicao", "Per. Letivo Inicial".
+Be sure that your data has the variables: "Matricula", "Nome", "Situacao Matricula", "Curso", "Cpf", "Instituicao", "Per. Letivo Inicial" and "Cota".
 
 ## Read files
 

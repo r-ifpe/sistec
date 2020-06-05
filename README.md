@@ -60,7 +60,8 @@ account on Qacademico and follow
   - Rename the including year and period (example2020\_1.csv)
 
 Be sure that your data has the variables: “Matricula”, “Nome”, “Situacao
-Matricula”, “Curso”, “Cpf”, “Instituicao”, “Per. Letivo Inicial”.
+Matricula”, “Curso”, “Cpf”, “Instituicao”, “Per. Letivo Inicial” and
+“Cota”.
 
 ## Read files
 
