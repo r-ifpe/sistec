@@ -27,7 +27,7 @@ follow:
 }
 
 Be sure that your data has the variables: "Matricula", "Nome", "Situacao Matricula",
-"Curso", "Cpf", "Instituicao", "Per. Letivo Inicial".
+"Curso", "Cpf", "Instituicao", "Per. Letivo Inicial", "Cota".
 }
 \examples{
  
