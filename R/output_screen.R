@@ -17,6 +17,7 @@ output_screen <- function(input_sistec, input_qacademico,
 
 qacademico_screen <- function(comparison){
 
+  
  shiny::HTML(paste("Compara\u00e7\u00e3o entre Sistec e Qacademico realizada com sucesso!", # Comparação
                     "", "",
                     "Alunos sem CPF:",
