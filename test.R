@@ -23,5 +23,29 @@ qacademico <- utils::read.csv("C:/Pesquisa/dados/qacademico/amostra/ListagemdeAl
 sigaa <- utils::read.csv("C:/Pesquisa/dados/ifsc/sigaa/sigaa.csv", sep = ";",  stringsAsFactors = FALSE, 
                               encoding = "UTF-8",check.names = FALSE)
 
-write.table(sigaa[, 1:5], file = "sigaa2.csv", sep = ";",row.names = FALSE, fileEncoding = "UTF-8")
+write.table(sigaa_fake, file = "sigaa2.csv", sep = ";",row.names = FALSE, fileEncoding = "UTF-8")
+
+sigaa_fake <- inner_join(sigaa, cpfs_table, by = "CPF") %>% 
+  select(-Nome, -CPF) 
+
+sigaa_fake2 <- sigaa_fake %>% 
+  filter(Matrícula >= 201912809604) %>% 
+  filter(grepl("240|103|101|222", Curso)) %>% 
+  sample_n(200) %>%  
+  group_by(Curso) %>% tally() %>% arrange(-n)
+
+
+
+
+co_uni <- read.csv("inst/extdata/co_unidade_ensino/co_unidade_ensino.csv", stringsAsFactors = FALSE)
+co_uni_sc <- read.csv("C:/Pesquisa/dados/ifsc/sigaa/outros/codigos_sistec.csv", sep = ";", stringsAsFactors = FALSE, fileEncoding = "UTF-8")
+
+cp_uni_sc1 <- co_uni_sc %>% 
+  mutate(teste =gsub("^.*CAMPUS |^.*CATARINA ", "", nome_unidade_ensino))
+co_uni_sc1 <- cp_uni_sc1[1:23, ] 
+
+
+
+
+
 
