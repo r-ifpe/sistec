@@ -16,40 +16,12 @@ d <- compare_sistec(a,b)
 
 write_output(d, "C:/Users/dmmad/Desktop", "TEST_2")
 
-qacademico <- utils::read.csv("inst/extdata/test_datasets/qacademico/fake_data_qacademico_2019_2.csv", sep = "",  stringsAsFactors = FALSE, 
-                encoding = "latin1", check.names = FALSE)
 
-qacademico2 <- utils::read.csv("C:/Pesquisa/dados/qacademico/amostra/ListagemdeAlunos_2019_2_1.csv", sep = "",  stringsAsFactors = FALSE, 
-                               encoding = "latin1", check.names = FALSE)
+qacademico <- utils::read.csv("C:/Pesquisa/dados/qacademico/amostra/ListagemdeAlunos_2020_1_1.csv", sep = "",  stringsAsFactors = FALSE, 
+                              encoding = "latin1", nrows = 1, check.names = FALSE)
 
-qacademico3 <- qacademico2 %>% filter(`Per. Letivo Inicial` >= "2019.1")
+sigaa <- utils::read.csv("C:/Pesquisa/dados/ifsc/sigaa/sigaa.csv", sep = ";",  stringsAsFactors = FALSE, 
+                              encoding = "UTF-8",check.names = FALSE)
 
-cota <- qacademico3 %>% select(Cota) 
-
-qacademico5 <- qacademico %>% bind_cols(cota)
-
-write.table(qacademico5, "fake_data_qacademico_2019_2.csv",
-            row.names = FALSE, fileEncoding = "latin1", sep = "")
-
-
-qacademico_example <- utils::read.csv("inst/extdata/examples/qacademico/fake_data_qacademico.csv", sep = "",  stringsAsFactors = FALSE, 
-                                      encoding = "latin1", check.names = FALSE) 
-
-qacademico_test2 <- utils::read.csv("inst/extdata/test_datasets/qacademico/fake_data_qacademico_2019_2.csv", sep = "",  stringsAsFactors = FALSE, 
-                                      encoding = "latin1", check.names = FALSE) 
-
-qacademico_test1 <- utils::read.csv("inst/extdata/test_datasets/qacademico/fake_data_qacademico_2019_1.csv", sep = "",  stringsAsFactors = FALSE, 
-                                    encoding = "latin1", check.names = FALSE) 
-write.table(t1, "fake_data_qacademico.csv",
-            row.names = FALSE, fileEncoding = "latin1", sep = "")
-
-############
-a <- read_sistec("C:/Pesquisa/sistec2/inst/extdata/test_datasets/sistec/") %>% 
-  dplyr::filter(S_DT_INICIO_CURSO >= "2019.1")
-b <- read_qacademico("C:/Pesquisa/sistec2/ova pasta/") %>% 
-  dplyr::filter(R_DT_INICIO_CURSO >= "2019.1")
-
-d <- compare_sistec(a,b)
-
-
+write.table(sigaa[, 1:5], file = "sigaa2.csv", sep = ";",row.names = FALSE, fileEncoding = "UTF-8")
 

@@ -13,6 +13,8 @@ for every student registration. Now, we just need to create a `read_*()` functio
 converts to a `rfept_data_frame`. 
 
 ### Functions 
+
+- The `read_rfept()` is a wrapper around `read_qacademico()` and `read_sigaa()`. Now you just need to specify the folder path and `read_rfept()` identifies if it is a qacademico or sigaa file and then read it. (#38)
 - Refactor of `sistec_compare()` to only work with `rfept_data_frame`. (#30)
 
 ### Bug fixes
