@@ -59,8 +59,7 @@ read_sigaa_web <- function(path){
                      R_NO_CURSO = sigaa_course_name(!!sym("Curso")),
                      R_DT_INICIO_CURSO = sigaa_convert_beginning_date(!!sym("Matr\u00edcula")),
                      R_NO_CAMPUS = "SEM CAMPUS", # until now SIGAA doesn't have campus information
-                     R_NO_COTA = ""
-)
+                     R_NO_COTA = "SEM INFORMA\u00c7\u00c3O")
   
   class(sigaa) <- c("rfept_data_frame", "sigaa_table", class(sigaa))
   
