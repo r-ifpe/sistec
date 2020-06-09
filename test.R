@@ -26,12 +26,13 @@ sigaa <- utils::read.csv("C:/Pesquisa/dados/ifsc/sigaa/sigaa.csv", sep = ";",  s
 write.table(sigaa_fake, file = "sigaa2.csv", sep = ";",row.names = FALSE, fileEncoding = "UTF-8")
 
 sigaa_fake <- inner_join(sigaa, cpfs_table, by = "CPF") %>% 
-  select(-Nome, -CPF) 
+  transmute(Matrícula, Nome = nome_rnd, Status, Curso, CPF = cpfs_rnd)
+
 
 sigaa_fake2 <- sigaa_fake %>% 
   filter(Matrícula >= 201912809604) %>% 
   filter(grepl("240|103|101|222", Curso)) %>% 
-  sample_n(200) %>%  
+  sample_n(200) %>%  write.table("fake_siga.csv", sep = ";", row.names = FALSE, fileEncoding = "UTF-8")
   group_by(Curso) %>% tally() %>% arrange(-n)
 
 
