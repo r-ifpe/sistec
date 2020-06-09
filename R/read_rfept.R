@@ -28,8 +28,8 @@ read_rfept <- function(path = ""){
   files <- list.files(path = path, pattern = "*.csv")
   file <- paste0(path , "/", files[1])
   
-  qacademico <- grepl("Per. Letivo Inicial", readLines(file, n = 1))
-  
+  qacademico <- stringr::str_detect(readLines(file, n = 1), "Per. Letivo Inicial")
+
   if(qacademico){
     read_qacademico(path)
   } else {
