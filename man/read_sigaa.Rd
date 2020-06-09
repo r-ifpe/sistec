@@ -17,15 +17,26 @@ This function support two kinds of schemas: from the api and the website. See De
 if you need help to download the Qacademico data.
 }
 \details{
-AINDA FALTA FAZER PARA O SIGAA. To download the student's data, go to your proper account on Qacademico and
+To download the student's data, go to your proper account on Sigaa and
 follow:
 \itemize{
-\item "Relatorio de Alunos" -> "Listagem de Alunos" (choose year and period)
-\item Click on "visualizar"
-\item Using F10 shortcut and save in .csv format
-\item Rename the including year and period (example2020_1.csv)
+\item Access the panel "Consultas" inside Sigaa module.
+\item Generate the report "Consulta geral discentes".
+\item Select the check box "Trazer informações em forma de relatório" e "Gerar csv".
+\item Select the filter "Campus" and other filter you desire.
+\item Selecionar o filtro "campus" ou outros filtros desejados.
+\item Click on "Buscar" and download the file.
 }
 
-Be sure that your data has the variables: "Matricula", "Nome", "Situacao Matricula",
-"Curso", "Cpf", "Instituicao", "Per. Letivo Inicial".
+Be sure that your data has the variables: "Matricula", "Nome", "Status,
+"Curso" and "CPF".
+}
+\examples{
+ 
+# this dataset is not a real one. It is just for test purpose.
+sigaa <- read_sigaa(system.file("extdata/examples/sigaa",
+                                package = "sistec"))
+
+sigaa
+
 }

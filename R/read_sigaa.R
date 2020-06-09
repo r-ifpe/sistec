@@ -6,16 +6,25 @@
 #' @param path The Sigaa file's path. 
 #' @return A data frame.
 #' 
-#' @details  AINDA FALTA FAZER PARA O SIGAA. To download the student's data, go to your proper account on Qacademico and 
+#' @details  To download the student's data, go to your proper account on Sigaa and 
 #' follow:
 #'  
-#' - "Relatorio de Alunos" -> "Listagem de Alunos" (choose year and period)
-#' - Click on "visualizar" 
-#' - Using F10 shortcut and save in .csv format
-#' - Rename the including year and period (example2020_1.csv) 
+#' - Access the panel "Consultas" inside Sigaa module.
+#' - Generate the report "Consulta geral discentes".
+#' - Select the check box "Trazer informações em forma de relatório" e "Gerar csv".
+#' - Select the filter "Campus" and other filter you desire.
+#' - Selecionar o filtro "campus" ou outros filtros desejados.
+#' - Click on "Buscar" and download the file. 
 #'
-#' Be sure that your data has the variables: "Matricula", "Nome", "Situacao Matricula", 
-#' "Curso", "Cpf", "Instituicao", "Per. Letivo Inicial".
+#' Be sure that your data has the variables: "Matricula", "Nome", "Status, 
+#' "Curso" and "CPF". 
+#' 
+#' @examples  
+#' # this dataset is not a real one. It is just for test purpose.
+#' sigaa <- read_sigaa(system.file("extdata/examples/sigaa",
+#'                                 package = "sistec"))
+#' 
+#' sigaa
 #' 
 #' @importFrom dplyr %>% sym 
 #' @export

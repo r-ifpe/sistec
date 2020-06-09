@@ -3,20 +3,45 @@ context("read_files")
 test_that("read_sistec works", {
   skip_on_cran()
   
-  sistec <- sistec::read_sistec(system.file("extdata/test_datasets/sistec",
-                                            package = "sistec"))
+  sistec <- read_sistec(system.file("extdata/examples/sistec",
+                                    package = "sistec"))
   
-  check_sistec_table(sistec, expect_nrow = 11099)
+  check_sistec_table(sistec, expect_nrow = 200)
   expect_true(inherits(sistec, "sistec_data_frame"))
+})
+
+test_that("read_rfept works", {
+  skip_on_cran()
   
+  qacademico <- read_rfept(system.file("extdata/examples/qacademico",
+                                       package = "sistec"))
+  
+  check_rfept_table(qacademico, expect_nrow = 200)
+  expect_true(inherits(qacademico, "rfept_data_frame"))
+  
+  sigaa <- read_rfept(system.file("extdata/examples/sigaa",
+                                  package = "sistec"))
+  
+  check_rfept_table(sigaa, expect_nrow = 200)
+  expect_true(inherits(sigaa, "rfept_data_frame"))
 })
 
 test_that("read_qacademico works", {
   skip_on_cran()
   
-  qacademico <- sistec::read_qacademico(system.file("extdata/test_datasets/qacademico",
-                                                    package = "sistec"))
+  qacademico <- read_qacademico(system.file("extdata/examples/qacademico",
+                                            package = "sistec"))
   
-  check_rfept_table(qacademico, expect_nrow = 14366)
+  check_rfept_table(qacademico, expect_nrow = 200)
   expect_true(inherits(qacademico, "rfept_data_frame"))
+})
+
+test_that("read_sigaa works", {
+  skip_on_cran()
+  
+  sigaa <- read_sigaa(system.file("extdata/examples/sigaa",
+                                  package = "sistec"))
+  
+  check_rfept_table(sigaa, expect_nrow = 200)
+  expect_true(inherits(sigaa, "rfept_data_frame"))
 })

@@ -1,22 +1,25 @@
-#' Indentify and read files
+#' Identify and read academic registration
 #'
-#' This function support two kinds of schemas: from the api and the website. See Details 
-#' if you need help to download the Qacademico data.
+#' The `read_rfept()` is a wrapper around `read_qacademico()` and `read_sigaa()`. Now 
+#' you just need to specify the folder path and `read_rfept()` identifies if it is a 
+#' qacademico or sigaa file and then read it.
 #'
-#' @param path The Sigaa file's path. 
+#' @param path The file's path to Qacademico or Sigaa folder. 
 #' @return A data frame.
 #' 
-#' @details  AINDA FALTA FAZER PARA O SIGAA. To download the student's data, go to your proper account on Qacademico and 
-#' follow:
-#'  
-#' - "Relatorio de Alunos" -> "Listagem de Alunos" (choose year and period)
-#' - Click on "visualizar" 
-#' - Using F10 shortcut and save in .csv format
-#' - Rename the including year and period (example2020_1.csv) 
-#'
-#' Be sure that your data has the variables: "Matricula", "Nome", "Situacao Matricula", 
-#' "Curso", "Cpf", "Instituicao", "Per. Letivo Inicial".
+#' @details  By now, this function only supports qacademico and sigaa.
 #' 
+#' @examples 
+#' # these datasets are not a real ones. It is just for test purpose.
+#' 
+#' qacademico <- read_rfept(system.file("extdata/examples/qacademico",
+#'                                      package = "sistec")) 
+#'                                      
+#' sigaa <- read_rfept(system.file("extdata/examples/sigaa",
+#'                                  package = "sistec"))
+#'                                  
+#' class(qacademico)
+#' class(sigaa)                                 
 #' @export
 read_rfept <- function(path = ""){
   
