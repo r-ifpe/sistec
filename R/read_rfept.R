@@ -18,8 +18,8 @@
 #' sigaa <- read_rfept(system.file("extdata/examples/sigaa",
 #'                                  package = "sistec"))
 #'                                  
-#'  class(qacademico)
-#'  class(sigaa)                                 
+#' class(qacademico)
+#' class(sigaa)                                 
 #' @export
 read_rfept <- function(path = ""){
   

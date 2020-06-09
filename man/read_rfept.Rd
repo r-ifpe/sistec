@@ -29,6 +29,6 @@ qacademico <- read_rfept(system.file("extdata/examples/qacademico",
 sigaa <- read_rfept(system.file("extdata/examples/sigaa",
                                  package = "sistec"))
                                  
- class(qacademico)
- class(sigaa)                                 
+class(qacademico)
+class(sigaa)                                 
 }
