@@ -34,7 +34,7 @@ devtools::install_github("r-ifpe/sistec")
 ```
 
 Load the package.
-```{r, eval=FALSE}
+```{r eval=FALSE}
 library(sistec)
 ```
 
@@ -78,7 +78,7 @@ Be sure that your data has the variables: "Matricula", "Nome", "Status, "Curso" 
 
 Load the sistec package and pass the folder path to `read_*()` functions. (**NOTE**: These datasets were generated randomly and do not represent the reality, it is just for example purpose).
 
-```{r}
+```{r eval=FALSE}
 sistec <- read_sistec(system.file("extdata/examples/sistec", package = "sistec"))
 qacademico <- read_rfept(system.file("extdata/examples/qacademico", package = "sistec"))
 ```
@@ -87,7 +87,7 @@ qacademico <- read_rfept(system.file("extdata/examples/qacademico", package = "s
 
 Compare the student's situation using `compare_sistec()`
 
-```{r}
+```{r eval=FALSE}
 comparison <- compare_sistec(sistec, qacademico)
 ```
 
