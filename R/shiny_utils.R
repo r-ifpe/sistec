@@ -4,11 +4,11 @@ server_input_path <- function(input_path){
   substr(input_path[1], 1, last_slash)
 }
 
-shiny_comparison <- function(sistec_path, qacademico_path){
-  if(!is.null(sistec_path) && !is.null(qacademico_path)){
+shiny_comparison <- function(sistec_path, rfept_path){
+  if(!is.null(sistec_path) && !is.null(rfept_path)){
     sistec_path <- server_input_path(sistec_path)
-    qacademico_path <- server_input_path(qacademico_path)
-    compare_sistec(sistec_path, qacademico_path)  
+    rfept_path <- server_input_path(rfept_path)
+    compare_sistec(sistec_path, rfept_path)  
   } else {
     FALSE
   }

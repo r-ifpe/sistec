@@ -1,12 +1,12 @@
-output_screen <- function(input_sistec, input_qacademico,
+output_screen <- function(input_sistec, input_rfept,
                           comparison){
-  
-  if(!is.null(input_qacademico) && !is.null(input_sistec)){
-    response <- qacademico_screen(comparison)
-  } else if(is.null(input_qacademico) && is.null(input_sistec)){
-    response <- "Selecione os arquivos do Qacademico e Sistec."   
-  } else if(is.null(input_qacademico)){
-    response <- "Selecione os arquivos do qacademico."
+
+  if(!is.null(input_sistec) && !is.null(input_rfept)){
+    response <- compare_screen(comparison)
+  } else if(is.null(input_sistec) && is.null(input_rfept)){
+    response <- "Selecione os arquivos do Sistec e do registro acad\u00eamico."   
+  } else if(is.null(input_rfept)){
+    response <- "Selecione os arquivos do registro acad\u00eamico."
   } else if(is.null(input_sistec)){
     response <- "Selecione os arquivos do sistec."
   } 
@@ -14,21 +14,20 @@ output_screen <- function(input_sistec, input_qacademico,
   response
 }
 
-
-qacademico_screen <- function(comparison){
-
+compare_screen <- function(comparison){
   
- shiny::HTML(paste("Compara\u00e7\u00e3o entre Sistec e Qacademico realizada com sucesso!", # Comparação
+ rfept <- rfept_table(comparison$rfept_complete)  
+ shiny::HTML(paste(paste0("Compara\u00e7\u00e3o entre Sistec e ", rfept,
+                          " realizada com sucesso!"),
                     "", "",
                     "Alunos sem CPF:",
                     paste0("&emsp; - Sistec: ", nrow(comparison$sistec_without_cpf)),
-                    paste0("&emsp; - Qacademico: ", nrow(comparison$qacademico_without_cpf)),
+                    paste0("&emsp; - ", rfept, ": ", nrow(comparison$rfept_without_cpf)),
                     "V\u00ednculos n\u00e3o encontrados:",
-                    paste0("&emsp; - Sistec: ", nrow(comparison$sistec_without_qacademico)),
-                    paste0("&emsp; - Qacademico: ", nrow(comparison$qacademico_without_sistec)),
+                    paste0("&emsp; - Sistec: ", nrow(comparison$sistec_without_rfept)),
+                    paste0("&emsp; - ", rfept, ": ", nrow(comparison$rfept_without_sistec)),
                     "Situa\u00e7\u00f5es comparadas:",
-                    paste0("&emsp; - Atualizadas: ", sum(comparison$situation_to_update$Status)),
-                    paste0("&emsp; - Desatualizadas: ", sum(!comparison$situation_to_update$Status)),
+                    paste0("&emsp; - Atualizadas: ", nrow(comparison$situation_updated)),
+                    paste0("&emsp; - Desatualizadas: ", nrow(comparison$situation_to_update)),
                     sep = '<br/>'))
 }
-
