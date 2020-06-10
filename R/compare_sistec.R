@@ -35,6 +35,6 @@ compare_sistec.rfept_data_frame <- function(sistec, rfept){
 #' @export
 compare_sistec.character <- function(sistec, rfept){
   sistec <- read_sistec(sistec)
-  qacademico <- read_qacademico(rfept)
+  qacademico <- read_rfept(rfept)
   compare_sistec_rfept(sistec, qacademico)
 }
