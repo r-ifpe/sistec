@@ -20,7 +20,7 @@
 #' @import shiny
 #' @export
 sistec_app <- function(output_path = NULL,
-                       output_folder_name = "Sistec_app",
+                       output_folder_name = "Compara\u00e7\u00f5es",
                        max_file_size = 100,
                        options_port = 8888,
                        options_launch_browser = TRUE,
@@ -33,11 +33,11 @@ sistec_app <- function(output_path = NULL,
   version <- as.character(read.dcf(description_path, fields = "Version"))
 
   ui <- fluidPage(
-    navbarPage(paste0("Sistec_app v", version),
-               tabPanel("Qacademico",
+    navbarPage(paste0("ARIA v", version),
+               tabPanel("Sistec",
                         sidebarLayout(
                           sidebarPanel(
-                            fileInput("qacademico", "Escolha os arquivos do Qacademico",
+                            fileInput("rfept", "Escolha os arquivos do registro acad\u00eamico",
                                       multiple = TRUE,
                                       buttonLabel = "Arquivos",
                                       placeholder = "Nada Selecionado",
@@ -100,14 +100,14 @@ sistec_app <- function(output_path = NULL,
       input$do
       
       comparison$x <- isolate(
-        if(!is.null(input$sistec$datapath[1]) && !is.null(input$qacademico$datapath[1])){
+        if(!is.null(input$sistec$datapath[1]) && !is.null(input$rfept$datapath[1])){
           shiny_comparison(input$sistec$datapath[1],
-                           input$qacademico$datapath[1])
+                           input$rfept$datapath[1])
         } else {FALSE}
       ) 
       
-      isolate(output_screen(input$qacademico$datapath[1],
-                            input$sistec$datapath[1],
+      isolate(output_screen(input$sistec$datapath[1],
+                            input$rfept$datapath[1],
                             comparison$x)
       )
     })

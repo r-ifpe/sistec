@@ -6,7 +6,7 @@
 \usage{
 sistec_app(
   output_path = NULL,
-  output_folder_name = "Sistec_app",
+  output_folder_name = "Comparações",
   max_file_size = 100,
   options_port = 8888,
   options_launch_browser = TRUE,
