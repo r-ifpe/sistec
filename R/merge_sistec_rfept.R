@@ -1,18 +1,11 @@
 merge_sistec_rfept <- function(x){
 
-  x <- link_students(x)
-  x <- update_unlinked_students(x) 
-  x
-}
-
-#' @importFrom dplyr %>% 
-link_students <- function(x){
-
   x$sistec_rfept_linked <- dplyr::inner_join(x$sistec, x$rfept,
                                              by = c("S_NU_CPF" = "R_NU_CPF")) %>% 
     link_courses() %>% 
-    link_ciclos() %>% 
-    complete_campus()
+    link_ciclos() 
+  
+  # %>% complete_campus()
   
   x
 }
@@ -28,11 +21,10 @@ link_courses <- function(x){
   x %>% 
     dplyr::group_by(!!sym("R_NO_CURSO"), !!sym("S_NO_CURSO")) %>% 
     dplyr::tally() %>% 
-    dplyr::arrange(!!sym("R_NO_CURSO"), dplyr::desc(!!sym("n"))) %>% 
-    dplyr::distinct(!!sym("R_NO_CURSO"), .keep_all = TRUE) %>% 
+    dplyr::filter(!!sym("n") >= 10) %>% 
     dplyr::rename(S_NO_CURSO_LINKED = !!sym("S_NO_CURSO"), S_QT_ALUNOS_LINKED = !!sym("n")) %>% 
-    dplyr::right_join(x, by = "R_NO_CURSO") %>% 
-    dplyr::filter(!!sym("S_NO_CURSO") == !!sym("S_NO_CURSO_LINKED")) %>% 
+    dplyr::inner_join(x, by = "R_NO_CURSO") %>% 
+    dplyr::filter(!!sym("S_NO_CURSO_LINKED") == !!sym("S_NO_CURSO")) %>% 
     dplyr::ungroup()
 }
 
@@ -55,25 +47,6 @@ complete_campus <- function(x){
   # some student registraion doesn't have information about campus
   # we complete this part using information in sistec
   dplyr::mutate(x, R_NO_CAMPUS = ifelse(!!sym("R_NO_CAMPUS") == "SEM CAMPUS",
-                          !!sym("S_NO_CAMPUS"),
-                          !!sym("R_NO_CAMPUS")))
-}
-
-#' @importFrom dplyr %>% 
-update_unlinked_students <- function(x){
-  
-  x$sistec_without_rfept <- dplyr::anti_join(x$sistec, x$sistec_rfept_linked,
-                                             by = c("S_NU_CPF", "S_NO_CURSO")) %>% 
-    dplyr::bind_rows(x$sistec_without_rfept)
-
-  x$rfept_without_sistec <- dplyr::anti_join(x$rfept, x$sistec_rfept_linked, 
-                                      by = c("R_NU_CPF" = "S_NU_CPF", "R_NO_CURSO")) %>% 
-    dplyr::bind_rows(x$rfept_without_sistec)
-  
-  # there is no reason for use this tables because 
-  # the datasets were merged
-  x$sistec <- NULL # clean memory
-  x$rfept <-NULL # clean memory
-
-  x
+                                        !!sym("S_NO_CAMPUS"),
+                                        !!sym("R_NO_CAMPUS")))
 }
