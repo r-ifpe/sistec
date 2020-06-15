@@ -15,6 +15,17 @@ check_rfept_table <- function(x, expect_nrow){
   expect_equal(nrow(x), expect_nrow)
 }
 
+check_rfept_wrong_registration <- function(x, expect_nrow){
+  expect_equal(colnames(x),
+               c("R_NO_CURSO", "S_NO_CURSO_LINKED", "S_QT_ALUNOS_LINKED", "R_NO_ALUNO",
+                 "R_NU_CPF", "R_CO_MATRICULA", "R_CO_CICLO_MATRICULA", "R_NO_STATUS_MATRICULA",
+                 "R_DT_INICIO_CURSO", "R_NO_CAMPUS", "R_NO_COTA", "S_NO_ALUNO",           
+                 "S_CO_CICLO_MATRICULA", "S_NO_STATUS_MATRICULA", "S_NO_CURSO",           
+                 "S_DT_INICIO_CURSO", "S_NO_CAMPUS"))
+  
+  expect_equal(nrow(x), expect_nrow)
+}
+
 check_situation_table <- function(x, expect_nrow){
   expect_equal(colnames(x),
                c("R_NO_CURSO", "S_NO_CURSO_LINKED", "S_QT_ALUNOS_LINKED", "S_NO_ALUNO",           
@@ -28,7 +39,8 @@ check_situation_table <- function(x, expect_nrow){
 
 check_linked_courses_table <- function(x, expect_nrow){
   expect_equal(colnames(x),
-               c("R_DT_INICIO_CURSO", "R_NO_CURSO", "S_NO_CURSO_LINKED", "S_CO_CICLO_MATRICULA"))
+               c("R_DT_INICIO_CURSO", "R_NO_CURSO", "R_NO_CAMPUS",
+                 "S_NO_CURSO_LINKED", "S_CO_CICLO_MATRICULA"))
   
   expect_equal(nrow(x), expect_nrow)
 }
