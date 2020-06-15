@@ -6,11 +6,13 @@ rename_comparison_list <- function(x){
   x$rfept_complete <- rename_rfept_comnplete_data_frame(x$rfept_complete)
   x$rfept_without_cpf <- rename_rfept_data_frame(x$rfept_without_cpf)
   x$rfept_without_sistec <- rename_rfept_data_frame(x$rfept_without_sistec)
+  x$rfept_wrong_beginning <- rename_wrong_beginning_data_frame(x$rfept_wrong_beginning)
+  x$rfept_wrong_cyclo <- rename_wrong_cyclo_data_frame(x$rfept_wrong_cyclo)
   x$situation_updated <- rename_comparison_data_frame(x$situation_updated)
   x$situation_to_update <- rename_comparison_data_frame(x$situation_to_update)
   x$linked_courses <- rename_linked_course_data_frame(x$linked_courses)
-  x
   
+  x
 }
 
 #' @importFrom dplyr %>% sym
@@ -66,6 +68,45 @@ rename_comparison_data_frame <- function(x){
 }
 
 #' @importFrom dplyr %>% sym
+#' @importFrom rlang :=
+rename_wrong_beginning_data_frame <- function(x){
+
+  rfept_table <- rfept_table(x)
+  
+  rfept_matricula <- paste0("MATRICULA_", stringr::str_to_upper(rfept_table))
+  rfept_beginning <- paste0("INICIO_", stringr::str_to_upper(rfept_table))
+  
+  x %>% 
+    dplyr::select(NOME = !!sym("R_NO_ALUNO"),
+                  CPF = !!sym("R_NU_CPF"),
+                  !!rfept_matricula := !!sym("R_CO_MATRICULA"),
+                  SISTEC_CURSO = !!sym("S_NO_CURSO"),
+                  SISTEC_CICLO = !!sym("S_CO_CICLO_MATRICULA"),
+                  !!rfept_beginning := !!sym("R_DT_INICIO_CURSO"),
+                  INICIO_SISTEC = !!sym("S_DT_INICIO_CURSO"),
+                  CAMPUS = !!sym("R_NO_CAMPUS"),
+                  CURSO = !!sym("R_NO_CURSO")) # to use rfept is better to update
+}
+
+#' @importFrom dplyr %>% sym
+#' @importFrom rlang :=
+rename_wrong_cyclo_data_frame <- function(x){
+
+  rfept_table <- rfept_table(x)
+  
+  rfept_matricula <- paste0("MATRICULA_", stringr::str_to_upper(rfept_table))
+
+  x %>% 
+    dplyr::select(NOME = !!sym("R_NO_ALUNO"),
+                  CPF = !!sym("R_NU_CPF"),
+                  !!rfept_matricula := !!sym("R_CO_MATRICULA"),
+                  SISTEC_CURSO = !!sym("S_NO_CURSO"),
+                  SISTEC_CICLO = !!sym("S_CO_CICLO_MATRICULA"),
+                  CAMPUS = !!sym("R_NO_CAMPUS"),
+                  CURSO = !!sym("R_NO_CURSO")) # to use rfept is better to update
+}
+
+#' @importFrom dplyr %>% sym
 rename_linked_course_data_frame <- function(x){
   
   rfept_table <- rfept_table(x)
@@ -75,6 +116,6 @@ rename_linked_course_data_frame <- function(x){
     dplyr::select(INICIO = !!sym("R_DT_INICIO_CURSO"),
                   CICLO = !!sym("S_CO_CICLO_MATRICULA"),
                   CURSO_SISTEC = !!sym("S_NO_CURSO_LINKED"),
-                  !!rfept_course := !!sym("R_NO_CURSO")) 
-  
+                  !!rfept_course := !!sym("R_NO_CURSO"),
+                  CAMPUS = !!sym("R_NO_CAMPUS")) 
 }

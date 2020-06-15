@@ -34,7 +34,7 @@ sistec_app <- function(output_path = NULL,
 
   ui <- fluidPage(
     navbarPage(paste0("ARIA v", version),
-               tabPanel("Sistec",
+               tabPanel("SISTEC",
                         sidebarLayout(
                           sidebarPanel(
                             fileInput("rfept", "Escolha os arquivos do registro acad\u00eamico",

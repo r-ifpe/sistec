@@ -29,6 +29,7 @@ write_output.comparison_list <- function(x,
     group_sistec(x) %>% write_sistec(path, rfept_table)
     group_rfept(x) %>% write_rfept(path, rfept_table)
     group_cpf_registration(x) %>% write_cpf_registration(path)
+
     write_tables(x, path, rfept_table)
   } else {
     stop("Please, select a folder to download the results.")
@@ -55,12 +56,24 @@ group_rfept <- function(x){
   
   rfept_without_sistec <- x$rfept_without_sistec %>%
     dplyr::group_nest(!!sym("CAMPUS"), !!sym("CURSO"), .key = "rfept_without_sistec")
+
+  rfept_wrong_beginning <- x$rfept_wrong_beginning %>%
+    dplyr::group_nest(!!sym("CAMPUS"), !!sym("CURSO"), .key = "rfept_wrong_beginning")
+  
+  rfept_wrong_cyclo <- x$rfept_wrong_cyclo %>%
+    dplyr::group_nest(!!sym("CAMPUS"), !!sym("CURSO"), .key = "rfept_wrong_cyclo")
   
   situation_to_update <- x$situation_to_update %>%
     dplyr::group_nest(!!sym("CAMPUS"), !!sym("CURSO"), .key = "situation_to_update")
   
-  dplyr::full_join(rfept_without_cpf, rfept_without_sistec, by=c("CAMPUS", "CURSO")) %>%
-    dplyr::full_join(situation_to_update, by=c("CAMPUS",  "CURSO"))
+  situation_updated <- x$situation_updated %>%
+    dplyr::group_nest(!!sym("CAMPUS"), !!sym("CURSO"), .key = "situation_updated")  
+ 
+  dplyr::full_join(rfept_without_cpf, rfept_without_sistec, by = c("CAMPUS", "CURSO")) %>%
+    dplyr::full_join(rfept_wrong_beginning, by = c("CAMPUS", "CURSO")) %>% 
+    dplyr::full_join(rfept_wrong_cyclo, by = c("CAMPUS", "CURSO")) %>% 
+    dplyr::full_join(situation_to_update, by = c("CAMPUS", "CURSO")) %>% 
+    dplyr::full_join(situation_updated, by = c("CAMPUS", "CURSO"))
 }
 
 #' @importFrom dplyr %>% sym
@@ -73,7 +86,7 @@ write_sistec <- function(x, path, rfept_table){
   
   invisible(
     lapply(1:nrow(x), function(e){
-      path_to_save <- paste0(path, "/Sistec/",  x$CAMPUS[e], "/", x$CURSO[e])
+      path_to_save <- paste0(path, "/Retificar no Sistec/",  x$CAMPUS[e], "/", x$CURSO[e])
       dir.create(path_to_save, recursive = TRUE)
       sistec <- list()
       sistec[["Retificar CPF"]] <- x$sistec_without_cpf[e][[1]]
@@ -84,15 +97,17 @@ write_sistec <- function(x, path, rfept_table){
 }
 
 write_rfept <- function(x, path, rfept_table){
-  
   invisible(
     lapply(1:nrow(x), function(e){
-      path_to_save <- paste0(path, "/", rfept_table, "/",  x$CAMPUS[e], "/", x$CURSO[e])
+      path_to_save <- paste0(path, "/Retificar no ", rfept_table, "/",  x$CAMPUS[e], "/", x$CURSO[e])
       dir.create(path_to_save, recursive = TRUE)
       rfept <- list()
       rfept[["Retificar CPF"]] <- x$rfept_without_cpf[e][[1]]
       rfept[["Inserir no Sistec"]] <- x$rfept_without_sistec[e][[1]]
+      rfept[["Retificar Inicio"]] <- x$rfept_wrong_beginning[e][[1]]
+      rfept[["Retificar Ciclo"]] <- x$rfept_wrong_cyclo[e][[1]]
       rfept[["Retificar Situa\u00e7\u00e3o"]] <- x$situation_to_update[e][[1]]
+      rfept[["Situa\u00e7\u00f5es Atualizadas"]] <- x$situation_updated[e][[1]]
       openxlsx::write.xlsx(rfept, paste0(path_to_save, "/", 
                                          rfept_table, ".xlsx"))
     })
@@ -105,7 +120,7 @@ write_cpf_registration <- function(x, path){
   invisible(
     lapply(1:nrow(x), function(e){
 
-      path_to_save <- paste0(path, "/Cadastro em Lote/",
+      path_to_save <- paste0(path, "/Cadastrar Alunos/",
                              x$CAMPUS[e], "/", x$CURSO[e], "/", x$CICLO[e])
       dir.create(path_to_save, recursive = TRUE)
       
@@ -113,7 +128,7 @@ write_cpf_registration <- function(x, path){
       unique_quotas <- unique(quotas_table$COTA)
       
       cpfs <- list()
-      cpfs[["Lista de Alunos"]] <- quotas_table
+      cpfs[["Inserir no Sistec"]] <- quotas_table
       
       for(i in 1:length(unique_quotas)){
         cpf_quota <- quotas_table[quotas_table$COTA == unique_quotas[i], ]$CPF
@@ -121,7 +136,7 @@ write_cpf_registration <- function(x, path){
         cpfs[[unique_quotas[i]]] <- cpf_quota
       }
 
-      openxlsx::write.xlsx(cpfs, paste0(path_to_save, "/Cadastro em Lote.xlsx"))
+      openxlsx::write.xlsx(cpfs, paste0(path_to_save, "/Cadastrar alunos.xlsx"))
     })
   )
 }
@@ -136,6 +151,8 @@ write_tables <- function(x, path, rfept_table){
   tables[[paste0("Sistec sem ", rfept_table)]] <- x$sistec_without_rfept
   tables[[paste0(rfept_table, " sem CPF")]] <- x$rfept_without_cpf
   tables[[paste0(rfept_table, " sem Sistec")]] <- x$rfept_without_sistec
+  tables[["Data de In\\u00edcio Errada"]] <- x$rfept_wrong_beginning
+  tables[["Ciclo Errado"]] <- x$rfept_wrong_cyclo
   tables[["Situa\u00e7\u00f5es Atualizadas"]] <- x$situation_updated
   tables[["Situa\u00e7\u00f5es Desatualizadas"]] <- x$situation_to_update
   tables[["Cursos Relacionados"]] <- x$linked_courses

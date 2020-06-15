@@ -9,13 +9,15 @@ test_that("compare_screen works", {
   comparison <- compare_sistec(sistec_path, qacademico_path)
   
   output_screen <- sistec:::compare_screen(comparison)
-  
+
   expect_true(grepl("Compara\u00e7\u00e3o entre Sistec e Qacademico realizada com sucesso!",
                     output_screen))
   expect_true(grepl("&emsp; - Sistec: 88<br/>", output_screen))
   expect_true(grepl("&emsp; - Qacademico: 6<br/>", output_screen))
-  expect_true(grepl("&emsp; - Sistec: 692<br/>", output_screen))
-  expect_true(grepl("&emsp; - Qacademico: 4020", output_screen))
-  expect_true(grepl("&emsp; - Atualizadas: 9516", output_screen))
+  expect_true(grepl("&emsp; - Sistec: 648<br/>", output_screen))
+  expect_true(grepl("&emsp; - Qacademico: 3975", output_screen))
+  expect_true(grepl("&emsp; - Na data de início: 56", output_screen))
+  expect_true(grepl("&emsp; - No ciclo: 0", output_screen))
+  expect_true(grepl("&emsp; - Atualizadas: 9505", output_screen))
   expect_true(grepl("&emsp; - Desatualizadas: 817", output_screen))
 })
