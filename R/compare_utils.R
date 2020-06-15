@@ -34,11 +34,11 @@ remove_invalid_cpf <- function(x){
 remove_unliked_cpf <- function(x){
   x$rfept_without_sistec <- dplyr::anti_join(x$rfept, x$sistec,
                                              by = c("R_NU_CPF" = "S_NU_CPF")) %>% 
-    bind_rows(x$rfept_without_sistec)
+    dplyr::bind_rows(x$rfept_without_sistec)
   
   x$sistec_without_rfept <- dplyr::anti_join(x$sistec, x$rfept,
                                              by = c("S_NU_CPF" = "R_NU_CPF")) %>% 
-    bind_rows(x$sistec_without_rfept)
+    dplyr::bind_rows(x$sistec_without_rfept)
   
   x$rfept <- dplyr::anti_join(x$rfept, x$rfept_without_sistec, by = "R_NU_CPF")
   x$sistec <- dplyr::anti_join(x$sistec, x$sistec_without_rfept, by = "S_NU_CPF")
