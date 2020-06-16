@@ -25,8 +25,7 @@ aria <- function(output_path = NULL,
                  options_port = 8888,
                  options_launch_browser = TRUE,
                  test_mode = TRUE){
-  
-  .Deprecated("ARIA")
+
   opt <- options(shiny.maxRequestSize = max_file_size*1024^2) 
   on.exit(options(opt))
   
