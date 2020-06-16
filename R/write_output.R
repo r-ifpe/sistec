@@ -12,7 +12,7 @@
 #' @export
 write_output <- function(x,
                          output_path = NULL, 
-                         output_folder_name = "Sistec_app"){
+                         output_folder_name = "ARIA"){
   UseMethod("write_output")
 }
 

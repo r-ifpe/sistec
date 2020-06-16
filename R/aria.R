@@ -20,7 +20,7 @@
 #' @import shiny
 #' @export
 aria <- function(output_path = NULL,
-                 output_folder_name = "Compara\u00e7\u00f5es",
+                 output_folder_name = "ARIA",
                  max_file_size = 100,
                  options_port = 8888,
                  options_launch_browser = TRUE,

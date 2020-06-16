@@ -6,7 +6,7 @@
 \usage{
 aria(
   output_path = NULL,
-  output_folder_name = "Comparações",
+  output_folder_name = "ARIA",
   max_file_size = 100,
   options_port = 8888,
   options_launch_browser = TRUE,
