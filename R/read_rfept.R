@@ -38,12 +38,11 @@ read_rfept <- function(path = "", start = NULL){
   qacademico <- stringr::str_detect(readLines(file, n = 1), "Per. Letivo Inicial")
 
   if(qacademico){
-    rfept <- read_qacademico(path)
+    rfept <- read_qacademico(path, start)
   } else {
-    rfept <- read_sigaa(path)
+    rfept <- read_sigaa(path, start)
   }
 
-  rfept <- filter_rfept_date(rfept, start)
   rfept
 }
 

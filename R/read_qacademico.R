@@ -4,6 +4,9 @@
 #' if you need help to download the Qacademico data.
 #'
 #' @param path The Qacademico file's path. 
+#' @param start A character with the date to start the comparison. The default is the minimum 
+#' value found in in the data. The date has to be in this format: "yyyy.semester".
+#' Ex.: "2019.1" or "2019.2".
 #' @return A data frame.
 #' 
 #' @details To download the student's data, go to your proper account on Qacademico and 
@@ -25,8 +28,8 @@
 #' qacademico
 #' @importFrom dplyr %>% sym 
 #' @export
-read_qacademico <- function(path = ""){
-  
+read_qacademico <- function(path = "", start = NULL){
+
   if(path == "") stop("You need to specify the path.")
   
   temp <-  list.files(path = path, pattern = "*.csv")
@@ -39,11 +42,14 @@ read_qacademico <- function(path = ""){
             "Curso", "Cpf", "Institui\u00e7\u00e3o", "Per. Letivo Inicial")
   
   if(sum(names(qacademico) %in% vars) == 8){
-    read_qacademico_web(path)
+    qacademico <- read_qacademico_web(path)
   } else{
     stop(paste("Not found:",
                paste(vars[!vars %in% names(qacademico)], collapse = ", ")))
   }
+  
+  qacademico <- filter_rfept_date(qacademico, start)
+  qacademico
 }
 
 #' @importFrom dplyr %>% sym
