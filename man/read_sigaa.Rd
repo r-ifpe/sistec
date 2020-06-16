@@ -10,15 +10,15 @@ read_sigaa(path = "", start = NULL)
 \item{path}{The Sigaa file's path.}
 
 \item{start}{A character with the date to start the comparison. The default is the minimum
-value found in in the data. The date has to be in this format: "yyyy.semester".
+value found in the data. The date has to be in this format: "yyyy.semester".
 Ex.: "2019.1" or "2019.2".}
 }
 \value{
 A data frame.
 }
 \description{
-This function support two kinds of schemas: from the api and the website. See Details
-if you need help to download the Qacademico data.
+This function reads Sigaa datasets from the api. See Details if you need help where to
+download the Sigaa data.
 }
 \details{
 To download the student's data, go to your proper account on Sigaa and
@@ -27,8 +27,7 @@ follow:
 \item Access the panel "Consultas" inside Sigaa module.
 \item Generate the report "Consulta geral discentes".
 \item Select the check box "Trazer informações em forma de relatório" e "Gerar csv".
-\item Select the filter "Campus" and other filter you desire.
-\item Selecionar o filtro "campus" ou outros filtros desejados.
+\item Select the filter "Campus" and other filters you desire.
 \item Click on "Buscar" and download the file.
 }
 

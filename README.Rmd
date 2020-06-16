@@ -15,8 +15,7 @@ knitr::opts_chunk$set(eval = FALSE)
 knitr::opts_chunk$set(warning = FALSE)
 ```
 
-The [Sistec](https://sistec.mec.gov.br/) is the Brazilian system for diploma registration and validation on technical and superior courses. The sistec package provides tools for Brazilian institutions to update the student's registration and make data analysis about their situation, 
-retention and drop out. 
+The [Sistec](https://sistec.mec.gov.br/) is the Brazilian system for diploma registration and validation on technical and superior courses. The sistec package provides tools for Brazilian institutions to update the student's registration and make data analysis about their situation, retention and drop out. 
 
 ## Installation
 

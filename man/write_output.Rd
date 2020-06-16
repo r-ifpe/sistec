@@ -4,7 +4,7 @@
 \alias{write_output}
 \title{Save the comparison results}
 \usage{
-write_output(x, output_path = NULL, output_folder_name = "Sistec_app")
+write_output(x, output_path = NULL, output_folder_name = "ARIA")
 }
 \arguments{
 \item{x}{A list returned by \code{compare_sistec()}.}
