@@ -4,10 +4,14 @@
 \alias{read_rfept}
 \title{Identify and read academic registration}
 \usage{
-read_rfept(path = "")
+read_rfept(path = "", start = NULL)
 }
 \arguments{
 \item{path}{The file's path to Qacademico or Sigaa folder.}
+
+\item{start}{A character with the date to start the comparison. The default is the minimum
+value found in in the data. The date has to be in this format: "yyyy.semester".
+Ex.: "2019.1" or "2019.2".}
 }
 \value{
 A data frame.
@@ -18,17 +22,21 @@ you just need to specify the folder path and \code{read_rfept()} identifies if i
 qacademico or sigaa file and then read it.
 }
 \details{
-By now, this function only supports qacademico and sigaa.
+By now, this function only supports qacademico and sigaa-sc.
 }
 \examples{
 # these datasets are not a real ones. It is just for test purpose.
 
-qacademico <- read_rfept(system.file("extdata/examples/qacademico",
-                                     package = "sistec")) 
+qacademico <- read_rfept(system.file("extdata/examples/qacademico", package = "sistec")) 
                                      
-sigaa <- read_rfept(system.file("extdata/examples/sigaa",
-                                 package = "sistec"))
-                                 
+sigaa <- read_rfept(system.file("extdata/examples/sigaa", package = "sistec"))
+   
 class(qacademico)
-class(sigaa)                                 
+class(sigaa)
+
+# example selecting the period
+qacademico_2019_2 <- read_rfept(system.file("extdata/examples/qacademico", package = "sistec"),
+                                start = "2019.2") 
+
+class(qacademico_2019_2)                                 
 }

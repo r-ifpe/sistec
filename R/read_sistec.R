@@ -6,6 +6,9 @@
 #' See Details if you need help to download the data from Sistec. 
 #'
 #' @param path The sistec file's path. 
+#' @param start A character with the date to start the comparison. The default is the minimum 
+#' value found in in the data. The date has to be in this format: "yyyy.semester".
+#' Ex.: "2019.1" or "2019.2".
 #' @return A data frame.
 #' 
 #' @details You can download the Sistec's student registration using your proper account on 
@@ -25,9 +28,13 @@
 #' 
 #' sistec
 #' 
-#' @importFrom rlang sym
+#' # example selecting the period
+#' sistec_2019_2 <- read_sistec(system.file("extdata/examples/sistec", package = "sistec"),
+#'                                 start = "2019.2") 
+#' 
+#' sistec_2019_2 
 #' @export
-read_sistec <- function(path = ""){
+read_sistec <- function(path = "", start = NULL){
   
   if(path == "") stop("You need to specify the path.")
 
@@ -70,11 +77,11 @@ read_sistec <- function(path = ""){
     stop("Not found Sistec variables in your file.")
   }
   
+  sistec <- filter_sistec_date(sistec, start)
   sistec
 }
 
-#' @importFrom dplyr %>% 
-#' @importFrom rlang sym
+#' @importFrom dplyr %>% sym
 read_sistec_web <- function(path, encoding){
   temp = list.files(path = path, pattern = "*.csv")
   temp <- paste0(path, "/", temp)
@@ -99,8 +106,7 @@ read_sistec_web <- function(path, encoding){
   sistec
 }
 
-#' @importFrom dplyr %>% 
-#' @importFrom rlang sym
+#' @importFrom dplyr %>% sym
 read_sistec_setec <- function(path, encoding){
   
   temp = list.files(path = path, pattern = "*.csv")
@@ -162,4 +168,17 @@ sistec_web_encoding <- function(x){
     "latin1"
   }
   encoding
+}
+
+filter_sistec_date <- function(x, start){
+  
+  year_regex <- "[12][09][0-9]{2}.[12]"
+  
+  if(is.null(start)){
+    start <- stringr::str_extract(x$S_DT_INICIO_CURSO, year_regex) %>% 
+      min(na.rm = TRUE)
+  } 
+  
+  x %>% 
+    dplyr::filter(!!sym("S_DT_INICIO_CURSO") >= start)
 }

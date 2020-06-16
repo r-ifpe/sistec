@@ -4,10 +4,14 @@
 \alias{read_sistec}
 \title{Read sistec files}
 \usage{
-read_sistec(path = "")
+read_sistec(path = "", start = NULL)
 }
 \arguments{
 \item{path}{The sistec file's path.}
+
+\item{start}{A character with the date to start the comparison. The default is the minimum
+value found in in the data. The date has to be in this format: "yyyy.semester".
+Ex.: "2019.1" or "2019.2".}
 }
 \value{
 A data frame.
@@ -38,4 +42,9 @@ sistec <- read_sistec(system.file("extdata/examples/sistec",
 
 sistec
 
+# example selecting the period
+sistec_2019_2 <- read_sistec(system.file("extdata/examples/sistec", package = "sistec"),
+                                start = "2019.2") 
+
+sistec_2019_2 
 }
