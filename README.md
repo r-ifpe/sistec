@@ -88,7 +88,8 @@ Be sure that your data has the variables: “Matricula”, “Nome”,
 
 Load the sistec package and pass the folder path to `read_*()`
 functions. (**NOTE**: These datasets were generated randomly and do not
-represent the reality, it is just for example purpose).
+represent the reality, it is just for example
+purpose).
 
 ``` r
 sistec <- read_sistec(system.file("extdata/examples/sistec", package = "sistec"))
