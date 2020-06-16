@@ -1,11 +1,11 @@
 #' Read Sigaa files
 #'
-#' This function support two kinds of schemas: from the api and the website. See Details 
-#' if you need help to download the Qacademico data.
+#' This function reads Sigaa datasets from the api. See Details if you need help where to
+#' download the Sigaa data.
 #'
 #' @param path The Sigaa file's path. 
 #' @param start A character with the date to start the comparison. The default is the minimum 
-#' value found in in the data. The date has to be in this format: "yyyy.semester".
+#' value found in the data. The date has to be in this format: "yyyy.semester".
 #' Ex.: "2019.1" or "2019.2".
 #' @return A data frame.
 #' 
@@ -15,8 +15,7 @@
 #' - Access the panel "Consultas" inside Sigaa module.
 #' - Generate the report "Consulta geral discentes".
 #' - Select the check box "Trazer informações em forma de relatório" e "Gerar csv".
-#' - Select the filter "Campus" and other filter you desire.
-#' - Selecionar o filtro "campus" ou outros filtros desejados.
+#' - Select the filter "Campus" and other filters you desire.
 #' - Click on "Buscar" and download the file. 
 #'
 #' Be sure that your data has the variables: "Matricula", "Nome", "Status, 

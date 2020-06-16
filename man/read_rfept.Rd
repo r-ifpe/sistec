@@ -10,7 +10,7 @@ read_rfept(path = "", start = NULL)
 \item{path}{The file's path to Qacademico or Sigaa folder.}
 
 \item{start}{A character with the date to start the comparison. The default is the minimum
-value found in in the data. The date has to be in this format: "yyyy.semester".
+value found in the data. The date has to be in this format: "yyyy.semester".
 Ex.: "2019.1" or "2019.2".}
 }
 \value{
