@@ -26,6 +26,7 @@ sistec_app <- function(output_path = NULL,
                        options_launch_browser = TRUE,
                        test_mode = TRUE){
 
+  .Deprecated("aria")
   opt <- options(shiny.maxRequestSize = max_file_size*1024^2) 
   on.exit(options(opt))
   
