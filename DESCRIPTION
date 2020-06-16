@@ -19,7 +19,7 @@ LazyData: true
 URL: https://github.com/r-ifpe/sistec
 BugReports: https://github.com/r-ifpe/sistec/issues
 Depends:
-    R (>= 3.6)
+    R (>= 4.0.1)
 Imports: 
     dplyr (>= 1.0),
     openxlsx,
