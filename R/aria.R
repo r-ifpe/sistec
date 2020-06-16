@@ -26,7 +26,8 @@ aria <- function(output_path = NULL,
                  options_launch_browser = TRUE,
                  test_mode = TRUE){
 
-  opt <- options(shiny.maxRequestSize = max_file_size*1024^2) 
+  shiny_max_file_size <- as.integer(max_file_size*1024^2)
+  opt <- options(shiny.maxRequestSize = shiny_max_file_size) 
   on.exit(options(opt))
   
   description_path <- system.file("DESCRIPTION", package = "sistec")
