@@ -1,11 +1,13 @@
 # sistec 0.1.0
 
-### Sistec_app
+### ARIA
 
-- Included `test_mode` parameter in `sistec_app()`. Now, it is possible to choose 
+- The web app in this packge now has a name: ARIA.
+- Included `test_mode` parameter in `aria()`. Now, it is possible to choose 
 if you want to run the app in production or in test mode. (#29)
 - Included wrong registration data frames in the results. (#43)
 - Included which year to start the comparison. (#44)
+- sistec_app was deprecated and point to `aria()`. (#45)
 
 ### Refactoring
 
