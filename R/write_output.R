@@ -19,7 +19,7 @@ write_output <- function(x,
 #' @export
 write_output.comparison_list <- function(x, 
                                          output_path = NULL, 
-                                         output_folder_name = "Sistec_app"){
+                                         output_folder_name = "ARIA"){
   # write results
   if(!is.null(output_path)) {
     rfept_table <- rfept_table(x$rfept_complete)
