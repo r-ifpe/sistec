@@ -1,9 +1,9 @@
-#' Sistec web application
+#' Aria web application
 #' 
 #' This is the web application using the sistec package. It was created to ease the 
 #' work using the package, but you can have the same results reading the 
-#' files (sistec::read_*()), comparing the results (sistec::compare_sistec()) and write 
-#' the outputs (sistec::write_output())
+#' files (sistec::read_rfept()), comparing the results with (sistec::compare_sistec()) and write 
+#' the outputs (sistec::write_output()).
 #' 
 #' @param output_path The folder where you want to save the results.
 #' @param output_folder_name The folder's name you want to save the results.
@@ -19,14 +19,14 @@
 #'
 #' @import shiny
 #' @export
-sistec_app <- function(output_path = NULL,
-                       output_folder_name = "Compara\u00e7\u00f5es",
-                       max_file_size = 100,
-                       options_port = 8888,
-                       options_launch_browser = TRUE,
-                       test_mode = TRUE){
-
-  .Deprecated("aria")
+aria <- function(output_path = NULL,
+                 output_folder_name = "Compara\u00e7\u00f5es",
+                 max_file_size = 100,
+                 options_port = 8888,
+                 options_launch_browser = TRUE,
+                 test_mode = TRUE){
+  
+  .Deprecated("ARIA")
   opt <- options(shiny.maxRequestSize = max_file_size*1024^2) 
   on.exit(options(opt))
   
@@ -34,7 +34,7 @@ sistec_app <- function(output_path = NULL,
   version <- as.character(read.dcf(description_path, fields = "Version"))
   
   period_input <- read_period_input()
-
+  
   ui <- fluidPage(
     navbarPage(paste0("ARIA v", version),
                tabPanel("SISTEC",
@@ -86,7 +86,7 @@ sistec_app <- function(output_path = NULL,
     
     output$download <- renderText({
       input$download
-
+      
       if(is.list(isolate(comparison$x))){
         
         output_path <- shiny_output_path(output_path)

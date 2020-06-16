@@ -4,6 +4,9 @@
 #' if you need help to download the Qacademico data.
 #'
 #' @param path The Sigaa file's path. 
+#' @param start A character with the date to start the comparison. The default is the minimum 
+#' value found in in the data. The date has to be in this format: "yyyy.semester".
+#' Ex.: "2019.1" or "2019.2".
 #' @return A data frame.
 #' 
 #' @details  To download the student's data, go to your proper account on Sigaa and 
@@ -25,11 +28,10 @@
 #'                                 package = "sistec"))
 #' 
 #' sigaa
-#' 
 #' @importFrom dplyr %>% sym 
 #' @export
-read_sigaa <- function(path = ""){
-  
+read_sigaa <- function(path = "", start = NULL){
+
   if(path == "") stop("You need to specify the path.")
   
   temp <-  list.files(path = path, pattern = "*.csv")
@@ -41,11 +43,14 @@ read_sigaa <- function(path = ""){
   vars <- c("Matr\u00edcula", "Nome", "Status", "Curso", "CPF")
   
   if(sum(names(sigaa) %in% vars) == 5){
-    read_sigaa_web(path)
+    sigaa <- read_sigaa_web(path)
   } else{
     stop(paste("Not found:",
                paste(vars[!vars %in% names(sigaa)], collapse = ", ")))
   }
+  
+  sigaa <- filter_rfept_date(sigaa, start)
+  sigaa
 }
 
 #' @importFrom dplyr %>% sym
