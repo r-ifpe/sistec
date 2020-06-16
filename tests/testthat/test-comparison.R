@@ -6,7 +6,10 @@ test_that("compare_sistec works", {
   sistec_path <- system.file("extdata/test_datasets/sistec", package = "sistec")
   qacademico_path <- system.file("extdata/test_datasets/qacademico", package = "sistec")
   
-  comparison <- compare_sistec(sistec_path, qacademico_path)
+  qacademico <- read_rfept(qacademico_path)
+  sistec <- read_sistec(sistec_path)
+  
+  comparison <- compare_sistec(sistec, qacademico)
   
   expect_equal(names(comparison),
                c("sistec_complete", "sistec_without_cpf", "sistec_without_rfept",

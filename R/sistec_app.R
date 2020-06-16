@@ -25,12 +25,14 @@ sistec_app <- function(output_path = NULL,
                        options_port = 8888,
                        options_launch_browser = TRUE,
                        test_mode = TRUE){
-  
+
   opt <- options(shiny.maxRequestSize = max_file_size*1024^2) 
   on.exit(options(opt))
   
   description_path <- system.file("DESCRIPTION", package = "sistec")
   version <- as.character(read.dcf(description_path, fields = "Version"))
+  
+  period_input <- read_period_input()
 
   ui <- fluidPage(
     navbarPage(paste0("ARIA v", version),
@@ -51,6 +53,9 @@ sistec_app <- function(output_path = NULL,
                                       accept = c("text/csv",
                                                  "text/comma-separated-values,text/plain",
                                                  ".csv")),
+                            selectInput("year", "Comparar a partir de:",
+                                        choices = period_input$PERIOD,
+                                        selected = "2019.1"),
                             actionButton("do", "Comparar"),
                             actionButton("download", "Salvar resultados"),
                             if(test_mode) checkboxInput("test_mode", "Test mode", TRUE)
@@ -102,7 +107,8 @@ sistec_app <- function(output_path = NULL,
       comparison$x <- isolate(
         if(!is.null(input$sistec$datapath[1]) && !is.null(input$rfept$datapath[1])){
           shiny_comparison(input$sistec$datapath[1],
-                           input$rfept$datapath[1])
+                           input$rfept$datapath[1],
+                           input$year)
         } else {FALSE}
       ) 
       

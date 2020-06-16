@@ -16,7 +16,7 @@ create_sistec_rfept_list <- function(sistec, rfept){
        linked_courses = data.frame())
 }
 
-#' @importFrom rlang sym
+#' @importFrom dplyr sym
 remove_invalid_cpf <- function(x){
   
   rfept_invalid <- c("", "   .   .   -  ", "___.___.___-__")
@@ -70,8 +70,6 @@ separate_wrong_registration <- function(x){
     dplyr::inner_join(y, by = "R_NO_CURSO") %>% 
     dplyr::filter(!!sym("S_NO_CURSO_LINKED") == !!sym("S_NO_CURSO")) %>% 
     dplyr::ungroup() 
-  
-  # %>% complete_campus()
 
   # update *_without_*
   x$sistec <- dplyr::anti_join(x$sistec, y, by = c("S_NU_CPF" = "R_NU_CPF", "S_NO_CURSO"))
