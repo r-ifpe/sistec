@@ -8,11 +8,3 @@ There were no ERRORs or WARNINGs.
 
 ## Possibly mis-spelled words in DESCRIPTION
 * Sistec (https://sistec.mec.gov.br/)
-
-## Notes
-* Included quotes on Sistec name
-* Fixed R redundant name on the title
-* Fixed the package name from the description beginning 
-* Fixed title in title case
-* Included /value in all .Rd
-* Included on.exit in sistec_app()
