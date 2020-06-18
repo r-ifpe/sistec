@@ -68,7 +68,6 @@ To download the student’s data, go to your proper account on Sigaa and follow:
  - Generate the report "Consulta geral discentes".
  - Select the check box "Trazer informações em forma de relatório" e "Gerar csv".
  - Select the filter "Campus" and other filter you desire.
- - Selecionar o filtro "campus" ou outros filtros desejados.
  - Click on "Buscar" and download the file. 
 
 Be sure that your data has the variables: "Matricula", "Nome", "Status, "Curso" and "CPF". 
