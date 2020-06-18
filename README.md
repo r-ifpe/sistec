@@ -70,8 +70,12 @@ Matricula”, “Curso”, “Cpf”, “Instituicao”, “Per. Letivo Inicial�
 
 ## Sigaa datasets
 
-To download the student’s data, go to your proper account on Sigaa and
-follow:
+Sigaa datasets can be partial or complete. These two formats can perform
+the comparison, but the partial doesn’t have information about “Campus”
+and “Cota”.
+
+To download the partial Sigaa’s data, go to your proper account on Sigaa
+and follow:
 
   - Access the panel “Consultas” inside Sigaa module.
   - Generate the report “Consulta geral discentes”.
@@ -80,8 +84,10 @@ follow:
   - Select the filter “Campus” and other filter you desire.
   - Click on “Buscar” and download the file.
 
-Be sure that your data has the variables: “Matricula”, “Nome”,
-“Status,”Curso" and “CPF”.
+For the complete dataset, you have to download directly from the Sigaa
+database. Be sure that your data has the variables: “Matricula”, “Nome”,
+“Situacao Matricula”, “Curso”, “Cpf”, “Instituicao”, “ano\_ingresso”,
+“semestre\_ingresso” and “Cota”.
 
 ## Read files
 

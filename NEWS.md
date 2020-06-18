@@ -1,3 +1,9 @@
+# sistec 0.1.1
+
+### Functions
+
+- Update `read_sigaa()`to read datasets with "Campus" and "Cota". (#53)
+
 # sistec 0.1.0
 
 ### ARIA

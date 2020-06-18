@@ -160,8 +160,8 @@ sistec_correct_campus_name <- function(campus){
 }
 
 sistec_web_encoding <- function(x){
-  utf <- any(stringr::str_detect(x$NO_STATUS_MATRICULA,
-                                 "CONCLU\u00cdDA"))
+  utf <- any(stringr::str_detect(x$NO_CICLO_MATRICULA,
+                                 "\u00cd|\u00c9|\u00ca|\u00c3|\u00c7|\u00c1|\u00c2"))
   encoding <- if(utf){
     "UTF-8"
   } else{

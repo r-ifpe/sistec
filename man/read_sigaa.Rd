@@ -17,11 +17,12 @@ Ex.: "2019.1" or "2019.2".}
 A data frame.
 }
 \description{
-This function reads Sigaa datasets from the api. See Details if you need help where to
-download the Sigaa data.
+This function reads partial and complete Sigaa datasets. These two formats can perform the
+comparison, but the partial doesn't have information about "Campus" and "Cota". See Details
+if you need help where to download the Sigaa data.
 }
 \details{
-To download the student's data, go to your proper account on Sigaa and
+To download the partial Sigaa's data, go to your proper account on Sigaa and
 follow:
 \itemize{
 \item Access the panel "Consultas" inside Sigaa module.
@@ -33,6 +34,10 @@ follow:
 
 Be sure that your data has the variables: "Matricula", "Nome", "Status,
 "Curso" and "CPF".
+
+For the complete dataset, you have to download directly from the Sigaa database. Be sure
+that your data has the variables: "Matricula", "Nome", "Situacao Matricula", "Curso",
+"Cpf", "Instituicao", "ano_ingresso", "semestre_ingresso" and "Cota".
 }
 \examples{
  

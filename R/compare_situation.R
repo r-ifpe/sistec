@@ -51,11 +51,11 @@ status_rfept.qacademico_table <- function(x){
 
 
 status_rfept.sigaa_table <- function(x){
-  list(concluido = "FORMADO", 
+  list(concluido = "FORMADO|CONCLU\u00cdDO", 
        integralizada = "CANCELADO", 
        abandono = "CANCELADO",
        desligado = "CANCELADO",
-       em_curso = "CURSANDO|CONCLUINTE|TRANCADO|GRADUANDO",
+       em_curso = "CURSANDO|CONCLUINTE|TRANCADO|GRADUANDO|ATIVO|DEFENDIDO|FORMANDO",
        transferido = "CANCELADO",
        reprovada = "CANCELADO")
 }
