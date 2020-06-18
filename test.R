@@ -21,3 +21,11 @@ write_output(d, "C:/Users/dmmad/Desktop", "TEST_2")
 
 
 b <- read_rfept("C:/Pesquisa/dados/qacademico/amostra/")
+
+b <- read_sigaa("C:/Pesquisa/dados/ifsc/complete/teste/")
+a <- read_sistec("C:/Pesquisa/dados/ifsc/complete/teste2/")
+
+d <- sistec::compare_sistec(a,b)
+sistec::write_output(d, "C:/Users/dmmad/Desktop", "TEST_2_SC")
+
+
