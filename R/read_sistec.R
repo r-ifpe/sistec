@@ -99,7 +99,7 @@ read_sistec_web <- function(path, encoding){
                      S_CO_CICLO_MATRICULA = !!sym("CO_CICLO_MATRICULA"),
                      S_NO_STATUS_MATRICULA = !!sym("NO_STATUS_MATRICULA"),
                      S_NO_CURSO = sistec_course_name(!!sym("NO_CICLO_MATRICULA")),
-                     S_DT_INICIO_CURSO = sistec_convert_beginning_date(!!sym("DT_DATA_INICIO"), encoding),
+                     S_DT_INICIO_CURSO = sistec_convert_beginning_date(!!sym("DT_DATA_INICIO")),
                      S_NO_CAMPUS = !!sym("S_NO_CAMPUS"))
   
   class(sistec) <- c("sistec_data_frame", class(sistec))
@@ -116,23 +116,25 @@ read_sistec_setec <- function(path, encoding){
 
   sistec <- lapply(temp, utils::read.csv,
                    sep = ";",  stringsAsFactors = FALSE, 
-                   colClasses = classes, encoding = "UTF-8") %>%
+                   colClasses = classes, encoding = encoding) %>%
     dplyr::bind_rows() %>%
     dplyr::transmute(S_NO_ALUNO = !!sym("Nome.Aluno"), 
                      S_NU_CPF = num_para_cpf(!!sym("Numero.Cpf")),
                      S_CO_CICLO_MATRICULA = !!sym("Co.Ciclo.Matricula"), 
                      S_NO_STATUS_MATRICULA = !!sym("Situa\u00e7\u00e3o.Matricula"), # Situação.Matricula
                      S_NO_CURSO = sistec_course_name(!!sym("No.Curso")), 
-                     S_DT_INICIO_CURSO = sistec_convert_beginning_date(!!sym("Dt.Data.Inicio"), encoding),
+                     S_DT_INICIO_CURSO = sistec_convert_beginning_date(!!sym("Dt.Data.Inicio")),
                      S_NO_CAMPUS = sistec_campus_name(!!sym("Unidade.Ensino")))
 
   class(sistec) <- c("sistec_data_frame", class(sistec))
   sistec
 }
 
-sistec_convert_beginning_date <- function(date, encoding){
+sistec_convert_beginning_date <- function(date){
   
-  if (encoding == "latin1"){
+  first_slash <- stringr::str_locate_all(date[1], "/")[[1]][1]
+  
+  if (first_slash == 3){
     year <- stringr::str_sub(date, 7, 10)
     month <- as.numeric(stringr::str_sub(date, 4, 5))
     semester <- ifelse(month > 6, 2, 1)
@@ -160,12 +162,12 @@ sistec_correct_campus_name <- function(campus){
 }
 
 sistec_web_encoding <- function(x){
-  utf <- any(stringr::str_detect(x$NO_CICLO_MATRICULA,
+  latin1 <- any(stringr::str_detect(x$NO_CICLO_MATRICULA,
                                  "\u00cd|\u00c9|\u00ca|\u00c3|\u00c7|\u00c1|\u00c2"))
-  encoding <- if(utf){
-    "UTF-8"
-  } else{
+  encoding <- if(latin1){
     "latin1"
+  } else{
+    "UTF-8"
   }
   encoding
 }
