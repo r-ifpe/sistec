@@ -1,7 +1,7 @@
 Package: sistec
 Type: Package
 Title: Tools to Analyze 'Sistec' Datasets
-Version: 0.1.0.9002
+Version: 0.1.0.9004
 Authors@R: c(
     person("Samuel", "Macêdo", email = "samuelmacedo@recife.ifpe.edu.br", role = c("aut", "cre")),
     person("Carlos", "Patrício", email = "carlos.patricio@vitoria.ifpe.edu.br", role = "aut"),
