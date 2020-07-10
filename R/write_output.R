@@ -31,6 +31,7 @@ write_output.comparison_list <- function(x,
     group_cpf_registration(x) %>% write_cpf_registration(path)
 
     write_tables(x, path, rfept_table)
+    write_linked_courses(x, path)
   } else {
     stop("Please, select a folder to download the results.")
   }
@@ -158,6 +159,17 @@ write_tables <- function(x, path, rfept_table){
   tables[["Cursos Relacionados"]] <- x$linked_courses
   
   openxlsx::write.xlsx(tables, paste0(path_to_save, "/Tabelas Utilizadas.xlsx"))
+}
+
+write_linked_courses <- function(x, path){
+  
+  path_to_save <- paste0(path, "/Cursos Relacionados")
+  dir.create(path_to_save, recursive = TRUE)
+  
+  tables <- list()
+  tables[["Cursos Relacionados"]] <- x$linked_courses
+  
+  openxlsx::write.xlsx(tables, paste0(path_to_save, "/Cursos relacionados.xlsx"))
 }
 
 #' @importFrom dplyr %>% 

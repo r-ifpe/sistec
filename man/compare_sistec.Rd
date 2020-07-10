@@ -4,7 +4,7 @@
 \alias{compare_sistec}
 \title{Comparison between Sistec and a student registration dataset}
 \usage{
-compare_sistec(sistec, rfept)
+compare_sistec(sistec, rfept, linked_courses = NULL)
 }
 \arguments{
 \item{sistec}{The folder's path to Sistec files or the Sistec data frame
@@ -12,6 +12,11 @@ read by \code{sistec::read_sistec()}function.}
 
 \item{rfept}{The folder's path to students reagistration datasets or a
 data frame read by \verb{sistec::read_*()}functions.}
+
+\item{linked_courses}{By default, the linked courses will be estimate using the data. You can specify
+those links loadind a .xlsx file with linked courses between the rfept and sistec. The columns must
+be in this order: INICIO, CICLO, CURSO_SISTEC    CURSO_RFEPT    CAMPUS. The date in INICIO column must be in
+yyyy.period. Ex.: 2019.1 or 2019.2.}
 }
 \value{
 A list of data frames.
