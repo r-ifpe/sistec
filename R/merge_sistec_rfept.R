@@ -1,13 +1,35 @@
 merge_sistec_rfept <- function(x){
 
-  x$sistec_rfept_linked <- dplyr::inner_join(x$sistec, x$rfept,
-                                             by = c("S_NU_CPF" = "R_NU_CPF")) %>% 
-    link_courses() %>% 
-    link_ciclos() 
-  
-  # %>% complete_campus()
-  
+  if(nrow(x$linked_courses) > 0){
+    x$sistec_rfept_linked <- merge_w_linked_course(x)
+  } else{
+    x$sistec_rfept_linked <- dplyr::inner_join(x$sistec, x$rfept,
+                                               by = c("S_NU_CPF" = "R_NU_CPF")) %>% 
+      link_courses() %>% 
+      link_ciclos() 
+  }
+
   x
+}
+
+#' @importFrom dplyr %>% sym
+merge_w_linked_course <- function(x){
+  
+  CURSO_RFEPT <- names(x$linked_courses)[4]
+  linked_courses <- x$linked_courses[, c(1, 2, 4, 5)] 
+  
+    
+  rfept <- x$rfept %>% 
+    dplyr::inner_join(linked_courses, by =c("R_DT_INICIO_CURSO" = "INICIO",
+                                            "R_NO_CURSO" = CURSO_RFEPT,
+                                            "R_NO_CAMPUS" = "CAMPUS")) 
+  
+  sistec_rfept_linked <- x$sistec %>% 
+    dplyr::inner_join(rfept, by = c("S_CO_CICLO_MATRICULA" = "CICLO",
+                                    "S_NU_CPF" = "R_NU_CPF"))
+  
+  sistec_rfept_linked$S_NO_CURSO_LINKED <- sistec_rfept_linked$S_NO_CURSO
+  sistec_rfept_linked
 }
 
 #' @importFrom dplyr %>% sym
