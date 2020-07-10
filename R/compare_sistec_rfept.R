@@ -1,7 +1,7 @@
 #' @importFrom dplyr %>% 
-compare_sistec_rfept <- function(sistec, rfept){
+compare_sistec_rfept <- function(sistec, rfept, linked_courses = NULL){
 
-  sistec_rfept <- create_sistec_rfept_list(sistec, rfept) %>% 
+  sistec_rfept <- create_sistec_rfept_list(sistec, rfept, linked_courses) %>% 
     remove_invalid_cpf() %>% 
     remove_unliked_cpf() %>% 
     merge_sistec_rfept() %>% 

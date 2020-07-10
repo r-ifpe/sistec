@@ -8,6 +8,10 @@
 #' read by `sistec::read_sistec()`function.  
 #' @param rfept The folder's path to students reagistration datasets or a 
 #' data frame read by `sistec::read_*()`functions. 
+#' @param linked_courses By default, the linked courses will be estimate using the data. You can specify 
+#' those links loadind a .xlsx file with linked courses between the rfept and sistec. The columns must
+#' be in this order: INICIO, CICLO, CURSO_SISTEC	CURSO_RFEPT	CAMPUS. The date in INICIO column must be in 
+#' yyyy.period. Ex.: 2019.1 or 2019.2. 
 #' 
 #' @return  A list of data frames. 
 #' 
@@ -23,11 +27,11 @@
 #' compare_sistec(sistec, qacademico)                                   
 #' 
 #' @export
-compare_sistec <- function(sistec, rfept){
+compare_sistec <- function(sistec, rfept, linked_courses = NULL){
   UseMethod("compare_sistec", rfept)
 }
 
 #' @export
-compare_sistec.rfept_data_frame <- function(sistec, rfept){
-  compare_sistec_rfept(sistec, rfept)
+compare_sistec.rfept_data_frame <- function(sistec, rfept, linked_courses = NULL){
+  compare_sistec_rfept(sistec, rfept, linked_courses)
 }

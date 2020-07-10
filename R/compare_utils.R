@@ -1,5 +1,9 @@
-create_sistec_rfept_list <- function(sistec, rfept){
+create_sistec_rfept_list <- function(sistec, rfept, linked_courses = NULL){
   
+  if(is.null(linked_courses)){
+    linked_courses <- data.frame()
+  } 
+
   list(sistec = sistec,
        sistec_complete = sistec,
        sistec_without_cpf = data.frame(),
@@ -13,7 +17,7 @@ create_sistec_rfept_list <- function(sistec, rfept){
        situation_updated = data.frame(),
        situation_to_update = data.frame(),
        sistec_rfept_linked = data.frame(),
-       linked_courses = data.frame())
+       linked_courses = linked_courses)
 }
 
 #' @importFrom dplyr sym
@@ -105,7 +109,7 @@ create_linked_courses_data_frame <- function(x){
   x$linked_courses <- x$sistec_rfept_linked %>% 
     dplyr::select(!!!syms(select_vars)) %>% 
     dplyr::distinct() %>% 
-    dplyr::arrange(!!!syms(arrange_vars))
+    dplyr::arrange(!!!syms(arrange_vars)) 
   
   class(x$linked_courses) <- c("linked_courses_data_frame", class(x$rfept_complete)[-1])
   
