@@ -17,7 +17,7 @@
 #' 
 #' @return A web application.
 #'
-#' @import shiny
+#' @import shiny 
 #' @export
 aria <- function(output_path = NULL,
                  output_folder_name = "ARIA",
@@ -40,6 +40,13 @@ aria <- function(output_path = NULL,
                tabPanel("SISTEC",
                         sidebarLayout(
                           sidebarPanel(
+                            tags$head(
+                              tags$style(HTML(".shiny-input-container {margin-bottom: 0px} 
+                                         #linked_course_progress { margin-bottom: 0px } 
+                                         .progress.active.shiny-file-input-progress { margin-bottom: 0px } 
+                                         #year {margin-botton: 20px} 
+                                         .checkbox { margin-top: 0px}")),
+                            ),
                             fileInput("rfept", "Escolha os arquivos do registro acad\u00eamico",
                                       multiple = TRUE,
                                       buttonLabel = "Arquivos",
@@ -54,9 +61,20 @@ aria <- function(output_path = NULL,
                                       accept = c("text/csv",
                                                  "text/comma-separated-values,text/plain",
                                                  ".csv")),
+                            fileInput("linked_course", "Escolha o arquivo com a relação entre 
+                                      os cursos do registro academico e o Sistec",
+                                      multiple = TRUE,
+                                      buttonLabel = "Arquivos",
+                                      placeholder = "Nada Selecionado",
+                                      accept = c("text/csv",
+                                                 "text/comma-separated-values,text/plain",
+                                                 ".csv")), 
+                            checkboxInput("linked_course_check", "Estimativa pelo ARIA", FALSE),
+                            br(),
                             selectInput("year", "Comparar a partir de:",
                                         choices = period_input$PERIOD,
                                         selected = "2019.1"),
+                            br(),
                             actionButton("do", "Comparar"),
                             actionButton("download", "Salvar resultados"),
                             if(test_mode) checkboxInput("test_mode", "Test mode", TRUE)
@@ -70,7 +88,7 @@ aria <- function(output_path = NULL,
                )
     )
   )
-  
+  #".shiny-input-container" = "margin-bottom: 0px", 
   server <- function(input, output, session){
     # close the R session when Chrome closes
     session$onSessionEnded(function() {
@@ -82,6 +100,7 @@ aria <- function(output_path = NULL,
       }
     })
     
+
     comparison <- reactiveValues(x = FALSE)
     
     output$download <- renderText({
