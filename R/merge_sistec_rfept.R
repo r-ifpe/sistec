@@ -8,7 +8,7 @@ merge_sistec_rfept <- function(x){
       link_courses() %>% 
       link_ciclos() 
   }
-
+  
   x
 }
 
@@ -17,7 +17,6 @@ merge_w_linked_course <- function(x){
   
   CURSO_RFEPT <- names(x$linked_courses)[4]
   linked_courses <- x$linked_courses[, c(1, 2, 4, 5)] 
-  
     
   rfept <- x$rfept %>% 
     dplyr::inner_join(linked_courses, by =c("R_DT_INICIO_CURSO" = "INICIO",
@@ -29,6 +28,7 @@ merge_w_linked_course <- function(x){
                                     "S_NU_CPF" = "R_NU_CPF"))
   
   sistec_rfept_linked$S_NO_CURSO_LINKED <- sistec_rfept_linked$S_NO_CURSO
+  sistec_rfept_linked$S_QT_ALUNOS_LINKED <- NA # for file approach this variable is not needed
   sistec_rfept_linked
 }
 
