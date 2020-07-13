@@ -8,7 +8,7 @@ test_that("compare_screen works", {
   
   qacademico <- read_rfept(qacademico_path)
   sistec <- read_sistec(sistec_path)
-  
+
   comparison <- compare_sistec(sistec, qacademico)
   
   output_screen <- sistec:::compare_screen(comparison)

@@ -1,7 +1,7 @@
 
 a <- read_sistec("C:/Pesquisa/sistec2/inst/extdata/test_datasets/sistec/") 
 b <- read_qacademico("C:/Pesquisa/sistec2/inst/extdata/test_datasets/qacademico/") 
-e <- sistec:::read_linked_courses("C:/Pesquisa/sistec2/inst/extdata/test_datasets/linked_courses/")
+e <- read_linked_courses("C:/Pesquisa/sistec2/inst/extdata/test_datasets/linked_courses/")
 
 d1 <- compare_sistec(a, b, e)
 d2 <- compare_sistec(a, b)
