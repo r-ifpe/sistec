@@ -86,14 +86,14 @@ download_test_datasets <- function(test_datasets_folder = NULL){
                   paste0(datasets_path, "qacademico/fake_data_qacademico_2019_2.csv"),
                   paste0(datasets_path, "qacademico/fake_data_qacademico_2020_1.csv"),
                   paste0(datasets_path, "sistec/fake_data_sistec_2019.1_2020.1.csv"),
-                  paste0(datasets_path, "linked_courses/linked_courses.xlsx"))
+                  paste0(datasets_path, "linked_courses/linked_courses.csv"))
     
     
     datasests_paths <- c("https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/qacademico/fake_data_qacademico_2019_1.csv",
                          "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/qacademico/fake_data_qacademico_2019_2.csv",
                          "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/qacademico/fake_data_qacademico_2020_1.csv",
                          "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/sistec/fake_data_sistec_2019.1_2020.1.csv",
-                         "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/linked_courses/linked_courses.xlsx")
+                         "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/linked_courses/linked_courses.csv")
     
     for(i in 1:5){
       utils::download.file(datasests_paths[i], 
@@ -101,5 +101,14 @@ download_test_datasets <- function(test_datasets_folder = NULL){
                            # method = "wget",
                            quiet = TRUE)
     }
+
+    # transform linked courses in .xlsx
+    linked_courses <- utils::read.csv(paste0(datasets_path, "linked_courses/linked_courses.csv"),
+                                      colClasses = c("INICIO" = "character",
+                                                     "CICLO" = "integer"))
+    openxlsx::write.xlsx(linked_courses, 
+                         paste0(datasets_path, "linked_courses/linked_courses.xlsx"))
+    unlink(paste0(datasets_path, "linked_courses/linked_courses.csv"))
+    
   }
 }
