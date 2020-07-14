@@ -1,0 +1,148 @@
+---
+title: "Manual de Instru\u00e7\u00f5es do ARIA. v0.1.1"
+subtitle: "Qacademico"
+author:
+  - Samuel Macêdo (samuelmacedo@recife.ifpe.edu.br)
+output: pdf_document
+---
+
+\renewcommand{\figurename}{Figura}
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(eval = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+```
+
+O ARIA é um aplicativo web criado para auxilar os servidores responsáveis por atualizar e casdastrar os alunos do registro acadêmico para o Sistec. Neste manual será descrito seu uso e como interpretar as saídas.
+
+## Entradas
+
+Nesta versão, o ARIA só apresenta uma tela. Esta é responsável por inserir os dados de regsitro academico, Sistec e, se necessário, uma lista com relação entre os cursos do registro acadêmico e o Sistec. 
+
+### Arquivos do Registro Acadêmico
+
+O primeiro botão do aplicativo pede para inserir os dados do registro acadêmico. As variáveis necessárias para execução do ARIA são: Matrícula, Nome, Situação de Matrícula, Curso, Cpf, Campus, Período de entrada e Cota. Esses arquivos precisam estar em CSV.
+
+![Inserir arquivo do registro academico](tools/manual/entrada-registro_academico.png)
+
+Na sua aplicação do Qacademico, você pode obter esses dados entrando em:
+
+- “Relatorio de Alunos” –> “Listagem de Alunos” (escolha o ano e período),
+- Clique em “visualizar”,
+- Use o atalho f10 e salve o arquivo em formato csv,
+- Renomeie os arquivos incluidondo o ano e periodo (examplo2020_1.csv),
+
+Certifique-se que as seguintes variáveis encontram-se no seu arquivo: “Matricula”, “Nome”, “Situacao Matricula”, “Curso”, “Cpf”, “Instituicao”, “Per. Letivo Inicial”  “Cota”.
+
+Como os arquivos foram renomeado com ano e período, é possível baixar varios arquivos de anos diferentes e por na mesma pasta. O ARIA irá analisá-los e pegar o status mais atual do aluno.
+
+### Arquivos do Sistec
+
+Os arquivos com as informações do 
+
+
+ - On setec: "Nome Aluno", "Numero Cpf", "Co Ciclo Matricula", "Situacao Matricula", "No Curso",
+ "Dt Data Inicio" and "Unidade Ensino".
+  
+ - On web: "NO_ALUNO", "NU_CPF", "CO_CICLO_MATRICULA", "NO_STATUS_MATRICULA", "NO_CICLO_MATRICULA", "DT_DATA_INICIO" and "CO_UNIDADE_ENSINO".
+
+Tip: To take every student for your institution/campus using web, search by student name and use " ". 
+
+
+
+
+
+The [Sistec](https://sistec.mec.gov.br/) is the Brazilian system for diploma registration and validation on technical and superior courses. The sistec package provides tools for Brazilian institutions to update the student's registration and make data analysis about their situation, retention and drop out. 
+
+## Installation
+
+You can install the sistec package from [CRAN](https://CRAN.r-project.org) as follows:
+
+```{r, eval=FALSE}
+install.packages("sistec")
+```
+
+To upgrade to the latest version of sistec, run the following command and restart your r session:
+
+```{r, eval=FALSE}
+install.packages("devtools")
+devtools::install_github("r-ifpe/sistec")
+```
+
+Load the package.
+```{r eval=FALSE}
+library(sistec)
+```
+
+## Sistec datasets
+
+You can download the Sistec's student registration using your proper account on Sistec. The package provides support if your data comes from [setec](http://portal.mec.gov.br/setec-secretaria-de-educacao-profissional-e-tecnologica) or [web](https://sistec.mec.gov.br/).
+Be sure that your data has these variables: 
+ 
+ - On setec: "Nome Aluno", "Numero Cpf", "Co Ciclo Matricula", "Situacao Matricula", "No Curso",
+ "Dt Data Inicio" and "Unidade Ensino".
+  
+ - On web: "NO_ALUNO", "NU_CPF", "CO_CICLO_MATRICULA", "NO_STATUS_MATRICULA", "NO_CICLO_MATRICULA", "DT_DATA_INICIO" and "CO_UNIDADE_ENSINO".
+
+Tip: To take every student for your institution/campus using web, search by student name and use " ". 
+
+## Qacademico datasets
+
+To download the student's data, go to your proper account on Qacademico and follow: 
+
+ - "Relatorio de Alunos" --> "Listagem de Alunos" (choose year and period)
+ - Click on "visualizar" 
+ - Using f10 shortcut and save in .csv format.
+ - Rename the including year and period (example2020_1.csv) 
+
+Be sure that your data has the variables: "Matricula", "Nome", "Situacao Matricula", "Curso", "Cpf", "Instituicao", "Per. Letivo Inicial" and "Cota".
+
+## Sigaa datasets
+
+Sigaa datasets can be partial or complete. These two formats can perform the comparison,
+but the partial doesn't have information about "Campus" and "Cota".
+
+To download the partial Sigaa's data, go to your proper account on Sigaa and follow:
+
+ - Access the panel "Consultas" inside Sigaa module.
+ - Generate the report "Consulta geral discentes".
+ - Select the check box "Trazer informações em forma de relatório" e "Gerar csv".
+ - Select the filter "Campus" and other filter you desire.
+ - Click on "Buscar" and download the file. 
+
+For the complete dataset, you have to download directly from the Sigaa database. Be 
+sure that your data has the variables: "Matricula", "Nome", "Situacao Matricula", 
+"Curso", "Cpf", "Instituicao", "ano_ingresso", "semestre_ingresso" and "Cota". 
+
+## Read files
+
+Load the sistec package and pass the folder path to `read_rfept()` functions. (**NOTE**: These datasets were generated randomly and do not represent the reality, it is just for example purpose).
+
+```{r eval=FALSE}
+sistec <- read_sistec(system.file("extdata/examples/sistec", package = "sistec"))
+qacademico <- read_rfept(system.file("extdata/examples/qacademico", package = "sistec"))
+```
+
+## Comparison
+
+Compare the student's situation using `compare_sistec()`
+
+```{r eval=FALSE}
+comparison <- compare_sistec(sistec, qacademico)
+```
+
+## Save results
+
+You can save the comparison in .xlsx format using `write_output()`
+
+```{r eval=FALSE}
+write_output(output_path = "your_folder",
+             output_folder_name = "the_name_you_want",
+             comparison = comparison)
+```
+
+## ARIA web interface
+
+ARIA is the web interface created in this package to ease your work. You can use all those functions just clicking in a few buttons, run `aria()`.
+
+<img src="tools/readme/aria_0.1.0.png" class="screenshot" width=800 />

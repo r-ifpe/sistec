@@ -8,6 +8,7 @@
 ### ARIA
 
 - New to button to include linked courses files. (#55)
+- ARIA's manual in pt-br. (#60)
 
 # sistec 0.1.0
 
