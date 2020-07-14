@@ -7,6 +7,7 @@
 #'
 #' @param path The linked courses file's path.
 #' @param format You can choose between xlsx or csv.  
+#' @param encoding This function uses latin1 by default but you can use UTF-8 if needed.
 #' 
 #' @return A data frame.
 #' 
@@ -16,7 +17,7 @@
 #' 
 #' linked_courses
 #' @export
-read_linked_courses <- function(path = "", format = "xlsx"){
+read_linked_courses <- function(path = "", format = "xlsx", encoding = "latin1"){
 
   if(path == "") stop("You need to specify the path.")
   
@@ -30,6 +31,6 @@ read_linked_courses <- function(path = "", format = "xlsx"){
   } else{
     utils::read.csv(temp, colClasses = c("INICIO" = "character",
                                          "CICLO" = "integer"),
-                    encoding = "latin1")
+                    encoding = encoding)
   }
 }
