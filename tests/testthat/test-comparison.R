@@ -5,11 +5,11 @@ test_that("compare_sistec works", {
   
   sistec_path <- system.file("extdata/test_datasets/sistec", package = "sistec")
   qacademico_path <- system.file("extdata/test_datasets/qacademico", package = "sistec")
-  linked_courses_path <- system.file("extdata/test_datasets/linked_courses", package = "sistec")
+  linked_courses_path <- system.file("extdata/examples/linked_courses", package = "sistec")
   
   qacademico <- read_rfept(qacademico_path)
   sistec <- read_sistec(sistec_path)
-  linked_courses <- read_linked_courses(linked_courses_path)
+  linked_courses <- read_linked_courses(linked_courses_path, "csv")
   
   # with ARIA approach
   comparison <- compare_sistec(sistec, qacademico)
