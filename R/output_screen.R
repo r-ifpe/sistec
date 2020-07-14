@@ -1,7 +1,7 @@
-output_screen <- function(input_sistec, input_rfept,
+output_screen <- function(input_sistec, input_rfept, linked_course_exist,
                           comparison){
 
-  if(!is.null(input_sistec) && !is.null(input_rfept)){
+  if(all(!is.null(input_sistec), !is.null(input_rfept), linked_course_exist)){
     response <- compare_screen(comparison)
   } else if(is.null(input_sistec) && is.null(input_rfept)){
     response <- "Selecione os arquivos do Sistec e do registro acad\u00eamico."   
@@ -9,7 +9,9 @@ output_screen <- function(input_sistec, input_rfept,
     response <- "Selecione os arquivos do registro acad\u00eamico."
   } else if(is.null(input_sistec)){
     response <- "Selecione os arquivos do sistec."
-  } 
+  } else if(!linked_course_exist){
+    "Selecione o modo como os cursos ser\u00e3o relacionados."
+  }
   
   response
 }
