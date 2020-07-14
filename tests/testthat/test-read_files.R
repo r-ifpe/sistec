@@ -49,8 +49,8 @@ test_that("read_sigaa works", {
 test_that("read_linked_courses works", {
   skip_on_cran()
   
-  linked_courses<- read_linked_courses(system.file("extdata/test_datasets/linked_courses",
-                                                   package = "sistec"))
+  linked_courses<- read_linked_courses(system.file("extdata/examples/linked_courses",
+                                                   package = "sistec"), "csv")
 
   expect_equal(nrow(linked_courses), 241)
   expect_equal(colnames(linked_courses),

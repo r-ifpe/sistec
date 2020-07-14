@@ -4,12 +4,14 @@
 \alias{read_linked_courses}
 \title{Read linked courses files}
 \usage{
-read_linked_courses(path = "", format = "xlsx")
+read_linked_courses(path = "", format = "xlsx", encoding = "latin1")
 }
 \arguments{
 \item{path}{The linked courses file's path.}
 
 \item{format}{You can choose between xlsx or csv.}
+
+\item{encoding}{This function uses latin1 by default but you can use UTF-8 if needed.}
 }
 \value{
 A data frame.
