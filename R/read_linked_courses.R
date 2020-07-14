@@ -17,7 +17,7 @@
 #' linked_courses
 #' @export
 read_linked_courses <- function(path = "", format = "xlsx"){
-  
+
   if(path == "") stop("You need to specify the path.")
   
   pattern <- paste0("*.", format)
@@ -29,6 +29,7 @@ read_linked_courses <- function(path = "", format = "xlsx"){
     openxlsx::read.xlsx(temp) 
   } else{
     utils::read.csv(temp, colClasses = c("INICIO" = "character",
-                                         "CICLO" = "integer"))
+                                         "CICLO" = "integer"),
+                    encoding = "latin1")
   }
 }
