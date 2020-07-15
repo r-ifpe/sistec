@@ -132,7 +132,7 @@ read_sistec_setec <- function(path, encoding){
 
 sistec_convert_beginning_date <- function(date){
   
-  first_slash <- stringr::str_locate_all(date[1], "/")[[1]][1]
+  first_slash <- stringr::str_locate_all(date[1], "/|-")[[1]][1]
   
   if (first_slash == 3){
     year <- stringr::str_sub(date, 7, 10)
