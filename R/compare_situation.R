@@ -51,7 +51,7 @@ status_rfept.qacademico_table <- function(x){
 
 
 status_rfept.sigaa_table <- function(x){
-  list(concluido = "FORMADO|CONCLU\u00cdDO", 
+  list(concluido = "FORMADO|CONCLU\u00cdDO|CONCLU\u00cdDA", 
        integralizada = "CANCELADO", 
        abandono = "CANCELADO",
        desligado = "CANCELADO",
