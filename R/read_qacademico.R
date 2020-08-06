@@ -38,6 +38,7 @@ read_qacademico <- function(path = "", start = NULL){
   qacademico <- utils::read.csv(temp[1], sep = "",  stringsAsFactors = FALSE, 
                                 encoding = "latin1", nrows = 1, check.names = FALSE)
   
+  
   vars <- c("Matr\u00edcula", "Nome", "Situa\u00e7\u00e3o Matr\u00edcula", "Cota",
             "Curso", "Cpf", "Institui\u00e7\u00e3o", "Per. Letivo Inicial")
   

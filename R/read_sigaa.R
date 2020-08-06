@@ -68,7 +68,7 @@ read_sigaa <- function(path = "", start = NULL){
                  paste(vars_partial[!vars_partial %in% names(sigaa)], collapse = ", ")))
     }
   } else {
-    stop("Not found Sistec variables in your file.")
+    stop("Not found Sigaa variables in your file.")
   }
 
   sigaa <- filter_rfept_date(sigaa, start)

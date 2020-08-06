@@ -8,9 +8,9 @@
 #' @param output_path The folder where you want to save the results.
 #' @param output_folder_name The folder's name you want to save the results.
 #' @param max_file_size The maximum file size in megabytes.
-#' @param options_port The TCP port that the application should listen on, usually 8888.
-#' @param options_launch_browser If true, the system's default web browser will be 
-#' launched automatically after the app is started. 
+# @param options_port The TCP port that the application should listen on, usually 8888.
+# @param options_launch_browser If true, the system's default web browser will be 
+# launched automatically after the app is started. 
 #' @param test_mode Use FALSE in production and TRUE when you are testing. In production,
 #' when you close the browser ,the app and the R session will be closed. In test, only the app will 
 #' close when you close the browser.
@@ -19,11 +19,11 @@
 #'
 #' @import shiny 
 #' @export
-aria <- function(output_path = NULL,
+aria_aws <- function(output_path = NULL,
                  output_folder_name = "ARIA",
                  max_file_size = 100,
-                 options_port = 8888,
-                 options_launch_browser = TRUE,
+                 # options_port = 8888,
+                 # options_launch_browser = TRUE,
                  test_mode = TRUE){
 
   shiny_max_file_size <- as.integer(max_file_size*1024^2)
@@ -89,15 +89,15 @@ aria <- function(output_path = NULL,
   )
   #".shiny-input-container" = "margin-bottom: 0px", 
   server <- function(input, output, session){
-    # close the R session when Chrome closes
-    session$onSessionEnded(function() {
-      if(is.null(isolate(input$test_mode))){
-        stopApp()
-        q("no")
-      } else {
-        stopApp()
-      }
-    })
+    # # close the R session when Chrome closes
+    # session$onSessionEnded(function() {
+    #   if(is.null(isolate(input$test_mode))){
+    #     stopApp()
+    #     q("no")
+    #   } else {
+    #     stopApp()
+    #   }
+    # })
 
     comparison <- reactiveValues(x = FALSE)
     
@@ -143,6 +143,7 @@ aria <- function(output_path = NULL,
     })
   }
   
-  shinyApp(ui, server, options = list(port = options_port,
-                                      launch.browser = options_launch_browser))
+  shinyApp(ui, server)
+  # , options = list(port = options_port,
+  #                                     launch.browser = options_launch_browser))
 } 
