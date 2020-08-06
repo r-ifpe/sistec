@@ -48,30 +48,35 @@ read_sistec <- function(path = "", start = NULL){
   vars_web <- c("NO_ALUNO", "NU_CPF", "CO_CICLO_MATRICULA", 
                 "NO_STATUS_MATRICULA", "NO_CICLO_MATRICULA", "DT_DATA_INICIO",
                 "CO_UNIDADE_ENSINO")
+ 
+  header <- readLines(temp[1], n = 1, encoding = "UTF-8")
+  comma_sep <- stringr::str_detect(header, ",")
+  if(comma_sep){
+    sep = ","
+  } else {
+    sep = ";"
+  }
 
-  sistec <- utils::read.csv(temp[1], sep = ";",  stringsAsFactors = FALSE, 
-                            encoding = "UTF-8", check.names = FALSE, nrows = 100)
+  vars_sistec <- names(utils::read.csv(temp[1], sep = sep, check.names = FALSE,
+                                       header = TRUE, encoding = "UTF-8"))
   
-  num_vars_setec <- sum(names(sistec) %in% vars_setec)
-  num_vars_web <- sum(names(sistec) %in% vars_web)
+  num_vars_setec <- sum(vars_sistec %in% vars_setec)
+  num_vars_web <- sum(vars_sistec %in% vars_web)
   
   if(num_vars_setec > 0){
     if(num_vars_setec < 7){ 
       stop(paste("Not found:",
-                 paste(vars_setec[!vars_setec %in% names(sistec)], collapse = ", ")))
-      
+                 paste(vars_setec[!vars_setec %in% vars_sistec], collapse = ", ")))
     } else{
-      encoding <- sistec_web_encoding(sistec)
-      sistec <- read_sistec_setec(path, encoding)
+      sistec <- read_sistec_setec(path)
     }
   } else if(num_vars_web > 0){
     if(num_vars_web < 7){ 
       stop(paste("Not found:",
-                 paste(vars_web[!vars_web %in% names(sistec)], collapse = ", ")))
-      
+                 paste(vars_web[!vars_web %in% vars_sistec], collapse = ", ")))
     } else{
-      encoding <- sistec_web_encoding(sistec)
-      sistec <- read_sistec_web(path, encoding)
+      encoding <- sistec_web_encoding(temp[1], sep)
+      sistec <- read_sistec_web(path, encoding, sep)
     }
   } else {
     stop("Not found Sistec variables in your file.")
@@ -82,7 +87,7 @@ read_sistec <- function(path = "", start = NULL){
 }
 
 #' @importFrom dplyr %>% sym
-read_sistec_web <- function(path, encoding){
+read_sistec_web <- function(path, encoding, sep){
   temp = list.files(path = path, pattern = "*.csv")
   temp <- paste0(path, "/", temp)
 
@@ -90,7 +95,7 @@ read_sistec_web <- function(path, encoding){
   classes <- c(NU_CPF = "character", CO_UNIDADE_ENSINO = "character")
 
   sistec <- lapply(temp, utils::read.csv,
-                   sep = ";",  stringsAsFactors = FALSE, 
+                   sep = sep,  stringsAsFactors = FALSE, 
                    colClasses = classes, encoding = encoding) %>%
     dplyr::bind_rows() %>%
     dplyr::left_join(co_unidade_ensino, by = "CO_UNIDADE_ENSINO") %>% 
@@ -107,7 +112,7 @@ read_sistec_web <- function(path, encoding){
 }
 
 #' @importFrom dplyr %>% sym
-read_sistec_setec <- function(path, encoding){
+read_sistec_setec <- function(path, encoding = "UTF-8"){
   
   temp = list.files(path = path, pattern = "*.csv")
   temp <- paste0(path, "/", temp)
@@ -161,15 +166,28 @@ sistec_correct_campus_name <- function(campus){
   stringr::str_replace(campus, "REU E LIMA", "ABREU E LIMA")
 }
 
-sistec_web_encoding <- function(x){
-  latin1 <- any(stringr::str_detect(x$NO_CICLO_MATRICULA,
-                                 "\u00cd|\u00c9|\u00ca|\u00c3|\u00c7|\u00c1|\u00c2"))
-  encoding <- if(latin1){
-    "latin1"
-  } else{
+sistec_web_encoding <- function(x, sep){
+  
+  sistec <- utils::read.csv(x, header = TRUE, sep = sep, encoding = "latin1", nrows = 100)
+  utf8 <- sum(stringi::stri_enc_isutf8(sistec$NO_CICLO_MATRICULA))
+  latin1 <- nrow(sistec) - utf8
+  
+  if(utf8 > latin1){
     "UTF-8"
+  } else{
+    "latin1"
   }
-  encoding
+  #encoding
+  
+  
+  # latin1 <- any(stringr::str_detect(sistec$NO_CICLO_MATRICULA,
+  #                                "\u00cd|\u00c9|\u00ca|\u00c3|\u00c7|\u00c1|\u00c2"))
+  # encoding <- if(latin1){
+  #   "latin1"
+  # } else{
+  #   "UTF-8"
+  # }
+  # encoding
 }
 
 filter_sistec_date <- function(x, start){
