@@ -1,3 +1,15 @@
+read_sistec("C:/Pesquisa/sistec2/inst/extdata/test_datasets/sistec/") 
+read_sistec("C:/Pesquisa/dados/sistec/web/")
+read_sistec("C:/Pesquisa/dados/sistec")
+read_sistec("C:/Pesquisa/dados/ifsc/sistec/")
+read_sistec("C:/Users/dmmad/Desktop/sigaa/sistec")
+
+
+a <- read.csv("C:/Users/dmmad/Desktop/exemplos/qacademico/ListagemdeAlunos_2019_2_1.csv",
+ check.names = FALSE, header = TRUE, sep = "")
+
+
+
 
 a <- read_sistec("C:/Pesquisa/sistec2/inst/extdata/test_datasets/sistec/") 
 b <- read_qacademico("C:/Pesquisa/sistec2/inst/extdata/test_datasets/qacademico/") 
