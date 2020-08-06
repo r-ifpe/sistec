@@ -61,15 +61,15 @@ aria <- function(output_path = NULL,
                                       accept = c("text/csv",
                                                  "text/comma-separated-values,text/plain",
                                                  ".csv")),
-                            fileInput("linked_course", "Escolha o arquivo com a rela\u00e7\u00e3o
-                                      entre os cursos do registro academico e o Sistec",
-                                      multiple = TRUE,
-                                      buttonLabel = "Arquivos",
-                                      placeholder = "Nada Selecionado",
-                                      accept = c(".xlsx", ".xls",
-                                                 "text/comma-separated-values,text/plain")), 
-                            checkboxInput("linked_course_check", "Estimativa pelo ARIA", FALSE),
-                            br(),
+                            # fileInput("linked_course", "Escolha o arquivo com a rela\u00e7\u00e3o
+                            #           entre os cursos do registro academico e o ciclo no Sistec",
+                            #           multiple = TRUE,
+                            #           buttonLabel = "Arquivos",
+                            #           placeholder = "Nada Selecionado",
+                            #           accept = c(".xlsx", ".xls",
+                            #                      "text/comma-separated-values,text/plain")), 
+                            # checkboxInput("linked_course_check", "Estimativa pelo ARIA", FALSE),
+                            # br(),
                             selectInput("year", "Comparar a partir de:",
                                         choices = period_input$PERIOD,
                                         selected = "2019.1"),
@@ -122,25 +122,22 @@ aria <- function(output_path = NULL,
     output$contents <- renderText({
       input$do
       
-      linked_course_approach <- isolate(
-        check_linked_course_approach(input$linked_course$datapath[1],
-                                     input$linked_course_check))
+      # linked_course_approach <- isolate(
+      #   check_linked_course_approach(input$linked_course$datapath[1],
+      #                                input$linked_course_check))
       
       comparison$x <- isolate(
         if(all(!is.null(input$sistec$datapath[1]),
-               !is.null(input$rfept$datapath[1]),
-               linked_course_approach$exist)){
+               !is.null(input$rfept$datapath[1]))){ #linked_course_approach$exist
           
           shiny_comparison(input$sistec$datapath[1],
-                           input$rfept$datapath[1],
-                           linked_course_approach,
+                           input$rfept$datapath[1], #linked_course_approach$tech = "aria",
                            input$year)
         } else {FALSE}
       ) 
       
       isolate(output_screen(input$sistec$datapath[1],
-                            input$rfept$datapath[1],
-                            linked_course_approach$exist,
+                            input$rfept$datapath[1], # linked_course_approach$exist,
                             comparison$x)
       )
     })
