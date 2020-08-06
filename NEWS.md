@@ -5,6 +5,11 @@
 - Update `read_sigaa()`to read datasets with "Campus" and "Cota". (#53)
 - Cration of `read_linked_courses()` to read a file with the relation between courses in academic registration and Sistec cyclo. (#55)
 
+### Documentation
+
+-  Aria's manual in PDF for qacademico users.
+
+
 ### ARIA
 
 - New to button to include linked courses files. (#55)
