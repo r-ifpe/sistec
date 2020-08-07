@@ -1,8 +1,8 @@
 library(shiny)
-library(sistec)
+library(dplyr)
 options(shiny.maxRequestSize = 100*1024^2) 
 
-aria_aws(test_mode = FALSE)
+sistec::aria_aws(test_mode = FALSE)
 # 
 # 
 # ###################
