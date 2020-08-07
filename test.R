@@ -9,7 +9,32 @@ a <- read.csv("C:/Users/dmmad/Desktop/exemplos/qacademico/ListagemdeAlunos_2019_
  check.names = FALSE, header = TRUE, sep = "")
 
 
-
+# output$download <- downloadHandler(
+#   filename = "ARIA.zip",
+#   content = function(file){
+#     #go to a temp dir to avoid permission issues
+#     output_path <- tempdir()
+#     owd <- setwd(output_path)
+#     on.exit(setwd(owd))
+#     files <- NULL;
+#     browser()
+#     if(is.list(isolate(comparison$x))){
+# 
+#       output_path <- shiny_output_path(output_path)
+#       
+#       write_output(x = isolate(comparison$x),
+#                    output_path = output_path,
+#                    output_folder_name = output_folder_name)
+# 
+#       "Download realizado com sucesso!"
+# 
+#     } else {
+#         ""
+#     }
+#     #create the zip file
+#     zip(file, "ARIA/")
+#   }
+# )
 
 a <- read_sistec("C:/Pesquisa/sistec2/inst/extdata/test_datasets/sistec/") 
 b <- read_qacademico("C:/Pesquisa/sistec2/inst/extdata/test_datasets/qacademico/") 

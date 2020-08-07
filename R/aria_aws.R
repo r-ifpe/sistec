@@ -75,13 +75,14 @@ aria_aws <- function(output_path = NULL,
                                         selected = "2019.1"),
                             br(),
                             actionButton("do", "Comparar"),
-                            actionButton("download", "Salvar resultados"),
+                            downloadButton("download", "Salvar resultados"),
                             if(test_mode) checkboxInput("test_mode", "Test mode", TRUE)
                           ),
                           mainPanel(
-                            strong(htmlOutput("contents")),
-                            br(), br(), br(), br(),
-                            strong(htmlOutput("download"))
+                            strong(htmlOutput("contents"))
+                            # ,
+                            # br(), br(), br(), br(),
+                            # strong(htmlOutput("download"))
                           )
                         )
                )
@@ -101,23 +102,50 @@ aria_aws <- function(output_path = NULL,
 
     comparison <- reactiveValues(x = FALSE)
     
-    output$download <- renderText({
-      input$download
-      
-      if(is.list(isolate(comparison$x))){
-        
-        output_path <- shiny_output_path(output_path)
-        
-        write_output(x = isolate(comparison$x),
-                     output_path = output_path,
-                     output_folder_name = output_folder_name)
-        
-        "Download realizado com sucesso!"
-        
-      } else {
-        "" 
+    output$download <- downloadHandler(
+      filename = "ARIA.zip",
+      content = function(file){
+        #go to a temp dir to avoid permission issues
+        output_path <- tempdir()
+        owd <- setwd(output_path)
+        on.exit(setwd(owd))
+        files <- NULL;
+
+        if(is.list(isolate(comparison$x))){
+
+          output_path <- shiny_output_path(output_path)
+
+          write_output(x = isolate(comparison$x),
+                       output_path = output_path,
+                       output_folder_name = output_folder_name)
+
+          "Download realizado com sucesso!"
+
+        } else {
+            ""
+        }
+        #create the zip file
+        zip(file, "ARIA/")
       }
-    })
+    )
+    
+    # output$download <- renderText({
+    #   input$download
+    #   
+    #   if(is.list(isolate(comparison$x))){
+    #     
+    #     output_path <- shiny_output_path(output_path)
+    #     
+    #     write_output(x = isolate(comparison$x),
+    #                  output_path = output_path,
+    #                  output_folder_name = output_folder_name)
+    #     
+    #     "Download realizado com sucesso!"
+    #     
+    #   } else {
+    #     "" 
+    #   }
+    # })
     
     output$contents <- renderText({
       input$do
@@ -141,6 +169,7 @@ aria_aws <- function(output_path = NULL,
                             comparison$x)
       )
     })
+    
   }
   
   shinyApp(ui, server)
