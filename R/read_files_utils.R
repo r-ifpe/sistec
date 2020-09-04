@@ -10,3 +10,16 @@ co_unidade_ensino <- function(){
   utils::read.csv(system.file("extdata/co_unidade_ensino/co_unidade_ensino.csv", package = "sistec"),
                               colClasses = "character")
 }
+
+
+detect_sep <- function(x){
+  header <- readLines(x, n = 1, encoding = "UTF-8")
+  comma_sep <- stringr::str_detect(header, ",")
+  if(comma_sep){
+    sep = ","
+  } else {
+    sep = ";"
+  }
+  
+  sep
+}

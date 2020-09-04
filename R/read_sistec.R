@@ -49,13 +49,7 @@ read_sistec <- function(path = "", start = NULL){
                 "NO_STATUS_MATRICULA", "NO_CICLO_MATRICULA", "DT_DATA_INICIO",
                 "CO_UNIDADE_ENSINO")
  
-  header <- readLines(temp[1], n = 1, encoding = "UTF-8")
-  comma_sep <- stringr::str_detect(header, ",")
-  if(comma_sep){
-    sep = ","
-  } else {
-    sep = ";"
-  }
+  sep <- detect_sep(temp[1])
 
   vars_sistec <- names(utils::read.csv(temp[1], sep = sep, check.names = FALSE,
                                        header = TRUE, encoding = "UTF-8"))
