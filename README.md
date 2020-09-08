@@ -4,6 +4,8 @@ sistec: Tools to Analyze Sistec Datasets
 [![Travis build
 status](https://travis-ci.org/r-ifpe/sistec.svg?branch=master)](https://travis-ci.org/r-ifpe/sistec)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/sistec)](https://cran.r-project.org/package=sistec)
+[![CircleCI build
+status](https://circleci.com/gh/r-ifpe/sistec.svg?style=svg)](https://circleci.com/gh/r-ifpe/sistec)
 
 The [Sistec](https://sistec.mec.gov.br/) is the Brazilian system for
 diploma registration and validation on technical and superior courses.
