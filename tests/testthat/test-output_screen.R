@@ -24,11 +24,11 @@ test_that("compare_screen works", {
   expect_true(grepl("&emsp; - Sistec: 88<br/>", output_screen))
   expect_true(grepl("&emsp; - Qacademico: 6<br/>", output_screen))
  
-  expect_true(grepl("CPF's duplicados:", output_screen))
+  expect_true(grepl("CPF's repetidos:", output_screen))
   expect_true(grepl("&emsp; - Sistec: 0<br/>", output_screen))
   expect_true(grepl("&emsp; - Qacademico: 0<br/>", output_screen)) 
   
-  expect_true(grepl("Vínculos duplicados:", output_screen))
+  expect_true(grepl("Vínculos repetidos:", output_screen))
   expect_true(grepl("&emsp; - Sistec: 2<br/>", output_screen))
   expect_true(grepl("&emsp; - Qacademico: 67<br/>", output_screen)) 
   

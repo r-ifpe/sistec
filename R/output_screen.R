@@ -9,10 +9,6 @@ output_screen <- function(input_sistec, input_rfept, comparison){ #linked_course
   } else if(is.null(input_sistec)){
     response <- "Selecione os arquivos do sistec."
   } 
-  
-  # else if(!linked_course_exist){
-  #   "Selecione o modo como os cursos ser\u00e3o relacionados."
-  # }
 
   response
 }
@@ -29,10 +25,10 @@ compare_screen <- function(comparison){
                    "Alunos sem CPF:",
                    paste0("&emsp; - Sistec: ", nrow(comparison$sistec_without_cpf)),
                    paste0("&emsp; - ", rfept, ": ", nrow(comparison$rfept_without_cpf)),
-                   "CPF's duplicados:",
+                   "CPF's repetidos:",
                    paste0("&emsp; - Sistec: ", nrow(comparison$sistec_wrong_cpf)),
                    paste0("&emsp; - ", rfept, ": ", nrow(comparison$rfept_wrong_cpf)),
-                   "V\u00ednculos duplicados:",
+                   "V\u00ednculos repetidos:",
                    paste0("&emsp; - Sistec: ", nrow(comparison$sistec_duplicated_registry)),
                    paste0("&emsp; - ", rfept, ": ", nrow(comparison$rfept_duplicated_registry)),
                    "V\u00ednculos n\u00e3o encontrados:",
