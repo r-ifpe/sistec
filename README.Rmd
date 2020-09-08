@@ -8,7 +8,7 @@ output:
 
   [![Travis build status](https://travis-ci.org/r-ifpe/sistec.svg?branch=master)](https://travis-ci.org/r-ifpe/sistec)
   [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/sistec)](https://cran.r-project.org/package=sistec)
-
+  [![CircleCI build status](https://circleci.com/gh/r-ifpe/sistec.svg?style=svg)](https://circleci.com/gh/r-ifpe/sistec)
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(eval = FALSE)

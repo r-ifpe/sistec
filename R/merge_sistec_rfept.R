@@ -1,35 +1,19 @@
 merge_sistec_rfept <- function(x){
 
-  if(nrow(x$linked_courses) > 0){
-    x$sistec_rfept_linked <- merge_w_linked_course(x)
-  } else{
-    x$sistec_rfept_linked <- dplyr::inner_join(x$sistec, x$rfept,
-                                               by = c("S_NU_CPF" = "R_NU_CPF")) %>% 
-      link_courses() %>% 
-      link_ciclos() 
-  }
-  
-  x
-}
+  x$sistec_rfept_linked <- dplyr::inner_join(x$sistec, x$rfept,
+                                             by = c("S_NU_CPF" = "R_NU_CPF")) %>% 
+    link_courses() %>% 
+    link_ciclos() %>% 
+    remove_duplicated_link()
 
-#' @importFrom dplyr %>% sym
-merge_w_linked_course <- function(x){
+  x$sistec <- dplyr::anti_join(x$sistec, x$sistec_rfept_linked,
+                               by = c("S_NU_CPF", "S_CO_CICLO_MATRICULA"))
   
-  CURSO_RFEPT <- names(x$linked_courses)[4]
-  linked_courses <- x$linked_courses[, c(1, 2, 4, 5)] 
     
-  rfept <- x$rfept %>% 
-    dplyr::inner_join(linked_courses, by =c("R_DT_INICIO_CURSO" = "INICIO",
-                                            "R_NO_CURSO" = CURSO_RFEPT,
-                                            "R_NO_CAMPUS" = "CAMPUS")) 
-  
-  sistec_rfept_linked <- x$sistec %>% 
-    dplyr::inner_join(rfept, by = c("S_CO_CICLO_MATRICULA" = "CICLO",
-                                    "S_NU_CPF" = "R_NU_CPF"))
-  
-  sistec_rfept_linked$S_NO_CURSO_LINKED <- sistec_rfept_linked$S_NO_CURSO
-  sistec_rfept_linked$S_QT_ALUNOS_LINKED <- NA # for file approach this variable is not needed
-  sistec_rfept_linked
+  x$rfept <- dplyr::anti_join(x$rfept, x$sistec_rfept_linked, 
+                              by = c("R_NU_CPF" = "S_NU_CPF", "R_CO_MATRICULA"))
+    
+  x
 }
 
 #' @importFrom dplyr %>% sym
@@ -43,7 +27,7 @@ link_courses <- function(x){
   x %>% 
     dplyr::group_by(!!sym("R_NO_CURSO"), !!sym("S_NO_CURSO")) %>% 
     dplyr::tally() %>% 
-    dplyr::filter(!!sym("n") >= 10) %>% 
+    dplyr::filter(!!sym("n") > 10) %>% 
     dplyr::rename(S_NO_CURSO_LINKED = !!sym("S_NO_CURSO"), S_QT_ALUNOS_LINKED = !!sym("n")) %>% 
     dplyr::inner_join(x, by = "R_NO_CURSO") %>% 
     dplyr::filter(!!sym("S_NO_CURSO_LINKED") == !!sym("S_NO_CURSO")) %>% 
@@ -63,6 +47,17 @@ link_ciclos <- function(x){
   
   dplyr::semi_join(x, ciclos, by = c("S_CO_CICLO_MATRICULA", "S_QT_ALUNOS_LINKED"))
 }
+
+#' @importFrom dplyr %>% sym
+remove_duplicated_link <- function(x){
+  duplicated_link <- x %>% 
+    dplyr::group_by(!!sym("S_NU_CPF"), !!sym("R_CO_MATRICULA")) %>%
+    dplyr::tally() %>% 
+    dplyr::filter(!!sym("n") > 1)
+  
+  dplyr::anti_join(x, duplicated_link, by = c("S_NU_CPF", "R_CO_MATRICULA"))
+}
+
 
 #' @importFrom dplyr sym
 complete_campus <- function(x){

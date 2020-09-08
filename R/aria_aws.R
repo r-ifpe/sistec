@@ -125,7 +125,7 @@ aria_aws <- function(output_path = NULL,
             ""
         }
         #create the zip file
-        zip(file, "ARIA/")
+        utils::zip(file, "ARIA/")
       }
     )
     

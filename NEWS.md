@@ -1,4 +1,4 @@
-# sistec 0.1.1
+# sistec 0.2.0
 
 ### Functions
 
@@ -9,10 +9,9 @@
 
 -  Aria's manual in PDF for qacademico users.
 
-
 ### ARIA
 
-- New to button to include linked courses files. (#55)
+- Included in outputs CPF's and academic registration with repetitions. (#65)
 - ARIA's manual in pt-br. (#60)
 
 # sistec 0.1.0

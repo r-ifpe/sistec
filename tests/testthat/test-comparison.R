@@ -9,13 +9,6 @@ test_that("compare_sistec works", {
   
   qacademico <- read_rfept(qacademico_path)
   sistec <- read_sistec(sistec_path)
-  linked_courses <- read_linked_courses(linked_courses_path, "csv")
-  
-  # with ARIA approach
   comparison <- compare_sistec(sistec, qacademico)
-  check_comparison(comparison)
-
-  # with file approach
-  comparison <- compare_sistec(sistec, qacademico, linked_courses)
   check_comparison(comparison)
 })

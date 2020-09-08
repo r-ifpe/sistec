@@ -40,7 +40,9 @@ read_sigaa <- function(path = "", start = NULL){
   temp <-  list.files(path = path, pattern = "*.csv")
   temp <- paste0(path , "/", temp) %>% sort(decreasing = TRUE)
   
-  sigaa <- utils::read.csv(temp[1], sep = ";",  stringsAsFactors = FALSE, 
+  sep <- detect_sep(temp[1])
+  
+  sigaa <- utils::read.csv(temp[1], sep = sep,  stringsAsFactors = FALSE, 
                                 encoding = "UTF-8", nrows = 1, check.names = FALSE)
 
   vars_complete <- c("Matricula", "Nome", "Situacao Matricula", "Curso", "Cpf",
@@ -55,7 +57,7 @@ read_sigaa <- function(path = "", start = NULL){
   
   if(sigaa_complete){
     if(num_vars_complete == 9){ 
-      sigaa <- read_sigaa_complete(path)
+      sigaa <- read_sigaa_complete(path, sep)
     } else{
       stop(paste("Not found:",
                  paste(vars_complete[!vars_complete %in% names(sigaa)], collapse = ", ")))
@@ -76,7 +78,7 @@ read_sigaa <- function(path = "", start = NULL){
 }
 
 #' @importFrom dplyr %>% sym
-read_sigaa_complete <- function(path){
+read_sigaa_complete <- function(path, sep){
   
   temp <-  list.files(path = path, pattern = "*.csv")
   temp <- paste0(path , "/", temp) %>% sort(decreasing = TRUE)
@@ -84,7 +86,7 @@ read_sigaa_complete <- function(path){
   classes <- c(Cpf = "character")
   
   sigaa <- lapply(temp,  utils::read.csv,
-                  sep = ";",  stringsAsFactors = FALSE, colClasses = classes,
+                  sep = sep,  stringsAsFactors = FALSE, colClasses = classes,
                   encoding = "UTF-8", check.names = FALSE) %>% 
     dplyr::bind_rows() %>% 
     dplyr::distinct(!!sym("Matricula"), .keep_all = TRUE) %>% # Take the most recent 

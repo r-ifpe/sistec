@@ -15,7 +15,7 @@ check_rfept_table <- function(x, expect_nrow){
   expect_equal(nrow(x), expect_nrow)
 }
 
-check_rfept_wrong_registration <- function(x, expect_nrow){
+check_wrong_registration <- function(x, expect_nrow){
   expect_equal(colnames(x),
                c("R_NO_CURSO", "S_NO_CURSO_LINKED", "S_QT_ALUNOS_LINKED", "R_NO_ALUNO",
                  "R_NU_CPF", "R_CO_MATRICULA", "R_CO_CICLO_MATRICULA", "R_NO_STATUS_MATRICULA",
@@ -49,21 +49,27 @@ check_linked_courses_table <- function(x, expect_nrow){
 check_comparison <- function(x){
   expect_equal(names(x),
                c("sistec_complete", "sistec_without_cpf", "sistec_without_rfept",
+                 "sistec_wrong_cpf", "sistec_duplicated_registry", "sistec_pending",
                  "rfept_complete", "rfept_without_cpf", "rfept_without_sistec",
-                 "rfept_wrong_beginning", "rfept_wrong_cyclo",
-                 "situation_updated", "situation_to_update", "linked_courses"))
+                 "rfept_wrong_cpf", "rfept_duplicated_registry", "rfept_pending",   
+                 "wrong_beginning", "situation_updated", "situation_to_update", "linked_courses"))
   
   check_sistec_table(x$sistec_complete, expect_nrow = 11099)
   check_sistec_table(x$sistec_without_cpf, expect_nrow = 88) 
-  check_sistec_table(x$sistec_without_rfept, expect_nrow = 648)
+  check_sistec_table(x$sistec_without_rfept, expect_nrow = 639)
+  check_sistec_table(x$sistec_wrong_cpf, expect_nrow = 0)
+  check_sistec_table(x$sistec_duplicated_registry, expect_nrow = 2)
+  check_sistec_table(x$sistec_pending, expect_nrow = 52)
   check_rfept_table(x$rfept_complete, expect_nrow = 14366)
   check_rfept_table(x$rfept_without_cpf, expect_nrow = 6)
-  check_rfept_table(x$rfept_without_sistec, expect_nrow = 3975)
-  check_rfept_wrong_registration(x$rfept_wrong_beginning, expect_nrow = 56)
-  check_rfept_wrong_registration(x$rfept_wrong_cyclo, expect_nrow = 0)
-  check_situation_table(x$situation_updated, expect_nrow = 9505)
-  check_situation_table(x$situation_to_update, expect_nrow = 817)
-  check_linked_courses_table(x$linked_courses, expect_nrow = 241)
+  check_rfept_table(x$rfept_without_sistec, expect_nrow = 3927)
+  check_rfept_table(x$rfept_wrong_cpf, expect_nrow = 0)
+  check_rfept_table(x$rfept_duplicated_registry, expect_nrow = 67)
+  check_rfept_table(x$rfept_pending, expect_nrow = 48)
+  check_wrong_registration(x$wrong_beginning, expect_nrow = 54)
+  check_situation_table(x$situation_updated, expect_nrow = 9465)
+  check_situation_table(x$situation_to_update, expect_nrow = 799)
+  check_linked_courses_table(x$linked_courses, expect_nrow = 239)
 }
 
 
