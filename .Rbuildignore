@@ -13,3 +13,5 @@
 ^CRAN-RELEASE$
 ^Manual_ARIA_qacademico.Rmd$
 ^Manual_ARIA_qacademico.pdf$
+^\.circleci$
+^\.circleci/config\.yml$
