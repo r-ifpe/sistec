@@ -1,14 +1,4 @@
-context("read_files")
-
-test_that("read_sistec works", {
-  skip_on_cran()
-  
-  sistec <- read_sistec(system.file("extdata/examples/sistec",
-                                    package = "sistec"))
-  
-  check_sistec_table(sistec, expect_nrow = 200)
-  expect_true(inherits(sistec, "sistec_data_frame"))
-})
+context("read_rfept")
 
 test_that("read_rfept works", {
   skip_on_cran()

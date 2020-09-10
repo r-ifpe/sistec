@@ -86,19 +86,25 @@ download_test_datasets <- function(test_datasets_folder = NULL){
     
     dir.create(paste0(datasets_path, "qacademico/"), recursive = TRUE)
     dir.create(paste0(datasets_path, "sistec/"), recursive = TRUE)
+    dir.create(paste0(datasets_path, "sistec_encoding/latin1/"), recursive = TRUE)
+    dir.create(paste0(datasets_path, "sistec_encoding/utf8/"), recursive = TRUE)
     
     destfile <- c(paste0(datasets_path, "qacademico/fake_data_qacademico_2019_1.csv"),
                   paste0(datasets_path, "qacademico/fake_data_qacademico_2019_2.csv"),
                   paste0(datasets_path, "qacademico/fake_data_qacademico_2020_1.csv"),
-                  paste0(datasets_path, "sistec/fake_data_sistec_2019.1_2020.1.csv"))
+                  paste0(datasets_path, "sistec/fake_data_sistec_2019.1_2020.1.csv"),
+                  paste0(datasets_path, "sistec_encoding/latin1/fake_data_sistec_latin1.csv"),
+                  paste0(datasets_path, "sistec_encoding/utf8/fake_data_sistec_utf8.csv"))
     
     
     datasests_paths <- c("https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/qacademico/fake_data_qacademico_2019_1.csv",
                          "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/qacademico/fake_data_qacademico_2019_2.csv",
                          "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/qacademico/fake_data_qacademico_2020_1.csv",
-                         "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/sistec/fake_data_sistec_2019.1_2020.1.csv")
+                         "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/sistec/fake_data_sistec_2019.1_2020.1.csv",
+                         "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/sistec_encoding/latin1/fake_data_sistec_latin1.csv",
+                         "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/sistec_encoding/utf8/fake_data_sistec_utf8.csv")
     
-    for(i in 1:4){
+    for(i in 1:length(destfile)){
       utils::download.file(datasests_paths[i], 
                            destfile = destfile[i],
                            # method = "wget",
