@@ -17,6 +17,6 @@ write_output(x, output_path = NULL, output_folder_name = "ARIA")
 None.
 }
 \description{
-You can use this function to save the results saparated by campus. The resutls will be
+You can use this function to save the results separated by campus. The results will be
 saved in .xlsx format.
 }
