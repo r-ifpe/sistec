@@ -19,4 +19,9 @@ b <- read_sigaa("C:/Users/dmmad/Desktop/teste_sc/sigaa")
 d <- compare_sistec(a,b)
 write_output(d, "C:/Users/dmmad/Desktop/Tenso_demais")
 
+a <- read_sistec("C:/Users/dmmad/Desktop/oi/sistec")
+b <- read_sigaa("C:/Users/dmmad/Desktop/oi/sigaa")
+d <- compare_sistec(a,b)
+write_output(d, "C:/Users/dmmad/Desktop/Tenso_demais2")
+
 
