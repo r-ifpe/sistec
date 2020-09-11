@@ -25,8 +25,6 @@ test_that("encoding and sep work", {
   # UTF-8 and ;
   sistec <- read_sistec(system.file("extdata/test_datasets/sistec_encoding/utf8",
                                     package = "sistec")) 
-  
-  expect_true(any(stringr::str_detect(sistec$S_NO_CURSO,
-                                      "\xc9|\xc7|\xd5|\xca|\xda|\xc2|\xc1|\xcd")))
-  
+
+  expect_true(any(stringi::stri_enc_isutf8(sistec$S_NO_CURSO)))
 }) 
