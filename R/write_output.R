@@ -1,6 +1,6 @@
 #' Save the comparison results
 #'
-#' You can use this function to save the results saparated by campus. The resutls will be
+#' You can use this function to save the results separated by campus. The results will be
 #' saved in .xlsx format.
 #'
 #' @param x A list returned by `compare_sistec()`.
@@ -78,10 +78,7 @@ group_rfept <- function(x){
   
   rfept_pending <- x$rfept_pending %>%
     dplyr::group_nest(!!sym("CAMPUS"), !!sym("CURSO"), .key = "rfept_pending")
-  
-  # rfept_wrong_cyclo <- x$rfept_wrong_cyclo %>%
-  #   dplyr::group_nest(!!sym("CAMPUS"), !!sym("CURSO"), .key = "rfept_wrong_cyclo")
-  
+
   wrong_beginning <- x$wrong_beginning %>%
     dplyr::group_nest(!!sym("CAMPUS"), !!sym("CURSO"), .key = "wrong_beginning")
   

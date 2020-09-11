@@ -7,12 +7,15 @@
 
 ### Documentation
 
--  Aria's manual in PDF for qacademico users.
+- ARIA's manual in pt-br. (#60)
 
 ### ARIA
 
 - Included in outputs CPF's and academic registration with repetitions. (#65)
-- ARIA's manual in pt-br. (#60)
+
+### Bug fixes
+
+- Fix encoding issues in `read_sistec()`. (#68)
 
 # sistec 0.1.0
 
