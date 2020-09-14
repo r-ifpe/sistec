@@ -175,10 +175,17 @@ write_tables <- function(x, path, rfept_table){
   tables <- list()
   tables[["Sistec sem CPF"]] <- x$sistec_without_cpf
   tables[[paste0("Sistec sem ", rfept_table)]] <- x$sistec_without_rfept
+  tables[["Sistec com CPF Repetidos"]] <- x$sistec_wrong_cpf
+  tables[["Sistec com Entrada Repetida"]] <- x$sistec_duplicated_registry
+  tables[["Sistec Inspe\u00e7\u00e3o Manual"]] <- x$sistec_pending
+  
   tables[[paste0(rfept_table, " sem CPF")]] <- x$rfept_without_cpf
   tables[[paste0(rfept_table, " sem Sistec")]] <- x$rfept_without_sistec
-  tables[["Data de In\\u00edcio Errada"]] <- x$rfept_wrong_beginning
-  tables[["Ciclo Errado"]] <- x$rfept_wrong_cyclo
+  tables[[paste0(rfept_table, " com CPF Repetidos")]] <- x$rfept_wrong_cpf
+  tables[[paste0(rfept_table, " com Entrada Repetida")]] <- x$rfept_duplicated_registry
+  tables[[paste0(rfept_table, " Inspe\u00e7\u00e3o Manual")]] <- x$rfept_pending
+  
+  tables[["Data de In\u00edcio Errada"]] <- x$rfept_wrong_beginning
   tables[["Situa\u00e7\u00f5es Atualizadas"]] <- x$situation_updated
   tables[["Situa\u00e7\u00f5es Desatualizadas"]] <- x$situation_to_update
   tables[["Cursos Relacionados"]] <- x$linked_courses
