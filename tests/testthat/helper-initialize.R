@@ -60,12 +60,14 @@ check_comparison <- function(x){
   check_sistec_table(x$sistec_wrong_cpf, expect_nrow = 0)
   check_sistec_table(x$sistec_duplicated_registry, expect_nrow = 2)
   check_sistec_table(x$sistec_pending, expect_nrow = 52)
+  
   check_rfept_table(x$rfept_complete, expect_nrow = 14366)
   check_rfept_table(x$rfept_without_cpf, expect_nrow = 6)
   check_rfept_table(x$rfept_without_sistec, expect_nrow = 3927)
   check_rfept_table(x$rfept_wrong_cpf, expect_nrow = 0)
   check_rfept_table(x$rfept_duplicated_registry, expect_nrow = 67)
   check_rfept_table(x$rfept_pending, expect_nrow = 48)
+  
   check_wrong_registration(x$wrong_beginning, expect_nrow = 54)
   check_situation_table(x$situation_updated, expect_nrow = 9465)
   check_situation_table(x$situation_to_update, expect_nrow = 799)
