@@ -47,7 +47,7 @@ aria <- function(output_path = NULL,
                                          #year {margin-botton: 20px} 
                                          .checkbox { margin-top: 0px}")),
                             ),
-                            fileInput("rfept", "Escolha os arquivos do registro acad\u00eamico",
+                            fileInput("rfept", "Escolha os arquivos do sistema acad\u00eamico",
                                       multiple = TRUE,
                                       buttonLabel = "Arquivos",
                                       placeholder = "Nada Selecionado",
