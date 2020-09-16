@@ -1,11 +1,13 @@
 ---
-title: "Manual de Instru\u00e7\u00f5es do ARIA. v0.1.0"
-subtitle: "Qacademico"
-author:
-  - Samuel Macêdo (samuelmacedo@recife.ifpe.edu.br)
-output: pdf_document
+title: \vspace{7cm}{Manual de Instruções do ARIA. v0.2.0}
+author: "Samuel Macêdo (samuelmacedo@recife.ifpe.edu.br)"
+header-includes: \renewcommand{\contentsname}{Sumário}
+output:
+  pdf_document:
+    number_sections: yes
 ---
-
+\newpage
+\tableofcontents
 \renewcommand{\figurename}{Figura}
 
 ```{r setup, include=FALSE}
@@ -13,15 +15,31 @@ knitr::opts_chunk$set(eval = FALSE)
 knitr::opts_chunk$set(warning = FALSE)
 ```
 
-O ARIA é um aplicativo web criado para auxilar os servidores responsáveis por atualizar e casdastrar os alunos do registro acadêmico para o Sistec. Neste manual será descrito seu uso e como interpretar as saídas.
+\newpage
 
-## Instalação
+# Introdução 
 
-O ARIA está disponibilizado em forma de aplicativo desktop ou pode ser usado diretamente via console do R. A versão desktop pode ser instalada dando um duplo clique no executável que veio junto com este manual. 
+  Um dos desafios enfrentados pelos registros acadêmicos (RA) e pesquisadores institucionais (PI) nos institutos federais é cadastrar e manter atualizados os dados do sistema acadêmico e o Sistec. 
+  
+  O sistema acadêmico é onde se encontram os registro cadastrais dos alunos matriculados: nome, nome do pai, nome da mãe, endereço, RG, CPF, entre outros. Além destes citados, também são armazenados informações, por exemplo, sobre disciplinas cursadas, notas, tracamentos e abandonos. Na maioria dos casos, o cadastro de alunos no sistema acadêmico vem dos dados de vestibular/ENEM ou algum tipo de cadastro realizado no ato da matrícula. Independente do formato adotado, a importação desses dados não é feita de maneira automática no sistema acadêmico e, muitas vezes, estas informações são inseridas de maneira manual pela equipe de RA's. 
 
-O ARIA é um software desenvolvido em R e pode ser executado diretamente pelo console. Você pode instalar a versão estável utilizando o comando `install.packages("sistec")` ou versão mais atual em desenvolvimento utilizando o comando `devtools::install_github("r-ifpe/sistec")`. Para executar o ARIA digite o comando `sistec::aria()`.
+  O Sistec é o Sistema Nacional de Informações da Educação Profissional e Tecnológica, é neste portal que devem estar cadastrados todos os alunos da rede para que o ministério da educação tenha ciência e redistribua os recursos entre os institutos federais e afns. A entrada de alunos no Sistec é simples, apenas com o CPF já é possível extrair os dados do aluno advindos das bases da receita federal. 
+  
+  O Sistec deveria ser o espelho do sistema acadêmico de um instituto e apesar da facilidade em cadastrar alunos no Sistec, mantê-lo atualizado em relação ao sistema acadêmico é onde está o principal desafio. Em muitos casos, esta atualização de cadastro é feita de maneira semi-automática ou manual, vendo a situação de matrícula e cadastro de aluno por aluno. Isto acontece por que, na prática, a única informação em comum entre as bases do sistema acadêmico e o Sistec é o CPF do aluno. E porque isso acontece? Em sua grande maioria, não há equivalência entre as bases em relação aos cursos, os nomes dos cursos registrados no sistema acadêmico não são os mesmos registrados no Sistec e também não há registro do código do ciclo na base do sistema acadêmico. Aliado a isto, também existem outros complicadores, como por exemplo, alunos cadastrados em mais de um curso, alunos matrículados por engano e erros de digitação no CPF.
+  
+  Diante dos problemas citados, é notório o desafio dos RA's e PI's em manter os dados do sistema acadêmico e Sistec de maneira atualizada e, em vista disso, que o ARIA surge como uma alternativa para facilitar o trabalho destes profissionais automatizando todo o processo de comparação entre as bases do sistema acadêmico e Sistec. 
+  
+  A versão atual do ARIA conta com a identificação de alunos com: CPF em branco, matriculas irregulares, divergência entre a data matricula e data do inicio do curso, que estão Sistec e não estão no sistema acadêmico e vice-versa, situação totalmente atualizada e situação desatualizada. Além dessas análises, o ARIA também disponibiliza a lista de alunos que não estão no Sistec já separadas por CPF e cota, isso facilita bastante na hora de importar os alunos no Sistec selecionando a opção de cadastro em lote.
+  
+  Nas próximas seções deste manual serão descritos como instalar, seu uso e como interpretar as saídas. 
+  
+# Instalação
 
-## Entradas
+  O ARIA é um aplicativo web criado para auxilar os servidores responsáveis por atualizar e casdastrar os alunos do registro acadêmico junto ao Sistec. Com este aplicativo é possível verificar erros no cadastro e fazer comparações entre o Sistec e sistema acadêmico. Além da versão web, o ARIA está disponibilizado em forma de aplicativo desktop ou pode ser usado diretamente via console do R. A versão desktop pode ser instalada dando um duplo clique no executável que veio junto com este manual. 
+
+  O ARIA é um software desenvolvido em R e pode ser executado diretamente pelo console. Você pode instalar a versão estável utilizando o comando `install.packages("sistec")` ou a versão mais atual em desenvolvimento utilizando o comando `devtools::install_github("r-ifpe/sistec")`. Para executar o ARIA digite o comando `sistec::aria()`. Caso deseje que o ARIA seja executado no seu servidor você precisará instalar o [shiny server](https://rstudio.com/products/shiny/download-server/), instalar o pacote `sistec` na pasta `sample-apps`. Para executar o ARIA use o comando `sistec::aria_aws()`. Aqui segue uma boa referência em como fazer esse procedimento na [AWS](https://www.charlesbordet.com/en/guide-shiny-aws/#).
+
+# Entradas
 
 Nesta versão, o ARIA só apresenta uma tela. Esta é responsável por inserir os dados de regsitro academico e Sistec.  
 

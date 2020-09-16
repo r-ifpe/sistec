@@ -11,7 +11,7 @@
 ^README_images$
 ^cran-comments\.md$
 ^CRAN-RELEASE$
-^Manual_ARIA_qacademico.Rmd$
-^Manual_ARIA_qacademico.pdf$
+^Manual_ARIA.Rmd$
+^Manual_ARIA.pdf$
 ^\.circleci$
 ^\.circleci/config\.yml$
