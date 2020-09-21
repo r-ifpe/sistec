@@ -3,9 +3,9 @@ output_screen <- function(input_sistec, input_rfept, comparison){ #linked_course
   if(all(!is.null(input_sistec), !is.null(input_rfept))){ # linked_course_exist
     response <- compare_screen(comparison)
   } else if(is.null(input_sistec) && is.null(input_rfept)){
-    response <- "Selecione os arquivos do Sistec e do registro acad\u00eamico."   
+    response <- "Selecione os arquivos do Sistec e do sistema acad\u00eamico."   
   } else if(is.null(input_rfept)){
-    response <- "Selecione os arquivos do registro acad\u00eamico."
+    response <- "Selecione os arquivos do sistema acad\u00eamico."
   } else if(is.null(input_sistec)){
     response <- "Selecione os arquivos do sistec."
   } 
