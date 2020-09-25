@@ -90,15 +90,15 @@ aria_aws <- function(output_path = NULL,
   )
   #".shiny-input-container" = "margin-bottom: 0px", 
   server <- function(input, output, session){
-    # # close the R session when Chrome closes
-    # session$onSessionEnded(function() {
-    #   if(is.null(isolate(input$test_mode))){
-    #     stopApp()
-    #     q("no")
-    #   } else {
-    #     stopApp()
-    #   }
-    # })
+     # close the R session when Chrome closes
+     session$onSessionEnded(function() {
+       if(is.null(isolate(input$test_mode))){
+         stopApp()
+         q("no")
+       } else {
+         stopApp()
+       }
+     })
 
     comparison <- reactiveValues(x = FALSE)
     
