@@ -1,0 +1,1 @@
+wscript.exe "%~dp0hide_cmd.vbs" "%~dp0run_shiny_app.bat"

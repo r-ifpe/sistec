@@ -30,13 +30,13 @@ aria <- function(output_path = NULL,
   opt <- options(shiny.maxRequestSize = shiny_max_file_size) 
   on.exit(options(opt))
   
-  description_path <- system.file("DESCRIPTION", package = "sistec")
-  version <- as.character(read.dcf(description_path, fields = "Version"))
+  # description_path <- system.file("DESCRIPTION", package = "sistec")
+  # version <- as.character(read.dcf(description_path, fields = "Version"))
   
   period_input <- read_period_input()
   
   ui <- fluidPage(
-    navbarPage(paste0("ARIA v", version),
+    navbarPage(paste0("ARIA v", aria_version()),
                tabPanel("SISTEC",
                         sidebarLayout(
                           sidebarPanel(
