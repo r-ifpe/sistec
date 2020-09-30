@@ -25,3 +25,7 @@ d <- compare_sistec(a,b)
 write_output(d, "C:/Users/dmmad/Desktop/Tenso_demais2")
 
 
+aria_desktop_build("C:/Users/dmmad/Desktop/ARIA_desktop", 
+                   "C:/Users/dmmad/Desktop")
+
+
