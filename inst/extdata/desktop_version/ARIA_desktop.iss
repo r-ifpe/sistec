@@ -17,7 +17,7 @@ DisableProgramGroupPage=yes
 PrivilegesRequired=lowest
 OutputDir=C:\Users\dmmad\Desktop
 OutputBaseFilename=ARIA
-SetupIconFile=C:\Users\dmmad\Desktop\ARIA-0.1.0.9010-lite\LogoIFPE.ico
+SetupIconFile=C:\Users\dmmad\Desktop\ARIA_desktop\LogoIFPE.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -29,8 +29,8 @@ Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortugue
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Users\dmmad\Desktop\ARIA-0.1.0.9010-lite\ARIA.bat"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\dmmad\Desktop\ARIA-0.1.0.9010-lite\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\dmmad\Desktop\ARIA_desktop\ARIA.bat"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\dmmad\Desktop\ARIA_desktop\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
