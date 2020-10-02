@@ -14,6 +14,7 @@
 #' @param test_mode Use FALSE in production and TRUE when you are testing. In production,
 #' when you close the browser ,the app and the R session will be closed. In test, only the app will 
 #' close when you close the browser.
+#' @param version A string. Choose "offline" or "online" version.
 #' 
 #' @return A web application.
 #'
@@ -24,15 +25,13 @@ aria <- function(output_path = NULL,
                  max_file_size = 100,
                  options_port = 8888,
                  options_launch_browser = TRUE,
-                 test_mode = TRUE){
+                 test_mode = TRUE,
+                 version = "offline"){
 
   shiny_max_file_size <- as.integer(max_file_size*1024^2)
   opt <- options(shiny.maxRequestSize = shiny_max_file_size) 
   on.exit(options(opt))
-  
-  # description_path <- system.file("DESCRIPTION", package = "sistec")
-  # version <- as.character(read.dcf(description_path, fields = "Version"))
-  
+
   period_input <- read_period_input()
   
   ui <- fluidPage(
@@ -47,47 +46,20 @@ aria <- function(output_path = NULL,
                                          #year {margin-botton: 20px} 
                                          .checkbox { margin-top: 0px}")),
                             ),
-                            fileInput("rfept", "Escolha os arquivos do sistema acad\u00eamico",
-                                      multiple = TRUE,
-                                      buttonLabel = "Arquivos",
-                                      placeholder = "Nada Selecionado",
-                                      accept = c("text/csv",
-                                                 "text/comma-separated-values,text/plain",
-                                                 ".csv")),
-                            fileInput("sistec", "Escolha os arquivos do Sistec",
-                                      multiple = TRUE,
-                                      buttonLabel = "Arquivos",
-                                      placeholder = "Nada Selecionado",
-                                      accept = c("text/csv",
-                                                 "text/comma-separated-values,text/plain",
-                                                 ".csv")),
-                            # fileInput("linked_course", "Escolha o arquivo com a rela\u00e7\u00e3o
-                            #           entre os cursos do registro academico e o ciclo no Sistec",
-                            #           multiple = TRUE,
-                            #           buttonLabel = "Arquivos",
-                            #           placeholder = "Nada Selecionado",
-                            #           accept = c(".xlsx", ".xls",
-                            #                      "text/comma-separated-values,text/plain")), 
-                            # checkboxInput("linked_course_check", "Estimativa pelo ARIA", FALSE),
-                            # br(),
-                            selectInput("year", "Comparar a partir de:",
-                                        choices = period_input$PERIOD,
-                                        selected = "2019.1"),
+                            aria_input_rfept(),
+                            aria_input_sistec(),
+                            aria_input_years(period_input$PERIOD),
                             br(),
-                            actionButton("do", "Comparar"),
-                            actionButton("download", "Salvar resultados"),
-                            if(test_mode) checkboxInput("test_mode", "Test mode", TRUE)
+                            aria_compare_button(),
+                            aria_download_button(version),
+                            aria_test_mode_checkbox(test_mode)
                           ),
-                          mainPanel(
-                            strong(htmlOutput("contents")),
-                            br(), br(), br(), br(),
-                            strong(htmlOutput("download"))
-                          )
+                         aria_main_panel(version)
                         )
                )
     )
   )
-  #".shiny-input-container" = "margin-bottom: 0px", 
+ 
   server <- function(input, output, session){
     # close the R session when Chrome closes
     session$onSessionEnded(function() {
@@ -101,8 +73,35 @@ aria <- function(output_path = NULL,
 
     comparison <- reactiveValues(x = FALSE)
     
-    output$download <- renderText({
-      input$download
+    output$download_online <- downloadHandler(
+      filename = "ARIA.zip",
+      content = function(file){
+        #go to a temp dir to avoid permission issues
+        output_path <- tempdir()
+        owd <- setwd(output_path)
+        on.exit(setwd(owd))
+        files <- NULL;
+        
+        if(is.list(isolate(comparison$x))){
+          
+          output_path <- shiny_output_path(output_path)
+          
+          write_output(x = isolate(comparison$x),
+                       output_path = output_path,
+                       output_folder_name = output_folder_name)
+          
+          "Download realizado com sucesso!"
+          
+        } else {
+          ""
+        }
+        #create the zip file
+        utils::zip(file, "ARIA/")
+      }
+    )
+    
+    output$download_offline <- renderText({
+      input$download_offline
       
       if(is.list(isolate(comparison$x))){
         
@@ -121,11 +120,7 @@ aria <- function(output_path = NULL,
     
     output$contents <- renderText({
       input$do
-      
-      # linked_course_approach <- isolate(
-      #   check_linked_course_approach(input$linked_course$datapath[1],
-      #                                input$linked_course_check))
-      
+
       comparison$x <- isolate(
         if(all(!is.null(input$sistec$datapath[1]),
                !is.null(input$rfept$datapath[1]))){ #linked_course_approach$exist
@@ -143,6 +138,5 @@ aria <- function(output_path = NULL,
     })
   }
   
-  shinyApp(ui, server, options = list(port = options_port,
-                                      launch.browser = options_launch_browser))
+  aria_run(ui, server, version, options_port, options_launch_browser)
 } 
