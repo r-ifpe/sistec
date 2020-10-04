@@ -1,9 +1,12 @@
-# sistec 0.2.0
+# sistec 0.3.0
 
 ### Functions
 
 - Update `read_sigaa()`to read datasets with "Campus" and "Cota". (#53)
 - Cration of `read_linked_courses()` to read a file with the relation between courses in academic registration and Sistec cyclo. (#55)
+- Creation of `aria_desktop_build()`. This function create a folder with all necessary
+files to build the ARIA's desktop version with innosetup. (#74)
+- The `aria()` now has offline and online version (#75)
 
 ### Documentation
 
