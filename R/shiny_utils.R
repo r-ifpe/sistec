@@ -14,14 +14,6 @@ shiny_comparison <- function(sistec_path, rfept_path, year){
   rfept <- read_rfept(server_input_path(rfept_path), year)
   
   compare_sistec(sistec, rfept)
-
-#linked_course_approach (parameter)
-#   if(linked_course_approach$tech == "aria"){
-#     compare_sistec(sistec, rfept)
-#   } else {
-#     linked_course <- read_linked_courses(server_input_path(linked_course_approach$path))
-#     compare_sistec(sistec, rfept, linked_course) 
-#   }
 }
 
 shiny_output_path <- function(output_path){
@@ -41,32 +33,3 @@ shiny_output_path <- function(output_path){
   }
   output_path
 }
-
-check_linked_course_approach <- function(datapath, estimate_by_aria){
-  
-  linked_course_approach <- list()
-  
-  if(!is.null(datapath)){
-    linked_course_approach$exist = TRUE
-    linked_course_approach$tech = "linked_course_file"
-    linked_course_approach$path = datapath
-  } else if(estimate_by_aria){
-    linked_course_approach$exist = TRUE
-    linked_course_approach$tech = "aria"
-  } else {
-    linked_course_approach$exist = FALSE
-  }
-  
-  linked_course_approach
-}
-
-
-
-
-
-
-
-
-
-
-

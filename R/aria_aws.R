@@ -26,6 +26,7 @@ aria_aws <- function(output_path = NULL,
                  # options_launch_browser = TRUE,
                  test_mode = TRUE){
 
+  .Deprecated('aria(version = "online")')
   shiny_max_file_size <- as.integer(max_file_size*1024^2)
   opt <- options(shiny.maxRequestSize = shiny_max_file_size) 
   on.exit(options(opt))
@@ -61,15 +62,6 @@ aria_aws <- function(output_path = NULL,
                                       accept = c("text/csv",
                                                  "text/comma-separated-values,text/plain",
                                                  ".csv")),
-                            # fileInput("linked_course", "Escolha o arquivo com a rela\u00e7\u00e3o
-                            #           entre os cursos do registro academico e o ciclo no Sistec",
-                            #           multiple = TRUE,
-                            #           buttonLabel = "Arquivos",
-                            #           placeholder = "Nada Selecionado",
-                            #           accept = c(".xlsx", ".xls",
-                            #                      "text/comma-separated-values,text/plain")), 
-                            # checkboxInput("linked_course_check", "Estimativa pelo ARIA", FALSE),
-                            # br(),
                             selectInput("year", "Comparar a partir de:",
                                         choices = period_input$PERIOD,
                                         selected = "2019.1"),
@@ -80,9 +72,6 @@ aria_aws <- function(output_path = NULL,
                           ),
                           mainPanel(
                             strong(htmlOutput("contents"))
-                            # ,
-                            # br(), br(), br(), br(),
-                            # strong(htmlOutput("download"))
                           )
                         )
                )

@@ -10,7 +10,8 @@ aria(
   max_file_size = 100,
   options_port = 8888,
   options_launch_browser = TRUE,
-  test_mode = TRUE
+  test_mode = TRUE,
+  version = "offline"
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ launched automatically after the app is started.}
 \item{test_mode}{Use FALSE in production and TRUE when you are testing. In production,
 when you close the browser ,the app and the R session will be closed. In test, only the app will
 close when you close the browser.}
+
+\item{version}{A string. Choose "offline" or "online" version.}
 }
 \value{
 A web application.
