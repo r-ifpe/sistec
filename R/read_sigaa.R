@@ -156,6 +156,8 @@ sigaa_partial_convert_beginning_date <- function(mat){
   dplyr::case_when(
     len == 12 ~ paste0(stringr::str_sub(mat, 1, 4), ".", 
                        stringr::str_sub(mat, 5, 5)),
+    len == 11 ~ paste0(stringr::str_sub(mat, 1, 4), ".", 
+                       stringr::str_sub(mat, 5, 5)),
     len == 10 ~ ifelse(stringr::str_sub(mat, 1, 3) == 200,
                        paste0(stringr::str_sub(mat, 1, 4), ".",
                               stringr::str_sub(mat, 5,5)),

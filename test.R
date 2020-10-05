@@ -1,3 +1,7 @@
+a <- read_sistec("C:/Users/dmmad/Desktop/teste_legal/sistec/")
+b <- read_sigaa("C:/Users/dmmad/Desktop/teste_legal/sigaa")
+d <- compare_sistec(a,b)
+
 read_sistec("C:/Pesquisa/sistec2/inst/extdata/test_datasets/sistec/") 
 read_sistec("C:/Pesquisa/dados/sistec/web/")
 read_sistec("C:/Pesquisa/dados/sistec")
