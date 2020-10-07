@@ -140,7 +140,7 @@ sistec_convert_beginning_date <- function(date){
     paste0(year, ".", semester )
   } else{
     year <- stringr::str_sub(date, 1, 4)
-    month <- as.numeric(stringr::str_sub(date, 5, 6))
+    month <- as.numeric(stringr::str_sub(date, 6, 7))
     semester <- ifelse(month > 6, 2, 1)
     paste0(year, ".", semester )
   }
