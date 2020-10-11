@@ -16,7 +16,7 @@ d <- compare_sistec(a,b)
 a <- read_sistec("C:/Users/dmmad/Desktop/exemplos/sistec/")
 b <- read_qacademico("C:/Users/dmmad/Desktop/exemplos/qacademico/")
 d <- compare_sistec(a,b)
-write_output(d, "C:/Users/dmmad/Desktop/Tenso_demais")
+write_output(d, "C:/Users/dmmad/Desktop/Nova pasta/")
 
 a <- read_sistec("C:/Users/dmmad/Desktop/teste_sc/sistec")
 b <- read_sigaa("C:/Users/dmmad/Desktop/teste_sc/sigaa")
