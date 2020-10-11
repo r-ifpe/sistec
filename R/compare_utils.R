@@ -165,7 +165,6 @@ separate_wrong_beginning <- function(x){
 #' @importFrom dplyr %>% sym
 pending_manual_inspection <- function(x){
   
- x <- remove_unlinked_cpf(x)
  x$sistec_pending <- x$sistec
  x$rfept_pending <- x$rfept
  x
