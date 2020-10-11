@@ -7,8 +7,9 @@ compare_sistec_rfept <- function(sistec, rfept, linked_courses = NULL){
     remove_wrong_cpf() %>% 
     remove_duplicated_registry() %>% 
     merge_sistec_rfept() %>% 
-    compare_situation() %>% 
     create_linked_courses_data_frame() %>% 
+    merge_duplicated_registry() %>% 
+    compare_situation() %>% 
     split_situation() %>% 
     separate_wrong_beginning() %>% 
     pending_manual_inspection() %>% 
