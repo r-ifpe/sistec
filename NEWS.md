@@ -11,6 +11,7 @@ files to build the ARIA's desktop version with innosetup. (#74)
 ### Documentation
 
 - ARIA's manual in pt-br. (#60)
+- ARIA's manual panel for output description. (#81)
 
 ### ARIA
 
