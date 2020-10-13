@@ -56,7 +56,10 @@ aria <- function(output_path = NULL,
                           ),
                          aria_main_panel(version)
                         )
-               )
+               ),
+               tabPanel("MANUAL",
+                        manual_screen()
+                        )
     )
   )
  
