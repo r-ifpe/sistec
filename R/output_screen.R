@@ -25,6 +25,9 @@ compare_screen <- function(comparison){
                    "Alunos sem CPF:",
                    paste0("&emsp; - Sistec: ", nrow(comparison$sistec_without_cpf)),
                    paste0("&emsp; - ", rfept, ": ", nrow(comparison$rfept_without_cpf)),
+                   "Alunos n\u00e3o encontrados:",
+                   paste0("&emsp; - Sistec: ", nrow(comparison$sistec_without_rfept)),
+                   paste0("&emsp; - ", rfept, ": ", nrow(comparison$rfept_without_sistec)),
                    "CPF's repetidos:",
                    paste0("&emsp; - Sistec: ", nrow(comparison$sistec_wrong_cpf)),
                    paste0("&emsp; - ", rfept, ": ", nrow(comparison$rfept_wrong_cpf)),
@@ -32,8 +35,8 @@ compare_screen <- function(comparison){
                    paste0("&emsp; - Sistec: ", nrow(comparison$sistec_duplicated_registry)),
                    paste0("&emsp; - ", rfept, ": ", nrow(comparison$rfept_duplicated_registry)),
                    "V\u00ednculos n\u00e3o encontrados:",
-                   paste0("&emsp; - Sistec: ", nrow(comparison$sistec_without_rfept)),
-                   paste0("&emsp; - ", rfept, ": ", nrow(comparison$rfept_without_sistec)),
+                   paste0("&emsp; - Sistec: ", nrow(comparison$sistec_unlinked_entry)),
+                   paste0("&emsp; - ", rfept, ": ", nrow(comparison$rfept_unlinked_entry)),
                    "Para inspe\u00e7\u00e3o manual:",
                    paste0("&emsp; - Sistec: ", nrow(comparison$sistec_pending)),
                    paste0("&emsp; - ", rfept, ": ", nrow(comparison$rfept_pending)), 
@@ -51,17 +54,7 @@ manual_screen <- function(){
                     "- Alunos sem CPF's: CPF's em branco ou inv\u00e1lidos.", 
                     "&emsp; Sugest\u00e3o: Retificar o CPF ou averiguar se o aluno de fato existe.",
                     "",
-                    "- CPF's repetidos: Alunos com nomes diferentes para o mesmo n\u00famero de CPF.", 
-                    "&emsp; Sugest\u00e3o: Retificar o CPF ou averiguar se o aluno de fato existe.",
-                    "", 
-                    "- V\u00ednculos repetidos: Alunos com entradas repetidas no sistema acad\u00eamico ou Sistec",
-                    "&emsp; <font color=\"#FF0000\"><b>URGENTE:</b></font> Alunos com entrada dupla no Sistec 
-                    indicam ao MEC que a institui\u00e7\u00e3o apresenta mais alunos que do que de fato existem. Isso 
-                    afeta no or\u00e7amento da institui\u00e7\u00e3o.", 
-                    "&emsp; Sugest\u00e3o: Retificar a matr\u00edcula no sistema acad\u00eamico ou pedir matr\u00edcula 
-                    extempor\u00e2nea no Sistec. Retifique os dados e execute o ARIA novamente.",
-                    "",
-                    "- V\u00ednculos n\u00e3o encontrados: Alunos que consistem no sistema acad\u00eamico mas n\u00e3o 
+                    "- Alunos n\u00e3o encontrados: Alunos que consistem no sistema acad\u00eamico mas n\u00e3o 
                     constam no Sistec e vice e versa.",
                     "&emsp; <font color=\"#FF0000\"><b>URGENTE:</b></font> Alunos n\u00e3o cadastrados no Sistec indicam 
                      ao MEC que a institui\u00e7\u00e3o apresenta menos alunos que do que de fato existem. Isso afeta no 
@@ -70,6 +63,26 @@ manual_screen <- function(){
                     \"Cadastrar no Sistec\", nela encontram-se os CPF's desses alunos e voc\u00ea pode realizar o cadastro 
                     desses alunos em lote. Retifique os dados e",
                     "&emsp; execute o ARIA novamente.",
+                    "",
+                    "- CPF's repetidos: Alunos com nomes diferentes para o mesmo n\u00famero de CPF.", 
+                    "&emsp; Sugest\u00e3o: Retificar o CPF ou averiguar se o aluno de fato existe.",
+                    "", 
+                    "- V\u00ednculos repetidos: Alunos com entradas repetidas no sistema acad\u00eamico ou Sistec.",
+                    "&emsp; <font color=\"#FF0000\"><b>URGENTE:</b></font> Alunos com entrada dupla no Sistec 
+                    indicam ao MEC que a institui\u00e7\u00e3o apresenta mais alunos que do que de fato existem. Isso 
+                    afeta no or\u00e7amento da institui\u00e7\u00e3o.", 
+                    "&emsp; Sugest\u00e3o: Retificar a matr\u00edcula no sistema acad\u00eamico ou pedir matr\u00edcula 
+                    extempor\u00e2nea no Sistec. Retifique os dados e execute o ARIA novamente.",
+                    "",
+                    "V\u00ednculos n\u00e3o encontrados: Alunos que est\u00e3o inclu\u00eddos nas duas bases, mas 
+                    n\u00e3o foi poss\u00edvel encontrar o equivalente do sistema acad\u00eamico no Sistec.",
+                    "&emsp; <font color=\"#FF0000\"><b>URGENTE:</b></font> Alunos n\u00e3o cadastrados no Sistec indicam 
+                     ao MEC que a institui\u00e7\u00e3o apresenta menos alunos que do que de fato existem. Isso afeta no 
+                     or\u00e7amento da institui\u00e7\u00e3o.",
+                    "&emsp; Sugest\u00e3o: Verifique se estas entradas, em espec\u00edfico, est\u00e3o cadastradas nas 
+                    duas bases. Na maioria das vezes, alunos nesta situa\u00e7\u00e3o possuem mais de um v\u00ednculo com 
+                    a institui\u00e7\u00e3o e pelo menos um dessas entradas n\u00e3o est\u00e3o ",
+                    "&emsp; cadastradas. Retifique os dados e execute o ARIA novamente.",
                     "",
                     "- Erro no cadastro: Alunos com entrada encontrada, por\u00e9m o cadastro foi realizado em periodos 
                     diferentes. Ex.: matr\u00edcula em 2019.2 no sistema acad\u00eamico e no Sistec consta em 2020.1.",

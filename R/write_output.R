@@ -52,12 +52,16 @@ group_sistec <- function(x){
   sistec_duplicated_registry <- x$sistec_duplicated_registry %>%
     dplyr::group_nest(!!sym("CAMPUS"), !!sym("CURSO"), .key = "sistec_duplicated_registry")
   
+  sistec_unlinked_entry <- x$sistec_unlinked_entry %>%
+    dplyr::group_nest(!!sym("CAMPUS"), !!sym("CURSO"), .key = "sistec_unlinked_entry")
+  
   sistec_pending <- x$sistec_pending %>%
     dplyr::group_nest(!!sym("CAMPUS"), !!sym("CURSO"), .key = "sistec_pending")
   
   dplyr::full_join(sistec_without_cpf, sistec_without_rfept, by = c("CAMPUS", "CURSO")) %>%
     dplyr::full_join(sistec_wrong_cpf, by = c("CAMPUS", "CURSO")) %>% 
     dplyr::full_join(sistec_duplicated_registry, by = c("CAMPUS", "CURSO")) %>% 
+    dplyr::full_join(sistec_unlinked_entry, by = c("CAMPUS", "CURSO")) %>% 
     dplyr::full_join(sistec_pending, by = c("CAMPUS", "CURSO"))
 }
 
@@ -76,6 +80,9 @@ group_rfept <- function(x){
   rfept_duplicated_registry <- x$rfept_duplicated_registry %>%
     dplyr::group_nest(!!sym("CAMPUS"), !!sym("CURSO"), .key = "rfept_duplicated_registry")
   
+  rfept_unlinked_entry <- x$rfept_unlinked_entry %>%
+    dplyr::group_nest(!!sym("CAMPUS"), !!sym("CURSO"), .key = "rfept_unlinked_entry")
+  
   rfept_pending <- x$rfept_pending %>%
     dplyr::group_nest(!!sym("CAMPUS"), !!sym("CURSO"), .key = "rfept_pending")
 
@@ -91,6 +98,7 @@ group_rfept <- function(x){
   dplyr::full_join(rfept_without_cpf, rfept_without_sistec, by = c("CAMPUS", "CURSO")) %>%
     dplyr::full_join(rfept_wrong_cpf, by = c("CAMPUS", "CURSO")) %>% 
     dplyr::full_join(rfept_duplicated_registry, by = c("CAMPUS", "CURSO")) %>% 
+    dplyr::full_join(rfept_unlinked_entry, by = c("CAMPUS", "CURSO")) %>% 
     dplyr::full_join(rfept_pending, by = c("CAMPUS", "CURSO")) %>% 
     dplyr::full_join(wrong_beginning, by = c("CAMPUS", "CURSO")) %>% 
     dplyr::full_join(situation_to_update, by = c("CAMPUS", "CURSO")) %>% 
@@ -114,6 +122,7 @@ write_sistec <- function(x, path, rfept_table){
       sistec[["Erro no CPF"]] <- x$sistec_wrong_cpf[e][[1]]
       sistec[["Entrada duplicada"]] <- x$sistec_duplicated_registry[e][[1]]
       sistec[[paste0("Inserir no ", rfept_table)]] <- x$sistec_without_rfept[e][[1]]
+      sistec[["Entrada n\u00e3o encontrada"]] <- x$sistec_unlinked_entry[e][[1]]
       sistec[["Inspe\u00e7\u00e3o manual"]] <- x$sistec_pending[e][[1]]
       openxlsx::write.xlsx(sistec, paste0(path_to_save, "/Sistec.xlsx"))
     })
@@ -130,6 +139,7 @@ write_rfept <- function(x, path, rfept_table){
       rfept[["Erro no CPF"]] <- x$rfept_wrong_cpf[e][[1]]
       rfept[["Entrada duplicada"]] <- x$rfept_duplicated_registry[e][[1]]
       rfept[["Inserir no Sistec"]] <- x$rfept_without_sistec[e][[1]]
+      rfept[["Entrada n\u00e3o encontrada"]] <- x$rfept_unlinked_entry[e][[1]]
       rfept[["Inspe\u00e7\u00e3o manual"]] <- x$rfept_pending[e][[1]]
       rfept[["Retificar Inicio"]] <- x$wrong_beginning[e][[1]]
       rfept[["Retificar Situa\u00e7\u00e3o"]] <- x$situation_to_update[e][[1]]
@@ -177,12 +187,14 @@ write_tables <- function(x, path, rfept_table){
   tables[[paste0("Sistec sem ", rfept_table)]] <- x$sistec_without_rfept
   tables[["Sistec com CPF Repetidos"]] <- x$sistec_wrong_cpf
   tables[["Sistec com Entrada Repetida"]] <- x$sistec_duplicated_registry
+  tables[["Sistec com entrada n\u00e3o encontrada"]] <- x$sistec_unlinked_entry
   tables[["Sistec Inspe\u00e7\u00e3o Manual"]] <- x$sistec_pending
   
   tables[[paste0(rfept_table, " sem CPF")]] <- x$rfept_without_cpf
   tables[[paste0(rfept_table, " sem Sistec")]] <- x$rfept_without_sistec
   tables[[paste0(rfept_table, " com CPF Repetidos")]] <- x$rfept_wrong_cpf
   tables[[paste0(rfept_table, " com Entrada Repetida")]] <- x$rfept_duplicated_registry
+  tables[[paste0(rfept_table, " com entrada n\u00e3o encontrada")]] <- x$rfept_unlinked_entry
   tables[[paste0(rfept_table, " Inspe\u00e7\u00e3o Manual")]] <- x$rfept_pending
   
   tables[["Data de In\u00edcio Errada"]] <- x$rfept_wrong_beginning

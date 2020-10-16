@@ -12,6 +12,7 @@ compare_sistec_rfept <- function(sistec, rfept, linked_courses = NULL){
     compare_situation() %>% 
     split_situation() %>% 
     separate_wrong_beginning() %>% 
+    separate_unlinked_entry() %>% 
     pending_manual_inspection() %>% 
     clean_memory()
   
