@@ -4,6 +4,7 @@ merge_sistec_rfept <- function(x){
                                              by = c("S_NU_CPF" = "R_NU_CPF")) %>% 
     link_courses() %>% 
     link_ciclos() %>% 
+    remove_duplicated_courses() %>% 
     remove_duplicated_link()
 
   x$sistec <- dplyr::anti_join(x$sistec, x$sistec_rfept_linked,
@@ -48,8 +49,21 @@ link_ciclos <- function(x){
   dplyr::semi_join(x, ciclos, by = c("S_CO_CICLO_MATRICULA", "S_QT_ALUNOS_LINKED"))
 }
 
+remove_duplicated_courses <- function(x){
+  courses <- x %>%
+    dplyr::group_by(!!sym("R_NO_CURSO"), !!sym("S_NO_CURSO")) %>% 
+    dplyr::tally() %>% 
+    dplyr::filter(!!sym("n") > 8) # this number is empirical. 
+  # I didn't find other examples less than 8
+  
+  dplyr::semi_join(x, courses, by = c("R_NO_CURSO", "S_NO_CURSO")) 
+}
+
 #' @importFrom dplyr %>% sym
 remove_duplicated_link <- function(x){
+  
+  
+  
   duplicated_link <- x %>% 
     dplyr::group_by(!!sym("S_NU_CPF"), !!sym("R_CO_MATRICULA")) %>%
     dplyr::tally() %>% 
