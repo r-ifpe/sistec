@@ -2,35 +2,37 @@
 
 ### Functions
 
-- Update `read_sigaa()`to read datasets with "Campus" and "Cota". (#53)
-- Cration of `read_linked_courses()` to read a file with the relation between courses in academic registration and Sistec cyclo. (#55)
+- The `aria()` now has offline and online version (#75)
 - Creation of `aria_desktop_build()`. This function create a folder with all necessary
 files to build the ARIA's desktop version with innosetup. (#74)
-- The `aria()` now has offline and online version (#75)
+- Cration of `read_linked_courses()` to read a file with the relation between courses in academic registration and Sistec cyclo. (#55)
+- Update `read_sigaa()`to read datasets with "Campus" and "Cota". (#53)
 
 ### Documentation
 
-- ARIA's manual in pt-br. (#60)
 - ARIA's manual panel for output description. (#81)
+- ARIA's manual in pt-br. (#60)
 
 ### ARIA
 
+- Included entry not found in outputs. (#82)
 - Included in outputs CPF's and academic registration with repetitions. (#65)
 
 ### Bug fixes
 
+- Fix a bug in sistec utf dates. (#79)
 - Fix encoding issues in `read_sistec()`. (#68)
 
 # sistec 0.1.0
 
 ### ARIA
 
-- The web app in this package now has a name: ARIA.
+- sistec_app was deprecated and point to `aria()`. (#45)
+- Included which year to start the comparison. (#44)
+- Included wrong registration data frames in the results. (#43)
 - Included `test_mode` parameter in `aria()`. Now, it is possible to choose 
 if you want to run the app in production or test mode. (#29)
-- Included wrong registration data frames in the results. (#43)
-- Included which year to start the comparison. (#44)
-- sistec_app was deprecated and point to `aria()`. (#45)
+- The web app in this package now has a name: ARIA.
 
 ### Refactoring
 
@@ -47,4 +49,4 @@ converts to a `rfept_data_frame`. (#30)
 
 ### Bug fixes
 
-- Fixed bugs when using dplyr 1.2.0. (#28)
+- Fixed bugs when using dplyr(>=1.2.0). (#28)
