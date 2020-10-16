@@ -10,6 +10,7 @@ create_sistec_rfept_list <- function(sistec, rfept, linked_courses = NULL){
        sistec_without_rfept = data.frame(),
        sistec_wrong_cpf = data.frame(),
        sistec_duplicated_registry = data.frame(),
+       sistec_unlinked_entry = data.frame(),
        sistec_pending = data.frame(),
        rfept = rfept,
        rfept_complete = rfept,
@@ -17,6 +18,7 @@ create_sistec_rfept_list <- function(sistec, rfept, linked_courses = NULL){
        rfept_without_sistec = data.frame(),
        rfept_wrong_cpf = data.frame(),
        rfept_duplicated_registry = data.frame(),
+       rfept_unlinked_entry = data.frame(),
        rfept_pending = data.frame(),
        wrong_beginning = data.frame(),
        situation_updated = data.frame(),
@@ -98,15 +100,12 @@ remove_wrong_cpf <- function(x){
   x
 }
 
-#' @importFrom dplyr %>% 
 remove_unlinked_cpf <- function(x){
   x$rfept_without_sistec <- dplyr::anti_join(x$rfept, x$sistec,
-                                             by = c("R_NU_CPF" = "S_NU_CPF")) %>% 
-    dplyr::bind_rows(x$rfept_without_sistec)
+                                             by = c("R_NU_CPF" = "S_NU_CPF"))
   
   x$sistec_without_rfept <- dplyr::anti_join(x$sistec, x$rfept,
-                                             by = c("S_NU_CPF" = "R_NU_CPF")) %>% 
-    dplyr::bind_rows(x$sistec_without_rfept)
+                                             by = c("S_NU_CPF" = "R_NU_CPF")) 
   
   x$rfept <- dplyr::anti_join(x$rfept, x$rfept_without_sistec, by = "R_NU_CPF")
   x$sistec <- dplyr::anti_join(x$sistec, x$sistec_without_rfept, by = "S_NU_CPF")
@@ -150,9 +149,22 @@ separate_wrong_beginning <- function(x){
   x$rfept <- dplyr::anti_join(x$rfept, y, by = c("R_NU_CPF", "R_NO_CURSO"))
   
   x$wrong_beginning <- y 
-  #%>% dplyr::filter(!!sym("S_DT_INICIO_CURSO") != !!sym("R_DT_INICIO_CURSO"))
-  
+
   class(x$wrong_beginning) <- c("wrong_registration_data_frame", class(x$rfept_complete)[-1])
+  
+  x
+}
+
+separate_unlinked_entry <- function(x){
+  
+  x$rfept_unlinked_entry<- dplyr::anti_join(x$rfept, x$sistec,
+                                            by = c("R_NU_CPF" = "S_NU_CPF")) 
+  
+  x$sistec_unlinked_entry <- dplyr::anti_join(x$sistec, x$rfept,
+                                             by = c("S_NU_CPF" = "R_NU_CPF"))
+  
+  x$rfept <- dplyr::anti_join(x$rfept, x$rfept_unlinked_entry, by = "R_NU_CPF")
+  x$sistec <- dplyr::anti_join(x$sistec, x$sistec_unlinked_entry, by = "S_NU_CPF")
   
   x
 }
