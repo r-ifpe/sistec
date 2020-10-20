@@ -1,7 +1,9 @@
-output_screen <- function(input_sistec, input_rfept, comparison){ #linked_course_exist,
+output_screen <- function(input_sistec, input_rfept, comparison){ 
 
-  if(all(!is.null(input_sistec), !is.null(input_rfept))){ # linked_course_exist
+  if(all(!is.null(input_sistec), !is.null(input_rfept), is.list(comparison))){ 
     response <- compare_screen(comparison)
+  } else if(all(!is.null(input_sistec), !is.null(input_rfept))){
+    response <- "Aperte o bot\u00e3o \"Comparar\" para executar as compara\u00e7\u00f5es."
   } else if(is.null(input_sistec) && is.null(input_rfept)){
     response <- "Selecione os arquivos do Sistec e do sistema acad\u00eamico."   
   } else if(is.null(input_rfept)){
