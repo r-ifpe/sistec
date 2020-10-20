@@ -15,6 +15,7 @@ files to build the ARIA's desktop version with innosetup. (#74)
 
 ### ARIA
 
+- Buttons "Comparar" and Downloads appear only when the data uploads. (#83)
 - Included entry not found in outputs. (#82)
 - Included in outputs CPF's and academic registration with repetitions. (#65)
 
