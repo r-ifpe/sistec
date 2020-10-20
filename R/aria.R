@@ -39,27 +39,19 @@ aria <- function(output_path = NULL,
                tabPanel("SISTEC",
                         sidebarLayout(
                           sidebarPanel(
-                            tags$head(
-                              tags$style(HTML(".shiny-input-container {margin-bottom: 0px} 
-                                         #linked_course_progress { margin-bottom: 0px } 
-                                         .progress.active.shiny-file-input-progress { margin-bottom: 0px } 
-                                         #year {margin-botton: 20px} 
-                                         .checkbox { margin-top: 0px}")),
-                            ),
+                            tags$head(tags$style(aria_head_tags())),
                             aria_input_rfept(),
                             aria_input_sistec(),
                             aria_input_years(period_input$PERIOD),
                             br(),
-                            aria_compare_button(),
-                            aria_download_button(version),
+                            aria_input_compare_button(),
+                            aria_input_download_button(),
                             aria_test_mode_checkbox(test_mode)
                           ),
                          aria_main_panel(version)
                         )
                ),
-               tabPanel("MANUAL",
-                        manual_screen()
-                        )
+               tabPanel("MANUAL", manual_screen())
     )
   )
  
@@ -104,8 +96,10 @@ aria <- function(output_path = NULL,
     )
     
     output$download_offline <- renderText({
-      input$download_offline
-      
+
+      if(is.null(input$download_offline)) return()
+      if(input$download_offline == 0) return()
+
       if(is.list(isolate(comparison$x))){
         
         output_path <- shiny_output_path(output_path)
@@ -115,30 +109,49 @@ aria <- function(output_path = NULL,
                      output_folder_name = output_folder_name)
         
         "Download realizado com sucesso!"
-        
       } else {
         "" 
       }
     })
     
     output$contents <- renderText({
-      input$do
 
-      comparison$x <- isolate(
-        if(all(!is.null(input$sistec$datapath[1]),
-               !is.null(input$rfept$datapath[1]))){ #linked_course_approach$exist
-          
-          shiny_comparison(input$sistec$datapath[1],
-                           input$rfept$datapath[1], #linked_course_approach$tech = "aria",
-                           input$year)
-        } else {FALSE}
-      ) 
+      if(is.null(input$do)){
+        comparison$x <- FALSE
+      } else if(isolate(input$do == 0)){
+        comparison$x <- FALSE
+      } else {
+        comparison$x <- isolate(
+            shiny_comparison(input$sistec$datapath[1],
+                             input$rfept$datapath[1], 
+                             input$year)
+        ) 
+      }
       
       isolate(output_screen(input$sistec$datapath[1],
-                            input$rfept$datapath[1], # linked_course_approach$exist,
+                            input$rfept$datapath[1], 
                             comparison$x)
       )
     })
+    
+    output$compare_button <- renderUI({
+      if(all(!is.null(input$sistec$datapath[1]),
+             !is.null(input$rfept$datapath[1]))){
+          
+        aria_compare_button()
+      }
+    })
+    
+    output$download_button <- renderUI({
+
+      if(!is.null(input$do)){
+        if(input$do != 0){
+          aria_download_button(version)
+        }
+      } 
+    })
+    
+    
   }
   
   aria_run(ui, server, version, options_port, options_launch_browser)
