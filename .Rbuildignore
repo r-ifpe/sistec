@@ -9,6 +9,8 @@
 ^README\.Rmd$
 ^README_files$
 ^README_images$
+^LEIAME\.Rmd$
+^LEIAME\.md$
 ^cran-comments\.md$
 ^CRAN-RELEASE$
 ^Manual_ARIA.Rmd$

@@ -6,6 +6,7 @@ status](https://travis-ci.org/r-ifpe/sistec.svg?branch=master)](https://travis-c
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/sistec)](https://cran.r-project.org/package=sistec)
 [![CircleCI build
 status](https://circleci.com/gh/r-ifpe/sistec.svg?style=svg)](https://circleci.com/gh/r-ifpe/sistec)
+[<img src="tools/readme/brasil_icon.png" width=22 height=22>](https://github.com/r-ifpe/sistec/blob/master/LEIAME.md)
 
 The [Sistec](https://sistec.mec.gov.br/) is the Brazilian system for
 diploma registration and validation on technical and superior courses.
@@ -23,7 +24,7 @@ install.packages("sistec")
 ```
 
 To upgrade to the latest version of sistec, run the following command
-and restart your r session:
+and restart your R session:
 
 ``` r
 install.packages("devtools")
@@ -93,9 +94,10 @@ database. Be sure that your data has the variables: “Matricula”, “Nome”,
 
 ## Read files
 
-Load the sistec package and pass the folder path to `read_rfept()`
-functions. (**NOTE**: These datasets were generated randomly and do not
-represent the reality, it is just for example purpose).
+Load the sistec package and pass the folder path to `read_sistec()` and
+`read_rfept()` functions. (**NOTE**: These datasets were generated
+randomly and do not represent the reality, it is just for example
+purpose).
 
 ``` r
 sistec <- read_sistec(system.file("extdata/examples/sistec", package = "sistec"))
@@ -123,7 +125,9 @@ write_output(output_path = "your_folder",
 ## ARIA web interface
 
 ARIA is the web interface created in this package to ease your work. You
-can use all those functions just clicking in a few buttons, run
-`aria()`.
+can use all those functions just clicking in a few buttons. The ARIA is
+available on version
+[desktop](https://www.dropbox.com/sh/2bv2h49i8qfbzs9/AAA7MBfaZepyLMc5saDAEEo1a?dl=0),
+[online](https://aria.ifpe.edu.br) or run `aria()` in your R session.
 
-<img src="tools/readme/aria_0.1.0.png" class="screenshot" width=800 />
+<img src="tools/readme/aria_0.2.0.png" class="screenshot" width=800 />
