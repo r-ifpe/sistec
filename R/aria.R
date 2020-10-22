@@ -62,7 +62,7 @@ aria <- function(output_path = NULL,
         stopApp()
         q("no")
       } else {
-        stopApp()
+      #  stopApp()
       }
     })
 
