@@ -51,6 +51,13 @@ compare_screen <- function(comparison){
 }
 
 manual_screen <- function(){
+  html_path <- system.file("extdata/docs/aria/manual_panel.html",
+                           package = "sistec")
+  shiny::includeHTML(html_path)
+}
+
+# it'll be deprecated
+manual_screen2 <- function(){
   shiny::HTML(paste("MANUAL DO ARIA",
                     "", 
                     "- Alunos sem CPF's: CPF's em branco ou inv\u00e1lidos.", 
