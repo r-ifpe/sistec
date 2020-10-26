@@ -1,0 +1,27 @@
+rm -rf sistec
+
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+sudo add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran40/'
+sudo apt-get update
+sudo apt-get install r-base -y
+
+sudo su - \
+-c "R -e \"install.packages(c('shiny', 'dplyr', 'openxlsx', 'rlang', 'stringi', 'stringr'), repos='https://cran.rstudio.com/')\""
+
+sudo apt-get install gdebi-core
+wget https://download3.rstudio.org/ubuntu-14.04/x86_64/shiny-server-1.5.14.948-amd64.deb
+sudo gdebi shiny-server-1.5.14.948-amd64.deb -y
+
+git clone https://github.com/r-ifpe/sistec.git
+sudo R CMD build sistec
+sudo R CMD INSTALL sistec_0.1.0.9015.tar.gz
+cd /srv/shiny-server
+sudo ln -s ~/sistec
+sudo rm index.html
+sudo rm -R sample-apps
+
+sudo nano /etc/shiny-server/shiny-server.conf   (preserve_logs true;)
+sudo systemctl reload shiny-server
+
+cd /var/log/shiny-server
+sudo tail movie-explorer-shiny-20181210-080534-46879.log
