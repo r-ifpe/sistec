@@ -1,5 +1,16 @@
 # sistec 0.2.0
 
+### ARIA
+
+- Buttons "Comparar" and Downloads appear only when the data uploads. (#83)
+- Included entry not found in outputs. (#82)
+- Included in outputs CPF's and academic registration with repetitions. (#65)
+
+### Documentation
+
+- ARIA's manual panel. (#86)
+- ARIA's manual in pt-br. (#60)
+
 ### Functions
 
 - The `aria()` now has offline and online version (#75)
@@ -7,17 +18,6 @@
 files to build the ARIA's desktop version with innosetup. (#74)
 - Cration of `read_linked_courses()` to read a file with the relation between courses in academic registration and Sistec cyclo. (#55)
 - Update `read_sigaa()`to read datasets with "Campus" and "Cota". (#53)
-
-### Documentation
-
-- ARIA's manual panel for output description. (#81)
-- ARIA's manual in pt-br. (#60)
-
-### ARIA
-
-- Buttons "Comparar" and Downloads appear only when the data uploads. (#83)
-- Included entry not found in outputs. (#82)
-- Included in outputs CPF's and academic registration with repetitions. (#65)
 
 ### Bug fixes
 
