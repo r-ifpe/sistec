@@ -1,0 +1,111 @@
+---
+title: "Manual do ARIA"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(eval = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+```
+
+## O que é o ARIA?
+
+O ARIA é um software para auxiliar RA's e PI's a atualizar seus sistemas acadêmicos junto ao Sistec. A ferramenta é muito simples, basta apenas inserir os dados do seu sistema acadêmico, inserir os dados Sistec e escolher a partir de que ano será feita a comparação. O resultado sai em tabelas de excel já dividida por campus e curso ou numa única tabela dividida em planilhas.
+Além dos dados de comparação, o ARIA também detecta inconsistências como, por exemplo, CPF's inexistentes e alunos com matrícula repetida. O ARIA também disponibiliza um arquivo para cadastro em lote dos alunos no Sistec, ou sejam, o PI/RA que não precisará cadastrar alunos por aluno.   
+
+## Antes de usar
+
+Verifique se seu instituto já está integrado ao ARIA na lista abaixo:
+
+ - Pernambuco: IFPE.
+ - Santa Catarina: IFC e IFSC.
+ 
+ Caso o seu instituto não esteja nesta lista, entre em contato com tiago.spiandorello@ifsc.edu.br ou samuelmacedo@recife.ifpe.edu.br.
+
+## Obtenção dos dados
+
+A maneira de obter o relatório de dados alunos no Sistec é igual para todos institutos, contudo cada sistema acadêmcio tem sua propria maneira de obter esses dados. Verifique abaixo como obter seus os dados do estudante no Sistec e no seu sistema acadêmico. 
+
+### Sistec
+
+Você pode baixar os registros de estudantes do Sistec usando sua própria conta do Sistec. O pacote lê os arquivos tanto da [web](https://sistec.mec.gov.br/) quanto da  [setec](http://portal.mec.gov.br/setec-secretaria-de-educacao-profissional-e-tecnologica). 
+
+Para obter a lista dos alunos da sua instituição/campus pela web, entre na sua conta do Sistec e siga os passos:
+ 
+- Acesse a aba "Ciclo de Matrícula";
+- Clique no menu "Aluno";
+- Clique em "Pesquisar Aluno";
+- No campo "Nome do Aluno":
+	- Marque a opção "Registro Civil"
+	- Busque por nome do estudante e use " " (apenas um espaço em branco, pois todas as pessoas têm espaço entre o nome e o sobrenome);
+- No campo "Pesquisar por" escoler "Parte do Nome".
+
+Certifique-se que as seguintes colunas se encontram na sua base de dados: 
+
+ - Pela web: "NO_ALUNO", "NU_CPF", "CO_CICLO_MATRICULA", "NO_STATUS_MATRICULA", "NO_CICLO_MATRICULA", "DT_DATA_INICIO" e "CO_UNIDADE_ENSINO".
+
+ - Pela setec: "Nome Aluno", "Numero Cpf", "Co Ciclo Matricula", "Situacao Matricula", "No Curso", "Dt Data Inicio" e "Unidade Ensino".
+
+### Qacademico
+
+Para baixar os dados do estudante, vá na sua conta do Qacademico e siga:
+
+ - "Relatório de Alunos" --> "Listagem de Alunos" (escolha ano e período);
+ - Clique em "visualizar";
+ - Use o atalho f10 e salve em formato .csv;
+ - Renomeie os arquivos incluindo ano e período, por exemplo example2020_1.csv. Caso só precise de um arquivo, não precisa renomear.
+
+Certifique-se que seus dados possuem as colunas: "Matricula", "Nome", "Situacao Matricula", "Curso", "Cpf", "Instituicao", "Per. Letivo Inicial" e "Cota".
+
+### Sigaa
+
+Os dados do Sigaa podem ser parciais ou completos. É possível executar as comparações utilizando essas duas bases, contudo os dados parciais não apresentam informação de Campus e Cota.
+
+Para baixar os dados parciais do Sigaa, vá na sua conta siga esses passos:
+
+ - Acesse o painel de "Consultas" dentro do modulo do Sigaa;
+ - Gere o relatório "Consulta geral discentes";
+ - Selecione o *check box* "Trazer informações em forma de relatório" e "Gerar csv";
+ - Selecione o "Campus" e outros filtros que você deseja;
+ - Clique em "Buscar" e baixe o arquivo. 
+
+Para os dados completos, você precisa baixar os arquivos direto da base do Sigaa. Certifique-se que seus dados possuem as colunas: "Matricula", "Nome", "Situacao Matricula", 
+"Curso", "Cpf", "Instituicao", "ano_ingresso", "semestre_ingresso" and "Cota". 
+
+## Interpretação das saídas do ARIA
+
+Segue abaixo todas as saídas do ARIA e sua interpretação.
+
+- Alunos sem CPF's: CPF's em branco ou inválidos. </br>
+  Sugestão: Retificar o CPF ou averiguar se o aluno de fato existe.
+  
+- Alunos não encontrados: Alunos que consistem no sistema acadêmico mas não constam no Sistec e vice e versa. </br>
+  <font color=#FF0000><b>URGENTE:</b></font> Alunos não cadastrados no Sistec indicam ao MEC que a instituição apresenta menos alunos que do que de fato existem. Isso afeta no orçamento da instituição. </br>
+ Sugestão: Cadastre os alunos no Sistec e atualize o registro acadêmico. Olhe a pasta "Cadastrar no Sistec", nela encontram-se os CPF's desses alunos e você pode realizar o cadastro  desses alunos em lote. Retifique os dados e execute o ARIA novamente.,
+
+- CPF's repetidos: Alunos com nomes diferentes para o mesmo número de CPF. </br>
+ Sugestão: Retificar o CPF ou averiguar se o aluno de fato existe.
+ 
+- Vínculos repetidos: Alunos com entradas repetidas no sistema acadêmico ou Sistec. </br>
+ <font color=#FF0000><b>URGENTE:</b></font> Alunos com entrada dupla no Sistec indicam ao MEC que a instituição apresenta mais alunos que do que de fato existem. Isso afeta no orçamento da instituição. </br> 
+ Sugestão: Retificar a matrícula no sistema acadêmico ou pedir matrícula extemporânea no Sistec. Retifique os dados e execute o ARIA novamente.
+
+- Vínculos não encontrados: Alunos que estão incluídos nas duas bases, mas não foi possível encontrar o equivalente do sistema acadêmico no Sistec.</br>
+ <font color=#FF0000><b>URGENTE:</b></font> Alunos não cadastrados no Sistec indicam ao MEC que a instituição apresenta menos alunos que do que de fato existem. Isso afeta no orçamento da instituição. </br>
+ Sugestão: Verifique se estas entradas, em específico, estão cadastradas nas duas bases. Na maioria das vezes, alunos nesta situação possuem mais de um vínculo com a instituição e pelo menos um dessas entradas não estão cadastradas. Retifique os dados e execute o ARIA novamente.
+
+- Erro no cadastro: Alunos com entrada encontrada, porém o cadastro foi realizado em periodos diferentes. Ex.: matrícula em 2019.2 no sistema acadêmico e no Sistec consta em 2020.1. </br>
+ <font color=#FF0000><b>ATENÇÃO:</b></font> O orçamento da instituição basea-se nos alunos cadastrados no Sistec em relação ao ano base. Se um aluno de 2019.2 for cadastrado em 2020.1 a instituição só receberá os recursos referentes a 2020 e não a 2019. </br>
+ Sugestão: Retificar a matrícula no sistema acadêmico ou pedir matrícula extemporânea no Sistec. Retifique os dados e execute o ARIA novamente.
+
+- Situações comparadas: Alunos destualizados são aqueles que precisam apenas corrigir a situação de matrícula. Os atualizados são aqueles em estão totalmente corretos entre sistema acadêmico e Sistec. Parabéns!
+
+- Inspeção manual: Alunos não identificados pelo ARIA em nenhum dos quesitos anteriores.  Normalmente serão alunos provenientes de cursos FIC com menos de oito alunos ou situações ainda não implementadas no ARIA. </br>
+ Sugestão: Retifique os dados das críticas anteriores e execute o ARIA novamente.
+
+Servidor, a atualização desses dados é extremamente importante e impacta diretamente nas estatísticas da instituição que servem de base para formulação de políticas públicas.
+
+
