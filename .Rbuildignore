@@ -17,3 +17,4 @@
 ^Manual_ARIA.pdf$
 ^\.circleci$
 ^\.circleci/config\.yml$
+^deploy\.txt$
