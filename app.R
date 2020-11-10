@@ -1,5 +1,12 @@
 library(shiny)
 library(dplyr)
-options(shiny.maxRequestSize = 100*1024^2) 
+library(stringr)
+library(sistec)
+library(utils)
 
-sistec::aria(version = "online", test_mode = FALSE)
+options(shiny.maxRequestSize =  as.integer(100*1024^2)) 
+ui <- aria_ui()
+#server <- aria_server(version = "online")
+server <- aria_server(version = "online")
+shinyApp(ui, server)
+
