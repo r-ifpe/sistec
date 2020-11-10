@@ -26,133 +26,13 @@ aria <- function(output_path = NULL,
                  options_port = 8888,
                  options_launch_browser = TRUE,
                  test_mode = TRUE,
-                 version = "offline"){
+                 version = "test"){
 
   shiny_max_file_size <- as.integer(max_file_size*1024^2)
   opt <- options(shiny.maxRequestSize = shiny_max_file_size) 
   on.exit(options(opt))
 
-  period_input <- read_period_input()
-  
-  ui <- fluidPage(
-    navbarPage(paste0("ARIA v", aria_version()),
-               tabPanel("SISTEC",
-                        sidebarLayout(
-                          sidebarPanel(
-                            tags$head(tags$style(aria_head_tags())),
-                            aria_input_rfept(),
-                            aria_input_sistec(),
-                            aria_input_years(period_input$PERIOD),
-                            br(),
-                            aria_input_compare_button(),
-                            aria_input_download_button(),
-                            aria_test_mode_checkbox(test_mode)
-                          ),
-                         aria_main_panel(version)
-                        )
-               ),
-               tabPanel("MANUAL", manual_screen())
-    )
-  )
- 
-  server <- function(input, output, session){
-    # close the R session when Chrome closes
-    session$onSessionEnded(function() {
-      if(is.null(isolate(input$test_mode))){
-        stopApp()
-        q("no")
-      } else {
-      #  stopApp()
-      }
-    })
-
-    comparison <- reactiveValues(x = FALSE)
-    
-    output$download_online <- downloadHandler(
-      filename = "ARIA.zip",
-      content = function(file){
-        #go to a temp dir to avoid permission issues
-        output_path <- tempdir()
-        owd <- setwd(output_path)
-        on.exit(setwd(owd))
-        files <- NULL;
-        
-        if(is.list(isolate(comparison$x))){
-          
-          output_path <- shiny_output_path(output_path)
-          
-          write_output(x = isolate(comparison$x),
-                       output_path = output_path,
-                       output_folder_name = output_folder_name)
-          
-          "Download realizado com sucesso!"
-          
-        } else {
-          ""
-        }
-        #create the zip file
-        utils::zip(file, "ARIA/")
-      }
-    )
-    
-    output$download_offline <- renderText({
-
-      if(is.null(input$download_offline)) return()
-      if(input$download_offline == 0) return()
-
-      if(is.list(isolate(comparison$x))){
-        
-        output_path <- shiny_output_path(output_path)
-        
-        write_output(x = isolate(comparison$x),
-                     output_path = output_path,
-                     output_folder_name = output_folder_name)
-        
-        "Download realizado com sucesso!"
-      } else {
-        "" 
-      }
-    })
-    
-    output$contents <- renderText({
-
-      if(is.null(input$do)){
-        comparison$x <- FALSE
-      } else if(isolate(input$do == 0)){
-        comparison$x <- FALSE
-      } else {
-        comparison$x <- isolate(
-            shiny_comparison(input$sistec$datapath[1],
-                             input$rfept$datapath[1], 
-                             input$year)
-        ) 
-      }
-      
-      isolate(output_screen(input$sistec$datapath[1],
-                            input$rfept$datapath[1], 
-                            comparison$x)
-      )
-    })
-    
-    output$compare_button <- renderUI({
-      if(all(!is.null(input$sistec$datapath[1]),
-             !is.null(input$rfept$datapath[1]))){
-          
-        aria_compare_button()
-      }
-    })
-    
-    output$download_button <- renderUI({
-
-      if(!is.null(input$do)){
-        if(input$do != 0){
-          aria_download_button(version)
-        }
-      } 
-    })
-    
-    
-  }
-  
+  ui <- aria_ui()
+  server <- aria_server(version)
   aria_run(ui, server, version, options_port, options_launch_browser)
 } 

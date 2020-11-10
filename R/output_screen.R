@@ -50,6 +50,7 @@ compare_screen <- function(comparison){
                    sep = '<br/>'))
 }
 
+#' @export
 manual_screen <- function(){
   html_path <- system.file("extdata/docs/aria/manual_panel.html",
                            package = "sistec")

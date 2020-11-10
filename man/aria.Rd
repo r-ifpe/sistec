@@ -11,7 +11,7 @@ aria(
   options_port = 8888,
   options_launch_browser = TRUE,
   test_mode = TRUE,
-  version = "offline"
+  version = "test"
 )
 }
 \arguments{
