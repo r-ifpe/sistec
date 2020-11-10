@@ -1,7 +1,7 @@
 Package: sistec
 Type: Package
 Title: Tools to Analyze 'Sistec' Datasets
-Version: 0.2.0
+Version: 0.2.0.9001
 Authors@R: c(
     person("Samuel", "Macêdo", email = "samuelmacedo@recife.ifpe.edu.br", role = c("aut", "cre")),
     person("Carlos", "Patrício", email = "carlos.patricio@vitoria.ifpe.edu.br", role = "aut"),
@@ -27,9 +27,10 @@ Imports:
     shiny,
     stringi,
     stringr,
+    stats,
     tcltk,
     utils
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Suggests: 
     testthat
 Encoding: UTF-8

@@ -1,8 +1,8 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^situação.xlsx$
-^app.R$
 ^random_data.R$
+^app\.R$
 ^test.R$
 ^\.travis\.yml$
 ^inst/extdata/test_datasets$
