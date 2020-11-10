@@ -50,70 +50,8 @@ compare_screen <- function(comparison){
                    sep = '<br/>'))
 }
 
-#' @export
 manual_screen <- function(){
   html_path <- system.file("extdata/docs/aria/manual_panel.html",
                            package = "sistec")
   shiny::includeHTML(html_path)
-}
-
-# it'll be deprecated
-manual_screen2 <- function(){
-  shiny::HTML(paste("MANUAL DO ARIA",
-                    "", 
-                    "- Alunos sem CPF's: CPF's em branco ou inv\u00e1lidos.", 
-                    "&emsp; Sugest\u00e3o: Retificar o CPF ou averiguar se o aluno de fato existe.",
-                    "",
-                    "- Alunos n\u00e3o encontrados: Alunos que consistem no sistema acad\u00eamico mas n\u00e3o 
-                    constam no Sistec e vice e versa.",
-                    "&emsp; <font color=\"#FF0000\"><b>URGENTE:</b></font> Alunos n\u00e3o cadastrados no Sistec indicam 
-                     ao MEC que a institui\u00e7\u00e3o apresenta menos alunos que do que de fato existem. Isso afeta no 
-                     or\u00e7amento da institui\u00e7\u00e3o.", 
-                    "&emsp; Sugest\u00e3o: Cadastre os alunos no Sistec e atualize o registro acad\u00eamico. Olhe a pasta 
-                    \"Cadastrar no Sistec\", nela encontram-se os CPF's desses alunos e voc\u00ea pode realizar o cadastro 
-                    desses alunos em lote. Retifique os dados e",
-                    "&emsp; execute o ARIA novamente.",
-                    "",
-                    "- CPF's repetidos: Alunos com nomes diferentes para o mesmo n\u00famero de CPF.", 
-                    "&emsp; Sugest\u00e3o: Retificar o CPF ou averiguar se o aluno de fato existe.",
-                    "", 
-                    "- V\u00ednculos repetidos: Alunos com entradas repetidas no sistema acad\u00eamico ou Sistec.",
-                    "&emsp; <font color=\"#FF0000\"><b>URGENTE:</b></font> Alunos com entrada dupla no Sistec 
-                    indicam ao MEC que a institui\u00e7\u00e3o apresenta mais alunos que do que de fato existem. Isso 
-                    afeta no or\u00e7amento da institui\u00e7\u00e3o.", 
-                    "&emsp; Sugest\u00e3o: Retificar a matr\u00edcula no sistema acad\u00eamico ou pedir matr\u00edcula 
-                    extempor\u00e2nea no Sistec. Retifique os dados e execute o ARIA novamente.",
-                    "",
-                    "V\u00ednculos n\u00e3o encontrados: Alunos que est\u00e3o inclu\u00eddos nas duas bases, mas 
-                    n\u00e3o foi poss\u00edvel encontrar o equivalente do sistema acad\u00eamico no Sistec.",
-                    "&emsp; <font color=\"#FF0000\"><b>URGENTE:</b></font> Alunos n\u00e3o cadastrados no Sistec indicam 
-                     ao MEC que a institui\u00e7\u00e3o apresenta menos alunos que do que de fato existem. Isso afeta no 
-                     or\u00e7amento da institui\u00e7\u00e3o.",
-                    "&emsp; Sugest\u00e3o: Verifique se estas entradas, em espec\u00edfico, est\u00e3o cadastradas nas 
-                    duas bases. Na maioria das vezes, alunos nesta situa\u00e7\u00e3o possuem mais de um v\u00ednculo com 
-                    a institui\u00e7\u00e3o e pelo menos um dessas entradas n\u00e3o est\u00e3o ",
-                    "&emsp; cadastradas. Retifique os dados e execute o ARIA novamente.",
-                    "",
-                    "- Erro no cadastro: Alunos com entrada encontrada, por\u00e9m o cadastro foi realizado em periodos 
-                    diferentes. Ex.: matr\u00edcula em 2019.2 no sistema acad\u00eamico e no Sistec consta em 2020.1.",
-                    "&emsp; <font color=\"#FF0000\"><b>ATEN\u00c7\u00c3O:</b></font> O or\u00e7amento da institui\u00e7\u00e3o 
-                    basea-se nos alunos cadastrados no Sistec em rela\u00e7\u00e3o ao ano base. Se um aluno de 2019.2 for 
-                    cadastrado em 2020.1 a institui\u00e7\u00e3o s\u00f3 receber\u00e1 os recursos referentes a 2020 e 
-                    n\u00e3o a 2019.",
-                    "&emsp; Sugest\u00e3o: Retificar a matr\u00edcula no sistema acad\u00eamico ou pedir matr\u00edcula 
-                    extempor\u00e2nea no Sistec. Retifique os dados e execute o ARIA novamente.",
-                    "",
-                    "- Situa\u00e7\u00f5es comparadas: Alunos destualizados s\u00e3o aqueles que precisam apenas corrigir 
-                    a situa\u00e7\u00e3o de matr\u00edcula. Os atualizados s\u00e3o aqueles em est\u00e3o totalmente corretos 
-                    entre sistema acad\u00eamico e Sistec. Parab\u00e9ns!",
-                    "",
-                    "- Inspe\u00e7\u00e3o manual: Alunos n\u00e3o identificados pelo ARIA em nenhum dos quesitos anteriores.
-                    Normalmente ser\u00e3o alunos provenientes de cursos FIC com menos de oito alunos ou situa\u00e7\u00f5es 
-                    ainda n\u00e3o implementadas no ARIA.", 
-                    "&emsp; Sugest\u00e3o: Retifique os dados das cr\u00edticas anteriores e execute o ARIA novamente.",
-                    "","",
-                    "Servidor, a atualiza\u00e7\u00e3o desses dados \u00e9 extremamente importante e impacta diretamente nas 
-                    estat\u00edsticas da institui\u00e7\u00e3o que servem de base para formula\u00e7\u00e3o de 
-                    pol\u00edticas p\u00fablicas.",
-                    sep = '<br/>'))
 }

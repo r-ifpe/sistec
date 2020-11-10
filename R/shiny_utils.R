@@ -4,7 +4,6 @@ server_input_path <- function(input_path){
   substr(input_path[1], 1, last_slash)
 }
 
-#' @export
 shiny_comparison <- function(sistec_path, rfept_path, year){
   sistec <- read_sistec(server_input_path(sistec_path), year)
   rfept <- read_rfept(server_input_path(rfept_path), year)

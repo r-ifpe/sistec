@@ -1,3 +1,10 @@
+#'  ARIA's server
+#' 
+#' This function calls the server from ARIA
+#' 
+#' @param version Use "test" to run locally, "online" to in the server 
+#' or "desktop" to build the desktop version.
+#' 
 #' @export
 aria_server <- function(version = "test"){
 

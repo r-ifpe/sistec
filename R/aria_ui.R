@@ -1,3 +1,9 @@
+#'  ARIA's user interface
+#' 
+#' This function calls the UI from ARIA
+#' 
+#' @param test_mode A logical to call a test or a production app.#' 
+#' 
 #' @export
 aria_ui <- function(test_mode = FALSE){
   fluidPage(
