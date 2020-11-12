@@ -5,9 +5,9 @@ aria_version <- function(){
 
 aria_run <- function(ui, server, version, options_port, options_launch_browser){
   if(version == "desktop"){
-    shinyApp(ui, server, options = list(port = options_port,
-                                        launch.browser = options_launch_browser))
+    shiny::shinyApp(ui, server, options = list(port = options_port,
+                                               launch.browser = options_launch_browser))
   } else {
-    shinyApp(ui, server)
+    shiny::shinyApp(ui, server)
   }
 }

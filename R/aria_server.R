@@ -1,10 +1,5 @@
-#'  ARIA's server
-#' 
-#' This function calls the server from ARIA
-#' 
-#' @param version Use "test" to run locally, "online" to in the server 
-#' or "desktop" to build the desktop version.
-#' 
+#' @rdname aria
+#' @importFrom shiny isolate
 #' @export
 aria_server <- function(version = "test"){
 
@@ -12,26 +7,26 @@ aria_server <- function(version = "test"){
     # close the R session when Chrome closes
     session$onSessionEnded(function() {
       if(version == "desktop"){
-        stopApp()
+        shiny::stopApp()
         q("no")
       }
     })
     
-    comparison <- reactiveValues(x = FALSE)
-    aria_values <- reactiveValues(temp_dir = tempdir(),
-                                  download_count = 0,
-                                  session_id = generate_session_id(),
-                                  rfept = 0, sistec = 0,
-                                  first_run = TRUE)
+    comparison <- shiny::reactiveValues(x = FALSE)
+    aria_values <- shiny::reactiveValues(temp_dir = tempdir(),
+                                         download_count = 0,
+                                         session_id = generate_session_id())
 
     # delete files and reload the app after download ARIA output
-    observeEvent(aria_values$download_count, {
+    shiny::observeEvent(aria_values$download_count, {
       unlink(paste0(aria_values$temp_dir, "/", aria_values$session_id), recursive = TRUE)
       comparison$x <- FALSE
-      session$reload()
+      if(version != "desktop"){
+        session$reload()
+      }
     }, ignoreInit = TRUE)
     
-    output$download_online <- downloadHandler(
+    output$download_online <- shiny::downloadHandler(
       filename = "ARIA.zip",
       content = function(file){
         # go to a temp dir to avoid permission issues
@@ -46,19 +41,25 @@ aria_server <- function(version = "test"){
                        output_folder_name = "ARIA")
           
           aria_values$download_count <- 1
-          
-          # create the zip file
-          system(paste0("cd ", aria_values$session_id, "; zip -r ",
-                        file, " ARIA"))
-        } else {
-          session$reload()
-        }
 
-       # utils::zip(file, "ARIA/")
+          # create the zip file
+          if_windows <- tolower(Sys.getenv("SystemRoot"))
+          if(grepl("windows", if_windows)){
+            shell(paste0("cd ", aria_values$session_id, "&& zip -r ",
+                         file, " ARIA")) 
+          } else {
+            system(paste0("cd ", aria_values$session_id, "; zip -r ",
+                          file, " ARIA"))
+          }
+        } else {
+          if(version != "desktop"){
+            session$reload()            
+          }
+        }
       }
     )
     
-    output$contents <- renderText({
+    output$contents <- shiny::renderText({
 
       aria_logs(aria_values$session_id,
                 input$rfept$datapath[1],
@@ -85,7 +86,7 @@ aria_server <- function(version = "test"){
       )
     })
     
-    output$compare_button <- renderUI({
+    output$compare_button <- shiny::renderUI({
       if(all(!is.null(input$sistec$datapath[1]),
              !is.null(input$rfept$datapath[1]))){
         
@@ -93,7 +94,7 @@ aria_server <- function(version = "test"){
       }
     })
     
-    output$download_button <- renderUI({
+    output$download_button <- shiny::renderUI({
       
       if(!is.null(input$do)){
         if(input$do != 0){
