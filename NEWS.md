@@ -1,3 +1,23 @@
+# sistec 0.2.1
+
+### ARIA
+
+- The download button is `shiny::DownloadHandler()` for all version of ARIA. (#90) 
+- Fix bug in download button for windows. (#90)
+
+### Refactoring
+
+- Remove tcltk dependencies. (#90)
+- Split ui and server of ARIA. (#89)
+
+### Security
+
+- Improved security on download button when ARIA is running in a server. (#89)
+
+### Logs
+
+- Created logs. (#89)
+
 # sistec 0.2.0
 
 ### ARIA
