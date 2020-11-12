@@ -42,7 +42,7 @@ aria_desktop_build <- function(aria_folder = "",
 aria_desktop_download_dependencies <- function(aria_folder = ""){
   
   aria_folder_exists(aria_folder)
-  utils::download.file("https://www.dropbox.com/s/jfr5usm65p209cl/ARIA_desktop.zip?dl=1",
+  utils::download.file("https://www.dropbox.com/s/m2ekuqb0crze9l8/ARIA_desktop.zip?dl=1",
                        destfile = paste0(aria_folder, "/ARIA_desktop.zip"),
                        mode = "wb")
   utils::untar(paste0(aria_folder, "/ARIA_desktop.zip"), exdir = aria_folder)

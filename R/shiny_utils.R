@@ -11,24 +11,6 @@ shiny_comparison <- function(sistec_path, rfept_path, year){
   compare_sistec(sistec, rfept)
 }
 
-shiny_output_path <- function(output_path){
-  if(is.null(output_path)){
-    if_windows <- tolower(Sys.getenv("SystemRoot"))
-    if (grepl("windows", if_windows)){
-      output_path <- utils::choose.dir()
-      output_path <- gsub("\\\\", "/",output_path)
-    } else {
-      output_path <- tcltk::tk_choose.dir()
-    }
-  } else {
-    if_windows <- tolower(Sys.getenv("SystemRoot"))
-    if (grepl("windows", if_windows)){
-      output_path <- gsub("\\\\", "/",output_path)
-    }
-  }
-  output_path
-}
-
 generate_session_id <- function(){
   clock_session <- Sys.time()
   

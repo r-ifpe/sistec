@@ -1,11 +1,8 @@
-#'  ARIA's user interface
-#' 
-#' This function calls the UI from ARIA
-#' 
-#' @param test_mode A logical to call a test or a production app.#' 
-#' 
+#' @rdname aria
+#' @importFrom shiny fluidPage navbarPage tabPanel sidebarLayout sidebarPanel
+#' @importFrom shiny tags br
 #' @export
-aria_ui <- function(test_mode = FALSE){
+aria_ui <- function(){
   fluidPage(
     navbarPage(paste0("ARIA v", aria_version()),
                tabPanel("SISTEC",
@@ -17,8 +14,7 @@ aria_ui <- function(test_mode = FALSE){
                             aria_input_years(),
                             br(),
                             aria_input_compare_button(),
-                            aria_input_download_button(),
-                            aria_test_mode_checkbox(test_mode)
+                            aria_input_download_button()
                           ),
                           aria_main_panel()
                         )

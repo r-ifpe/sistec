@@ -7,7 +7,7 @@
 #' using `linked_courses` parameter or using ARIA estimation.
 #' 
 #' @param sistec The folder's path to Sistec files or the Sistec data frame
-#' read by `sistec::read_sistec()`function.  
+#' read by `read_sistec()`function.  
 #' @param rfept The folder's path to students reagistration datasets or a 
 #' data frame read by `sistec::read_*()`functions. 
 #' @param linked_courses By default, the linked courses will be estimate using the data

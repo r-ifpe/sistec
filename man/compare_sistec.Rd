@@ -8,7 +8,7 @@ compare_sistec(sistec, rfept, linked_courses = NULL)
 }
 \arguments{
 \item{sistec}{The folder's path to Sistec files or the Sistec data frame
-read by \code{sistec::read_sistec()}function.}
+read by \code{read_sistec()}function.}
 
 \item{rfept}{The folder's path to students reagistration datasets or a
 data frame read by \verb{sistec::read_*()}functions.}

@@ -47,4 +47,5 @@ sistec_2019_2 <- read_sistec(system.file("extdata/examples/sistec", package = "s
                                 start = "2019.2") 
 
 sistec_2019_2 
+
 }
