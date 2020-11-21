@@ -61,9 +61,8 @@ rename_rfept_complete_data_frame <- function(x){
 rename_comparison_data_frame <- function(x){
   
   rfept_table <- rfept_table(x)
-  
-  rfept_matricula <- paste0("MATRICULA_", stringr::str_to_upper(rfept_table))
-  rfept_status <- paste0("STATUS_", stringr::str_to_upper(rfept_table))
+  rfept_matricula <- rfept_rename_column(rfept_table, "MATRICULA")
+  rfept_status <- rfept_rename_column(rfept_table, "STATUS")
   
   x %>% 
     dplyr::select(NOME = !!sym("S_NO_ALUNO"),
@@ -81,9 +80,8 @@ rename_comparison_data_frame <- function(x){
 rename_wrong_beginning_data_frame <- function(x){
 
   rfept_table <- rfept_table(x)
-  
-  rfept_matricula <- paste0("MATRICULA_", stringr::str_to_upper(rfept_table))
-  rfept_beginning <- paste0("INICIO_", stringr::str_to_upper(rfept_table))
+  rfept_matricula <- rfept_rename_column(rfept_table, "MATRICULA")
+  rfept_beginning <- rfept_rename_column(rfept_table, "INICIO")
   
   x %>% 
     dplyr::select(NOME = !!sym("R_NO_ALUNO"),
@@ -102,8 +100,7 @@ rename_wrong_beginning_data_frame <- function(x){
 rename_wrong_cyclo_data_frame <- function(x){
 
   rfept_table <- rfept_table(x)
-  
-  rfept_matricula <- paste0("MATRICULA_", stringr::str_to_upper(rfept_table))
+  rfept_matricula <- rfept_rename_column(rfept_table, "MATRICULA")
 
   x %>% 
     dplyr::select(NOME = !!sym("R_NO_ALUNO"),
@@ -119,7 +116,7 @@ rename_wrong_cyclo_data_frame <- function(x){
 rename_linked_course_data_frame <- function(x){
   
   rfept_table <- rfept_table(x)
-  rfept_course <- paste0("CURSO_", stringr::str_to_upper(rfept_table))
+  rfept_course <- rfept_rename_column(rfept_table, "CURSO")
   
   linked_courses <- x %>% 
     dplyr::select(INICIO = !!sym("R_DT_INICIO_CURSO"),
@@ -127,4 +124,16 @@ rename_linked_course_data_frame <- function(x){
                   CURSO_SISTEC = !!sym("S_NO_CURSO_LINKED"),
                   !!rfept_course := !!sym("R_NO_CURSO"),
                   CAMPUS = !!sym("R_NO_CAMPUS")) 
+}
+
+rfept_rename_column <- function(x, column){
+  paste0(column, "_", stringr::str_to_upper(x)) 
+}
+
+rfept_table <- function(x){
+  pos <- stringr::str_which(class(x), "_table")
+  table <- sub("_table", "", class(x)[pos])
+  if(table == "generic_rfept") {
+    table <- "rfept"}
+  stringr::str_to_title(table)
 }
