@@ -113,6 +113,8 @@ group_cpf_registration <- function(x){
 
 write_sistec <- function(x, path, rfept_table){
   
+  if(nrow(x) == 0) return()
+  
   invisible(
     lapply(1:nrow(x), function(e){
       path_to_save <- paste0(path, "/Retificar no Sistec/",  x$CAMPUS[e], "/", x$CURSO[e])
@@ -130,6 +132,9 @@ write_sistec <- function(x, path, rfept_table){
 }
 
 write_rfept <- function(x, path, rfept_table){
+  
+  if(nrow(x) == 0) return()
+  
   invisible(
     lapply(1:nrow(x), function(e){
       path_to_save <- paste0(path, "/Retificar no ", rfept_table, "/",  x$CAMPUS[e], "/", x$CURSO[e])
@@ -153,6 +158,8 @@ write_rfept <- function(x, path, rfept_table){
 #' @importFrom dplyr sym
 write_cpf_registration <- function(x, path){
 
+  if(nrow(x) == 0) return()
+  
   invisible(
     lapply(1:nrow(x), function(e){
 
@@ -214,11 +221,4 @@ write_linked_courses <- function(x, path){
   tables[["Cursos Relacionados"]] <- x$linked_courses
   
   openxlsx::write.xlsx(tables, paste0(path_to_save, "/Cursos relacionados.xlsx"))
-}
-
-#' @importFrom dplyr %>% 
-rfept_table <- function(x){
-  pos <- stringr::str_which(class(x), "_table")
-  table <- sub("_table", "", class(x)[pos])
-  stringr::str_to_title(table)
 }

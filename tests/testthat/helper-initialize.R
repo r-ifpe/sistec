@@ -46,7 +46,7 @@ check_linked_courses_table <- function(x, expect_nrow){
   expect_equal(nrow(x), expect_nrow)
 }
 
-check_comparison <- function(x){
+check_comparison <- function(x, rows){
   expect_equal(names(x),
                c("sistec_complete", "sistec_without_cpf", "sistec_without_rfept", "sistec_wrong_cpf",
                  "sistec_duplicated_registry", "sistec_unlinked_entry", "sistec_pending",
@@ -54,26 +54,26 @@ check_comparison <- function(x){
                  "rfept_duplicated_registry", "rfept_unlinked_entry", "rfept_pending",   
                  "wrong_beginning", "situation_updated", "situation_to_update", "linked_courses"))
   
-  check_sistec_table(x$sistec_complete, expect_nrow = 11099)
-  check_sistec_table(x$sistec_without_cpf, expect_nrow = 88) 
-  check_sistec_table(x$sistec_without_rfept, expect_nrow = 528)
-  check_sistec_table(x$sistec_wrong_cpf, expect_nrow = 0)
-  check_sistec_table(x$sistec_duplicated_registry, expect_nrow = 1)
-  check_sistec_table(x$sistec_unlinked_entry, expect_nrow = 111)
-  check_sistec_table(x$sistec_pending, expect_nrow = 52)
+  check_sistec_table(x$sistec_complete, expect_nrow = rows[1])
+  check_sistec_table(x$sistec_without_cpf, expect_nrow = rows[2]) 
+  check_sistec_table(x$sistec_without_rfept, expect_nrow = rows[3])
+  check_sistec_table(x$sistec_wrong_cpf, expect_nrow = rows[4])
+  check_sistec_table(x$sistec_duplicated_registry, expect_nrow = rows[5])
+  check_sistec_table(x$sistec_unlinked_entry, expect_nrow = rows[6])
+  check_sistec_table(x$sistec_pending, expect_nrow = rows[7])
   
-  check_rfept_table(x$rfept_complete, expect_nrow = 14366)
-  check_rfept_table(x$rfept_without_cpf, expect_nrow = 6)
-  check_rfept_table(x$rfept_without_sistec, expect_nrow = 3773)
-  check_rfept_table(x$rfept_wrong_cpf, expect_nrow = 0)
-  check_rfept_table(x$rfept_duplicated_registry, expect_nrow = 43)
-  check_rfept_table(x$rfept_unlinked_entry, expect_nrow = 177)
-  check_rfept_table(x$rfept_pending, expect_nrow = 48)
+  check_rfept_table(x$rfept_complete, expect_nrow = rows[8])
+  check_rfept_table(x$rfept_without_cpf, expect_nrow = rows[9])
+  check_rfept_table(x$rfept_without_sistec, expect_nrow = rows[10])
+  check_rfept_table(x$rfept_wrong_cpf, expect_nrow = rows[11])
+  check_rfept_table(x$rfept_duplicated_registry, expect_nrow = rows[12])
+  check_rfept_table(x$rfept_unlinked_entry, expect_nrow = rows[13])
+  check_rfept_table(x$rfept_pending, expect_nrow = rows[14])
   
-  check_wrong_registration(x$wrong_beginning, expect_nrow = 54)
-  check_situation_table(x$situation_updated, expect_nrow = 9466)
-  check_situation_table(x$situation_to_update, expect_nrow = 799)
-  check_linked_courses_table(x$linked_courses, expect_nrow = 239)
+  check_wrong_registration(x$wrong_beginning, expect_nrow = rows[15])
+  check_situation_table(x$situation_updated, expect_nrow = rows[16])
+  check_situation_table(x$situation_to_update, expect_nrow = rows[17])
+  check_linked_courses_table(x$linked_courses, expect_nrow = rows[18])
   check_amount_entry(x)
 }
 
@@ -100,13 +100,27 @@ download_test_datasets <- function(test_datasets_folder = NULL){
     dir.create(paste0(datasets_path, "sistec/"), recursive = TRUE)
     dir.create(paste0(datasets_path, "sistec_encoding/latin1/"), recursive = TRUE)
     dir.create(paste0(datasets_path, "sistec_encoding/utf8/"), recursive = TRUE)
+    dir.create(paste0(datasets_path, "generic_rfept/rfept/"), recursive = TRUE)
+    dir.create(paste0(datasets_path, "generic_rfept/sistec/"), recursive = TRUE)
+    dir.create(paste0(datasets_path, "generic_rfept/wrong_beginning_date/"), recursive = TRUE)
+    dir.create(paste0(datasets_path, "generic_rfept/wrong_cpf/"), recursive = TRUE)
+    dir.create(paste0(datasets_path, "generic_rfept/wrong_header/"), recursive = TRUE)
+    dir.create(paste0(datasets_path, "generic_rfept/wrong_separator/"), recursive = TRUE)
+    dir.create(paste0(datasets_path, "generic_rfept/wrong_status/"), recursive = TRUE)
     
     destfile <- c(paste0(datasets_path, "qacademico/fake_data_qacademico_2019_1.csv"),
                   paste0(datasets_path, "qacademico/fake_data_qacademico_2019_2.csv"),
                   paste0(datasets_path, "qacademico/fake_data_qacademico_2020_1.csv"),
                   paste0(datasets_path, "sistec/fake_data_sistec_2019.1_2020.1.csv"),
                   paste0(datasets_path, "sistec_encoding/latin1/fake_data_sistec_latin1.csv"),
-                  paste0(datasets_path, "sistec_encoding/utf8/fake_data_sistec_utf8.csv"))
+                  paste0(datasets_path, "sistec_encoding/utf8/fake_data_sistec_utf8.csv"),
+                  paste0(datasets_path, "generic_rfept/rfept/rfept.csv"),                  
+                  paste0(datasets_path, "generic_rfept/sistec/sistec.csv"),
+                  paste0(datasets_path, "generic_rfept/wrong_beginning_date/fake_generic_rfept.csv"),
+                  paste0(datasets_path, "generic_rfept/wrong_cpf/fake_generic_rfept.csv"),
+                  paste0(datasets_path, "generic_rfept/wrong_header/fake_generic_rfept.csv"),
+                  paste0(datasets_path, "generic_rfept/wrong_separator/fake_generic_rfept.csv"),
+                  paste0(datasets_path, "generic_rfept/wrong_status/fake_generic_rfept.csv"))
     
     
     datasests_paths <- c("https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/qacademico/fake_data_qacademico_2019_1.csv",
@@ -114,7 +128,14 @@ download_test_datasets <- function(test_datasets_folder = NULL){
                          "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/qacademico/fake_data_qacademico_2020_1.csv",
                          "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/sistec/fake_data_sistec_2019.1_2020.1.csv",
                          "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/sistec_encoding/latin1/fake_data_sistec_latin1.csv",
-                         "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/sistec_encoding/utf8/fake_data_sistec_utf8.csv")
+                         "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/sistec_encoding/utf8/fake_data_sistec_utf8.csv",
+                         "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/generic_rfept/rfept/rfept.csv",    
+                         "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/generic_rfept/sistec/sistec.csv",  
+                         "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/generic_rfept/wrong_beginning_date/fake_generic_rfept.csv",  
+                         "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/generic_rfept/wrong_cpf/fake_generic_rfept.csv",  
+                         "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/generic_rfept/wrong_header/fake_generic_rfept.csv",  
+                         "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/generic_rfept/wrong_separator/fake_generic_rfept.csv",  
+                         "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/generic_rfept/wrong_status/fake_generic_rfept.csv")
     
     for(i in 1:length(destfile)){
       utils::download.file(datasests_paths[i], 

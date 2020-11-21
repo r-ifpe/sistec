@@ -59,3 +59,13 @@ status_rfept.sigaa_table <- function(x){
        transferido = "CANCELADO",
        reprovada = "CANCELADO")
 }
+
+status_rfept.generic_rfept_table <- function(x){
+  list(concluido = "CONCLU\u00cdDA", 
+       integralizada = "INTEGRALIZADA", 
+       abandono = "ABANDONO",
+       desligado = "DESLIGADO",
+       em_curso = "EM_CURSO",
+       transferido = "TRANSF_EXT",
+       reprovada = "REPROVADA")
+}

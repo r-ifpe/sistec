@@ -92,6 +92,27 @@ do Sigaa. Certifique-se que seus dados possuem as colunas: “Matricula”,
 “Nome”, “Situacao Matricula”, “Curso”, “Cpf”, “Instituicao”,
 “ano\_ingresso”, “semestre\_ingresso” and “Cota”.
 
+## Dados genéricos
+
+Se o seu instituto ainda não foi completamente integrado ao pacote, você
+pode converter os dados do seu sistema acadêmico para um layout genérico
+e usar `read_rfept()`normalmente. Para que esta conversão seja realizada
+com sucesso siga os requerimentos abaixo:
+
+  - Renomeie suas colunas para: NO\_ALUNO, NU\_CPF, CO\_MATRICULA,
+    NO\_STATUS\_MATRICULA, NO\_CURSO, DT\_INICIO\_CURSO, NO\_CAMPUS e
+    NO\_COTA;
+  - Todas alunas devem pertencer a class *string*;
+  - Os CPF’s devem estar no formato xxx.xxx.xxx-xx;
+  - A data de início do curso deve estar no formato aaaa.s. Ex.: 2020.1.
+    Use 1 para o primeiro semestre e 2 para o segundo.
+  - Converta o status dos alunos para um dos status do Sistec, use:
+    ABANDONO, EM\_CURSO, CONCLUÍDA, DESLIGADO, INTEGRALIZADA, REPROVADA
+    and TRANSF\_EXT;
+  - Salve seus dados em um arquivo único em formato csv separado por
+    vírgula e com encode latin1. Separadores de ponto e vírgula e
+    encode UTF-8 também podem ser usados.
+
 ## Lendo os arquivos
 
 Para ler os arquivos, carregue o pacote `sistec` e passe, como

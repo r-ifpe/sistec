@@ -1,6 +1,6 @@
 #' Read Qacademico files
 #'
-#' This function support two kinds of schemas: from the api and the website. See Details 
+#' This function supports two kinds of schemas: from the api and the website. See Details 
 #' if you need help to download the Qacademico data.
 #'
 #' @param path The Qacademico file's path. 

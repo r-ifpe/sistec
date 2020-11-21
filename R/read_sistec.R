@@ -164,21 +164,10 @@ sistec_correct_campus_name <- function(campus){
 sistec_web_encoding <- function(x, sep){
   
   sistec <- utils::read.csv(x, header = TRUE, sep = sep, encoding = "latin1", nrows = 300)
-  # utf8 <- sum(stringi::stri_enc_isutf8(sistec$NO_CICLO_MATRICULA))
-  # latin1 <- nrow(sistec) - utf8
-  # 
-  # if(utf8 > latin1){
-  #   "UTF-8"
-  # } else{
-  #   "latin1"
-  # }
-  #encoding
-  
+
   latin1 <- any(stringr::str_detect(sistec$NO_CICLO_MATRICULA,
                                  "\xc9|\xc7|\xd5|\xca|\xda|\xc2|\xc1|\xcd")) # bug in \xc3
   
-  # latin1 <- any(stringr::str_detect(sistec$NO_CICLO_MATRICULA,
-  #                                "\u00cd|\u00c9|\u00ca|\u00c3|\u00c7|\u00c1|\u00c2"))
   encoding <- if(latin1){
     "latin1"
   } else{

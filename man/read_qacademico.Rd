@@ -17,7 +17,7 @@ Ex.: "2019.1" or "2019.2".}
 A data frame.
 }
 \description{
-This function support two kinds of schemas: from the api and the website. See Details
+This function supports two kinds of schemas: from the api and the website. See Details
 if you need help to download the Qacademico data.
 }
 \details{
