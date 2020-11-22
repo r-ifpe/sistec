@@ -4,6 +4,10 @@ sistec: Tools to Analyze Sistec Datasets
 [![Travis build
 status](https://travis-ci.org/r-ifpe/sistec.svg?branch=master)](https://travis-ci.org/r-ifpe/sistec)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/sistec)](https://cran.r-project.org/package=sistec)
+[![R build
+status](https://github.com/R-IFPE/sistec/workflows/R-ubuntu/badge.svg)](https://github.com/R-IFPE/sistec/actions)
+[![R build
+status](https://github.com/R-IFPE/sistec/workflows/R-macOS/badge.svg)](https://github.com/R-IFPE/sistec/actions)
 [![CircleCI build
 status](https://circleci.com/gh/r-ifpe/sistec.svg?style=svg)](https://circleci.com/gh/r-ifpe/sistec)
 [<img src="tools/readme/brasil_icon.png" width=22 height=22>](https://github.com/r-ifpe/sistec/blob/master/LEIAME.md)
