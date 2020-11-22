@@ -18,3 +18,5 @@
 ^\.circleci$
 ^\.circleci/config\.yml$
 ^deploy\.txt$
+^\.github$
+^appveyor\.yml$
