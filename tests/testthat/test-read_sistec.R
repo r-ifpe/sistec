@@ -25,7 +25,7 @@ test_that("encoding and sep work", {
                                     package = "sistec")) 
 
   expect_true(any(stringr::str_detect(sistec$S_NO_CURSO,
-                                      "\xc9|\xc7|\xd5|\xca|\xda|\xc2|\xc1|\xcd")))
+                                      "\u00c9|\u00c7|\u00d5|\u00ca|\u00da|\u00c2|\u00c1|\u00cd")))
 }) 
 
 test_that("co_unidade_ensino works", {
@@ -34,7 +34,7 @@ test_that("co_unidade_ensino works", {
   co_unidade_ensino <- sistec:::co_unidade_ensino()
   expect_named(co_unidade_ensino, c("CO_UNIDADE_ENSINO", "S_NO_CAMPUS"))
   
-  cities <- "JABOAT\u00c3O|CHAPEC\u00d3|CAMBORI\u00da|BAMBU\u00cd"
-  n_cities <- sum(stringr::str_detect( co_unidade_ensino$S_NO_CAMPUS, cities))
+  cities <- "JABOAT\xc3O|CHAPEC\xd3|CAMBORI\xda|BAMBU\xcd"
+  n_cities <- sum(stringr::str_detect(co_unidade_ensino$S_NO_CAMPUS, cities))
   expect_equal(n_cities, 4)
 }) 
