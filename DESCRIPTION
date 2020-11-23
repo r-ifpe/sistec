@@ -25,7 +25,6 @@ Imports:
     openxlsx,
     rlang,
     shiny,
-    stringi,
     stringr,
     stats,
     utils
