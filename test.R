@@ -1,3 +1,25 @@
+
+sigaa <- read_rfept("sigaa")
+sistec <- read_sistec("sistec")
+d <- compare_sistec(sistec, sigaa)
+write_output(d, "ARIA")
+
+sigaa <- read_rfept("sigaa_ifsc")
+sistec <- read_sistec("sistec_ifsc")
+d <- compare_sistec(sistec, sigaa)
+write_output(d, "ARIA")
+
+sigaa <- read_rfept("sigaa_ifsc2")
+sistec <- read_sistec("sistec_ifsc2")
+d <- compare_sistec(sistec, sigaa)
+write_output(d, "ARIA")
+
+sigaa <- read_rfept("sigaa_ifsc3")
+sistec <- read_sistec("sistec_ifsc")
+d <- compare_sistec(sistec, sigaa)
+write_output(d, "ARIA")
+
+
 join %>% 
   group(Função, subfunção, acao, programa, ano) %>% 
   summariza(Pago - `Pago inicial`)
