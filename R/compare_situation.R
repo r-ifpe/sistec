@@ -6,7 +6,7 @@ compare_situation <- function(x){
   status_rfept <- status_rfept(x$rfept_complete)
   
   # existe_rfept <- !is.na(rfept)
-  status_concluido <- str_detect(sistec, "CONCLU\u00cdDA") & # CONCLUÍDA
+  status_concluido <- str_detect(sistec, "CONCLU\u00cdDA|CONCLU.DA") & # CONCLUÍDA
     str_detect(rfept, status_rfept$concluido) 
   status_integralizada <- str_detect(sistec, "INTEGRALIZADA") &
     str_detect(rfept, status_rfept$integralizada) 
