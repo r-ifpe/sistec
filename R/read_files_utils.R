@@ -8,7 +8,7 @@ num_para_cpf <- function(cpf) {
 
 co_unidade_ensino <- function(){
   utils::read.csv(system.file("extdata/co_unidade_ensino/co_unidade_ensino.csv", package = "sistec"),
-                              colClasses = "character", fileEncoding = "latin1")
+                              colClasses = "character", fileEncoding = "UTF-8")
 }
 
 detect_sep <- function(x){
