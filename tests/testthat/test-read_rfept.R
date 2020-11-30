@@ -14,7 +14,7 @@ test_that("read_rfept works", {
   
   sigaa <- read_rfept(system.file("extdata/examples/sigaa", package = "sistec"))
   
-  check_rfept_table(sigaa, expect_nrow = 200)
+  check_rfept_table(sigaa, expect_nrow = 20)
   expect_true(inherits(sigaa, "rfept_data_frame"))
 })
 
@@ -32,7 +32,7 @@ test_that("read_sigaa works", {
   
   sigaa <- read_sigaa(system.file("extdata/examples/sigaa", package = "sistec"))
   
-  check_rfept_table(sigaa, expect_nrow = 200)
+  check_rfept_table(sigaa, expect_nrow = 20)
   expect_true(inherits(sigaa, "rfept_data_frame"))
 })
 
