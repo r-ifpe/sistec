@@ -35,17 +35,18 @@ read_rfept <- function(path = "", start = NULL){
   files <- list.files(path = path, pattern = "*.csv")
   file <- paste0(path , "/", files[1])
   
-  generic_rfept <- stringr::str_detect(readLines(file, n = 1), "NO_CURSO|NO_CAMPUS")
   qacademico <- stringr::str_detect(readLines(file, n = 1), "Per. Letivo Inicial")
   sigaa <- stringr::str_detect(readLines(file, n = 1), "semestre_ingresso")
+  conecta <- stringr::str_detect(readLines(file, n = 1), "Cota.Chamado")
 
-  if(generic_rfept){
-    rfept <- read_generic_rfept(path, start)
-  } else if(qacademico){
+  if(qacademico){
     rfept <- read_qacademico(path, start)
-  } else {
-    # sigaa
+  } else if(sigaa){
     rfept <- read_sigaa(path, start)
+  } else if(conecta){
+    rfept <- read_conecta(path, start)
+  } else {
+    rfept <- read_generic_rfept(path, start)
   }
   rfept
 }

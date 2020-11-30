@@ -1,3 +1,52 @@
+a <- read_rfept("C:/Users/dmmad/Desktop/ARIA-testes/ifmg/conecta/")
+a1 <- a %>%
+  filter(R_NO_CAMPUS == "Congonhas",
+         R_DT_INICIO_CURSO %in% c("2019.1", "2019.2", "2020.1", "2020.2"))
+
+a2 <- a1 %>% 
+  arrange(R_NO_CURSO, R_DT_INICIO_CURSO)
+
+b <- read_sistec("C:/Users/dmmad/Desktop/ARIA-testes/ifmg/sistec/")
+b1 <- b %>% 
+  filter(S_DT_INICIO_CURSO %in% c("2019.1", "2019.2", "2020.1", "2020.2"))
+
+b2 <- b1 %>% 
+  arrange(S_NO_CURSO, S_DT_INICIO_CURSO)
+
+a2$R_NO_ALUNO <- b2$S_NO_ALUNO[1:751]
+a2$R_NU_CPF <- b2$S_NU_CPF[1:751]
+
+d <- compare_sistec(b2, a2)
+
+write_output(d, "C:/Users/dmmad/Desktop/ARIA_IFMG")
+
+
+names(a2)
+
+
+##################
+#### retenção ####
+##################
+a <- read.csv("C:/Users/dmmad/Desktop/ARIA-testes/sistec_csv_COM_cpf.csv", sep = ";")
+
+a %>%
+  select(NO_CICLO_MATRICULA, DT_DATA_INICIO, DT_DATA_FIM_PREVISTO, NO_STATUS_MATRICULA) %>% 
+  mutate(NO_CURSO = sistec:::sistec_course_name(NO_CICLO_MATRICULA),
+         DT_RETENCAO_ANO = 1 + as.numeric(substr(DT_DATA_FIM_PREVISTO, 1,4)),
+         DT_RETENCAO_MES = as.numeric(substr(DT_DATA_FIM_PREVISTO, 6,7)),
+         DT_ATUAL_ANO = as.numeric(substr(Sys.Date(), 1,4)),
+         DT_ATUAL_MES = as.numeric(substr(Sys.Date(), 6,7))) %>% 
+  mutate(TEMPO_EM_CURSO = 12 * (DT_ATUAL_ANO - DT_RETENCAO_ANO) + DT_ATUAL_MES - DT_RETENCAO_MES) %>% 
+  filter(TEMPO_EM_CURSO >= 12, NO_STATUS_MATRICULA == "EM_CURSO") %>% 
+  select(-DT_DATA_INICIO, -DT_DATA_FIM_PREVISTO, -NO_CICLO_MATRICULA) %>% 
+  mutate(STATUS = "RETIDO") 
+
+
+#(ano_atual - ano_base) * 12 + mes_atual - mes_base
+#####################################################################
+
+
+
 
 sigaa <- read_rfept("sigaa")
 sistec <- read_sistec("sistec")

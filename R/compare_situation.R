@@ -69,3 +69,13 @@ status_rfept.generic_rfept_table <- function(x){
        transferido = "TRANSF_EXT",
        reprovada = "REPROVADA")
 }
+
+status_rfept.conecta_table <- function(x){
+  list(concluido = "Conclu\u00eddo|Formado", 
+       integralizada = "Integralizou", 
+       abandono = "Evas\u00e3o",
+       desligado = "Desligado|desligamento|Interna|Matriz",
+       em_curso = "Matriculado|Trancado|PMA",
+       transferido = "Externa",
+       reprovada = "Reprovada")
+}
