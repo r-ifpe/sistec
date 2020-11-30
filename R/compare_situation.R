@@ -6,7 +6,7 @@ compare_situation <- function(x){
   status_rfept <- status_rfept(x$rfept_complete)
   
   # existe_rfept <- !is.na(rfept)
-  status_concluido <- str_detect(sistec, "CONCLU\u00cdDA") & # CONCLUÍDA
+  status_concluido <- str_detect(sistec, "CONCLU\u00cdDA|CONCLU.DA") & # CONCLUÍDA
     str_detect(rfept, status_rfept$concluido) 
   status_integralizada <- str_detect(sistec, "INTEGRALIZADA") &
     str_detect(rfept, status_rfept$integralizada) 
@@ -58,4 +58,14 @@ status_rfept.sigaa_table <- function(x){
        em_curso = "CURSANDO|CONCLUINTE|TRANCADO|GRADUANDO|ATIVO|DEFENDIDO|FORMANDO",
        transferido = "CANCELADO",
        reprovada = "CANCELADO")
+}
+
+status_rfept.generic_rfept_table <- function(x){
+  list(concluido = "CONCLU\u00cdDA", 
+       integralizada = "INTEGRALIZADA", 
+       abandono = "ABANDONO",
+       desligado = "DESLIGADO",
+       em_curso = "EM_CURSO",
+       transferido = "TRANSF_EXT",
+       reprovada = "REPROVADA")
 }

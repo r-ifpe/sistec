@@ -4,6 +4,10 @@ sistec: Tools to Analyze Sistec Datasets
 [![Travis build
 status](https://travis-ci.org/r-ifpe/sistec.svg?branch=master)](https://travis-ci.org/r-ifpe/sistec)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/sistec)](https://cran.r-project.org/package=sistec)
+[![R build
+status](https://github.com/R-IFPE/sistec/workflows/R-ubuntu/badge.svg)](https://github.com/R-IFPE/sistec/actions)
+[![R build
+status](https://github.com/R-IFPE/sistec/workflows/R-macOS/badge.svg)](https://github.com/R-IFPE/sistec/actions)
 [![CircleCI build
 status](https://circleci.com/gh/r-ifpe/sistec.svg?style=svg)](https://circleci.com/gh/r-ifpe/sistec)
 [<img src="tools/readme/brasil_icon.png" width=22 height=22>](https://github.com/r-ifpe/sistec/blob/master/LEIAME.md)
@@ -80,17 +84,40 @@ and “Cota”.
 To download the partial Sigaa’s data, go to your proper account on Sigaa
 and follow:
 
-  - Access the panel “Consultas” inside Sigaa module.
-  - Generate the report “Consulta geral discentes”.
+  - Access the panel “Consultas” inside Sigaa module;
+  - Generate the report “Consulta geral discentes”;
   - Select the check box “Trazer informações em forma de relatório” e
-    “Gerar csv”.
-  - Select the filter “Campus” and other filter you desire.
+    “Gerar csv”;
+  - Select the filter “Campus” and other filter you desire;
   - Click on “Buscar” and download the file.
 
 For the complete dataset, you have to download directly from the Sigaa
 database. Be sure that your data has the variables: “Matricula”, “Nome”,
 “Situacao Matricula”, “Curso”, “Cpf”, “Instituicao”, “ano\_ingresso”,
 “semestre\_ingresso” and “Cota”.
+
+## Generic datasets
+
+If your institute is not fully integrated with the package, you can
+transform your academic database into a generic layout and use
+`read_rfept()` normally.
+
+To transform your database in a generic rfept layout, follow these
+requirements:
+
+  - Rename your columns to: NO\_ALUNO, NU\_CPF, CO\_MATRICULA,
+    NO\_STATUS\_MATRICULA, NO\_CURSO, DT\_INICIO\_CURSO, NO\_CAMPUS and
+    NO\_COTA;
+  - All variables should be inherited to string class;
+  - The CPF’s should be in xxx.xxx.xxx-xx format;
+  - The beginning date should be in yyyy.s format. Ex.: 2020.1. Use 1
+    for first semester and 2 for second.
+  - Convert the student’s status to valid name in Sistec, use: ABANDONO,
+    EM\_CURSO, CONCLUÍDA, DESLIGADO, INTEGRALIZADA, REPROVADA and
+    TRANSF\_EXT;
+  - Save your data in a single file in csv format separated by comma and
+    use latin1 encoding. Semicolons separators and UTF-8 enconding are
+    also available.
 
 ## Read files
 

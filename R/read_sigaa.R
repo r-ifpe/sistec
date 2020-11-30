@@ -89,7 +89,9 @@ read_sigaa_complete <- function(path, sep){
                   sep = sep,  stringsAsFactors = FALSE, colClasses = classes,
                   encoding = "UTF-8", check.names = FALSE) %>% 
     dplyr::bind_rows() %>% 
-    dplyr::distinct(!!sym("Matricula"), .keep_all = TRUE) %>% # Take the most recent 
+    dplyr::distinct(!!sym("Matricula"), .keep_all = TRUE) %>%  # Take the most recent 
+    sigaa_convert_unidade_ensino() %>% 
+    sigaa_convert_semester() %>% 
     dplyr::transmute(R_NO_ALUNO = !!sym("Nome"),
                      R_NU_CPF = num_para_cpf(!!sym("Cpf")),
                      R_CO_MATRICULA = !!sym("Matricula"),
@@ -106,7 +108,6 @@ read_sigaa_complete <- function(path, sep){
 }
 
 sigaa_campus_name <- function(campus){
-  campus <- stringr::str_sub(campus, 8)
   sigaa_correct_campus_name(campus)
 }
 
@@ -118,7 +119,7 @@ sigaa_complete_convert_beginning_date <- function(year, semester){
 sigaa_cota <- function(cota){
   dplyr::if_else(grepl("Processo seletivo sem cota|Ampla concorr\u00eancia", cota), 
                  "N\u00c3O COTISTA",
-                 dplyr::if_else(cota == "",
+                 dplyr::if_else(cota == ""|is.na(cota),
                                 "SEM INFORMA\u00c7\u00c3O",
                                 "COTISTA"))
 }
@@ -183,4 +184,25 @@ sigaa_correct_campus_name <- function(campus){
 sigaa_course_name <- function(course){ 
   course <- stringr::str_replace_all(course,"/|:|\\?|\\.", "_" )
   dplyr::if_else(course == "", "SEM CURSO", course)
+}
+
+#' @importFrom dplyr %>% 
+sigaa_convert_unidade_ensino <- function(x){
+  if(inherits(x$Instituicao, "integer")){
+    co_unidade_ensino <- co_unidade_ensino()
+    x$Instituicao <- as.character(x$Instituicao)
+    x <- dplyr::left_join(x, co_unidade_ensino,
+                          by = c("Instituicao" = "CO_UNIDADE_ENSINO")) %>% 
+      dplyr::mutate(Instituicao = !!sym("S_NO_CAMPUS"))
+  }
+  x
+}
+
+#' @importFrom dplyr %>% sym
+sigaa_convert_semester <- function(x){
+  # in IFC, they use 0 when a course is annual, but it always 
+  # starts at first semester
+  x %>% 
+    dplyr::mutate(semestre_ingresso = ifelse(!!sym("semestre_ingresso") == 0,
+                                             1, !!sym("semestre_ingresso")))
 }
