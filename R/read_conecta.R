@@ -22,7 +22,7 @@ read_conecta <- function(path = "", start = NULL){
                              encoding = "latin1", nrows = 1, check.names = FALSE)
   
   
-  vars <- c("RA", "NOME_ALUNO", "STATUS_NO_CURSO", "Cota.Chamado",
+  vars <- c("RA", "NOME_ALUNO", "STATUS_NO_CURSO", "Cota Chamado",
             "NOME_CURSO", "CPF", "NOME_CAMPUS", "DATA_INGRESSO_CURSO")
   
   if(sum(names(conecta) %in% vars) == 8){
@@ -53,16 +53,19 @@ read_conecta_web <- function(path){
                      R_CO_MATRICULA = !!sym("RA"),
                      R_CO_CICLO_MATRICULA = "", # unitl now a RFEPT doesn't have ciclo
                      R_NO_STATUS_MATRICULA = !!sym("STATUS_NO_CURSO"),
-                     R_NO_CURSO = !!sym("NOME_CURSO"),
+                     R_NO_CURSO = conecta_convert_course_name(!!sym("NOME_CURSO")),
                      R_DT_INICIO_CURSO = conecta_convert_beginning_date(!!sym("DATA_INGRESSO_CURSO")),
                      R_NO_CAMPUS = !!sym("NOME_CAMPUS"),
-                     R_NO_COTA = conecta_cota(!!sym("Cota.Chamado")))
+                     R_NO_COTA = conecta_cota(!!sym("Cota Chamado")))
   
   class(conecta) <- c("rfept_data_frame", "conecta_table", class(conecta))
   
   conecta
 }
 
+conecta_convert_course_name <- function(course){
+  stringr::str_trim(course)
+}
 
 conecta_convert_beginning_date <- function(date){
   
@@ -75,7 +78,7 @@ conecta_convert_beginning_date <- function(date){
 }
 
 conecta_cota <- function(cota){
-  dplyr::if_else(cota == ""|is.na(cota),
+  dplyr::if_else(grepl("A0|AC", cota) | cota == "",
                  "SEM COTA",
                  "COTISTA")
 }
