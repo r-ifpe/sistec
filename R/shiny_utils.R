@@ -22,3 +22,21 @@ generate_session_id <- function(){
          floor(stats::runif(1, 0.1, 0.9999) * 1000000)
   )
 }
+
+shiny_output_path <- function(output_path){
+  if(is.null(output_path)){
+    if_windows <- tolower(Sys.getenv("SystemRoot"))
+    if (grepl("windows", if_windows)){
+      output_path <- utils::choose.dir()
+      output_path <- gsub("\\\\", "/",output_path)
+    } else {
+      output_path <- tcltk::tk_choose.dir()
+    }
+  } else {
+    if_windows <- tolower(Sys.getenv("SystemRoot"))
+    if (grepl("windows", if_windows)){
+      output_path <- gsub("\\\\", "/",output_path)
+    }
+  }
+  output_path
+}

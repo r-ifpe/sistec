@@ -37,7 +37,7 @@ read_rfept <- function(path = "", start = NULL){
   
   qacademico <- stringr::str_detect(readLines(file, n = 1), "Per. Letivo Inicial")
   sigaa <- stringr::str_detect(readLines(file, n = 1), "semestre_ingresso")
-  conecta <- stringr::str_detect(readLines(file, n = 1), "Cota.Chamado")
+  conecta <- stringr::str_detect(readLines(file, n = 1), "Cota Chamado")
 
   if(qacademico){
     rfept <- read_qacademico(path, start)

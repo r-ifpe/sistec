@@ -15,7 +15,7 @@ aria(
 
 aria_server(version = "test")
 
-aria_ui()
+aria_ui(version)
 }
 \arguments{
 \item{max_file_size}{The maximum file size in megabytes.}

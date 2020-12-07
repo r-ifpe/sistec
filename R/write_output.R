@@ -20,8 +20,13 @@ write_output <- function(x,
 write_output.comparison_list <- function(x, 
                                          output_path = NULL, 
                                          output_folder_name = "ARIA"){
+  
   # write results
   if(!is.null(output_path)) {
+    if(dir.exists(paste0(output_path,"/ARIA"))){
+      unlink(paste0(output_path,"/ARIA"), recursive = TRUE)
+    }
+    
     rfept_table <- rfept_table(x$rfept_complete)
     path <- paste0(output_path, "/", output_folder_name)
 
