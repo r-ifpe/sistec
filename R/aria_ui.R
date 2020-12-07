@@ -2,7 +2,7 @@
 #' @importFrom shiny fluidPage navbarPage tabPanel sidebarLayout sidebarPanel
 #' @importFrom shiny tags br
 #' @export
-aria_ui <- function(){
+aria_ui <- function(version){
   fluidPage(
     navbarPage(paste0("ARIA v", aria_version()),
                tabPanel("SISTEC",
@@ -16,7 +16,7 @@ aria_ui <- function(){
                             aria_input_compare_button(),
                             aria_input_download_button()
                           ),
-                          aria_main_panel()
+                          aria_main_panel(version)
                         )
                ),
                tabPanel("MANUAL", manual_screen())
@@ -74,34 +74,33 @@ aria_compare_button <- function(){
   shiny::actionButton("do", "Comparar")
 }
 
-aria_download_button <- function(){ #version
-  shiny::downloadButton("download_online", "Salvar resultados")
-  # if(version == "online"){
-  #   shiny::downloadButton("download_online", "Salvar resultados")
-  # } else {
-  #   shiny::actionButton("download_offline", "Salvar resultados")
-  # }
+aria_download_button <- function(version){ #version
+ # shiny::downloadButton("download_online", "Salvar resultados")
+  if(version == "desktop"){
+    shiny::actionButton("download_offline", "Salvar resultados")
+  } else {
+    shiny::downloadButton("download_online", "Salvar resultados")
+  }
 }
 
-aria_test_mode_checkbox <- function(test_mode){
-  if(test_mode){
-    shiny::checkboxInput("test_mode", "Test mode", TRUE)
-  } 
-}
+#deprecated
+# aria_test_mode_checkbox <- function(test_mode){
+#   if(test_mode){
+#     shiny::checkboxInput("test_mode", "Test mode", TRUE)
+#   } 
+# }
 
 #' @importFrom shiny mainPanel strong br htmlOutput
-aria_main_panel <- function(){ #version
-  mainPanel(
-    strong(htmlOutput("contents")))
-  # 
-  # 
-  # if(version == "online"){
-  #   mainPanel(
-  #     strong(htmlOutput("contents")))
-  # } else{
-  #   mainPanel(
-  #     strong(htmlOutput("contents")),
-  #     br(), br(), br(), br(),
-  #     strong(htmlOutput("download_offline")))
-  # }
+aria_main_panel <- function(version){ #version
+  # mainPanel(
+  #   strong(htmlOutput("contents")))
+  if(version == "desktop"){
+    mainPanel(
+      strong(htmlOutput("contents")),
+      br(), br(), br(), br(),
+      strong(htmlOutput("download_offline")))
+  } else{
+    mainPanel(
+      strong(htmlOutput("contents")))
+  }
 }

@@ -41,7 +41,7 @@ aria <- function(max_file_size = 100,
   opt <- options(shiny.maxRequestSize = shiny_max_file_size) 
   on.exit(options(opt))
 
-  ui <- aria_ui()
+  ui <- aria_ui(version)
   server <- aria_server(version)
   aria_run(ui, server, version, options_port, options_launch_browser)
 } 

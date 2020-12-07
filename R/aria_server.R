@@ -59,6 +59,33 @@ aria_server <- function(version = "test"){
       }
     )
     
+    output$download_offline <- shiny::renderText({
+      if(is.null(input$download_offline)) return()
+      if(input$download_offline == 0) return()
+
+      if(is.list(isolate(comparison$x))){
+        
+        if_windows <- tolower(Sys.getenv("SystemRoot"))
+        if(grepl("windows", if_windows)){
+          output_path <- utils::choose.dir()
+          output_path <- gsub("\\\\", "/",output_path)
+        } else {
+          output_path <- tcltk::tk_choose.dir()
+        }
+        
+        #output_path <- shiny_output_path(output_path)
+        
+        write_output(x = isolate(comparison$x),
+                     output_path = output_path,
+                     output_folder_name = "ARIA")
+        
+        "Download realizado com sucesso!"
+      } else {
+        "" 
+      }
+    })
+    
+    
     output$contents <- shiny::renderText({
 
       aria_logs(aria_values$session_id,
@@ -98,7 +125,7 @@ aria_server <- function(version = "test"){
       
       if(!is.null(input$do)){
         if(input$do != 0){
-          aria_download_button()
+          aria_download_button(version)
         }
       }
     })
