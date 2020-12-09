@@ -62,6 +62,7 @@ read_generic_rfept <- function(path = "", start = NULL){
   check_rfept_cpf(rfept)
   check_rfept_course_beginning_date(rfept)
   check_rfept_status(rfept)
+  check_rfept_cota(rfept)
   
   class(rfept) <- c("rfept_data_frame", "generic_rfept_table", class(rfept))
   
@@ -132,6 +133,19 @@ check_rfept_status <- function(x){
         call. = FALSE)
  }
 }
+
+check_rfept_cota <- function(x){
+  all_true <- all(x$R_NO_COTA %in% c("COTISTA", "N\u00c3O COTISTA",
+                                     "SEM INFORMA\u00c7\u00c3O"))
+  
+  if(!all_true){
+    stop(paste("Sistema acad\u00eamico: As cotas dos alunos precisam estar",
+               "em um desses formatos:",
+               "COTISTA, N\u00c3O COTISTA ou SEM INFORMA\u00c7\u00c3O"),
+         call. = FALSE)
+  }
+}
+
 
 correct_course_name <- function(course){
   course <- stringr::str_remove(course, " - .*$")  
