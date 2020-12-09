@@ -71,8 +71,14 @@ Para baixar os dados parciais do Sigaa, vá na sua conta siga esses passos:
  - Selecione o "Campus" e outros filtros que você deseja
  - Clique em "Buscar" e baixe o arquivo. 
 
-Para os dados completos, você precisa baixar os arquivos direto da base do Sigaa. Certifique-se que seus dados possuem as colunas: "Matricula", "Nome", "Situacao Matricula", 
-"Curso", "Cpf", "Instituicao", "ano_ingresso", "semestre_ingresso" and "Cota". 
+Para os dados completos, você precisa baixar os arquivos direto da base do Sigaa. Certifique-se que seus dados possuem as colunas: "Matricula", "Nome", "Situacao Matricula", "Curso", "Cpf", "Instituicao", "ano_ingresso", "semestre_ingresso" and "Cota". 
+
+## Dados do Conecta 
+
+Para baixar os dados da base de dados do Conecta siga os passos abaixo:
+
+ - Acesse "Currículo e Oferta" -> "Matrizes Curriculares" - > "Anexos" -> "Consulta SQL";
+ - Selecione uma visualização que contenha as variáveis: "RA", "NOME_ALUNO", "STATUS_NO_CURSO", "Cota Chamado", "NOME_CURSO", "CPF", "NOME_CAMPUS", "DATA_INGRESSO_CURSO". 
 
 ## Dados genéricos
 

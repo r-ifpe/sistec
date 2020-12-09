@@ -419,6 +419,7 @@ summary {
 <li><a href="#antes-de-usar">Antes de usar</a></li>
 <li><a href="#obtenção-dos-dados">Obtenção dos dados</a><ul>
 <li><a href="#sistec">Sistec</a></li>
+<li><a href="#conecta">Conecta</a></li>
 <li><a href="#qacademico">Qacademico</a></li>
 <li><a href="#sigaa">Sigaa</a></li>
 <li><a href="#generic_rfept">Layout genérico</a></li>
@@ -435,7 +436,8 @@ summary {
 <h2>Antes de usar</h2>
 <p>Verifique se seu instituto já está integrado ao ARIA na lista abaixo:</p>
 <ul>
-<li>Pernambuco: IFPE.</li>
+<li>Minas Gerais: IFMG.</li>
+<li>Pernambuco: IFPE e IFSertão.</li>
 <li>Santa Catarina: IFC e IFSC.</li>
 </ul>
 <p>Caso o seu instituto não esteja nesta lista, você ainda pode usar o ARIA convertendo sua base de dados a um <a href="#generic_rfept">layout genérico</a>. Qualquer dúvida, entre em contato com <a href="mailto:tiago.spiandorello@ifsc.edu.br" class="email">tiago.spiandorello@ifsc.edu.br</a> ou <a href="mailto:samuelmacedo@recife.ifpe.edu.br" class="email">samuelmacedo@recife.ifpe.edu.br</a>.</p>
@@ -462,6 +464,14 @@ summary {
 <ul>
 <li><p>Pela web: “NO_ALUNO”, “NU_CPF”, “CO_CICLO_MATRICULA”, “NO_STATUS_MATRICULA”, “NO_CICLO_MATRICULA”, “DT_DATA_INICIO” e “CO_UNIDADE_ENSINO”.</p></li>
 <li><p>Pela setec: “Nome Aluno”, “Numero Cpf”, “Co Ciclo Matricula”, “Situacao Matricula”, “No Curso”, “Dt Data Inicio” e “Unidade Ensino”.</p></li>
+</ul>
+</div>
+<div id="conecta" class="section level3">
+<h3>Conecta</h3>
+<p>Para baixar os dados da base de dados do Conecta siga os passos abaixo:</p>
+<ul>
+<li>Acesse “Currículo e Oferta” -&gt; “Matrizes Curriculares” - &gt; “Anexos” -&gt; “Consulta SQL”;</li>
+<li>Selecione uma visualização que contenha as variáveis: “RA”, “NOME_ALUNO”, “STATUS_NO_CURSO”, “Cota Chamado”, “NOME_CURSO”, “CPF”, “NOME_CAMPUS”, “DATA_INGRESSO_CURSO”.</li>
 </ul>
 </div>
 <div id="qacademico" class="section level3">
@@ -497,6 +507,7 @@ summary {
 <li>Os CPF’s devem estar no formato xxx.xxx.xxx-xx;</li>
 <li>A data de início do curso deve estar no formato aaaa.s. Ex.: 2020.1. Use 1 para o primeiro semestre e 2 para o segundo.</li>
 <li>Converta o status dos alunos para um dos status do Sistec, use: ABANDONO, EM_CURSO, CONCLUÍDA, DESLIGADO, INTEGRALIZADA, REPROVADA and TRANSF_EXT;</li>
+<li>Converta o tipo de cota para uma dessas três possibilidades: COTISTA, NÃO COTISTA e SEM INFORMAÇÃO;</li>
 <li>Salve seus dados em um arquivo único em formato csv separado por vírgula e com encode latin1. Separadores de ponto e vírgula e encode UTF-8 também podem ser usados.</li>
 </ul>
 </div>

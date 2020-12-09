@@ -96,6 +96,15 @@ database. Be sure that your data has the variables: “Matricula”, “Nome”,
 “Situacao Matricula”, “Curso”, “Cpf”, “Instituicao”, “ano\_ingresso”,
 “semestre\_ingresso” and “Cota”.
 
+## Conecta datasets
+
+To download Conecta datasets from the database follow these steps:
+
+  - Access "Curr
+  - Select a view that contains the variables: “RA”, “NOME\_ALUNO”,
+    “STATUS\_NO\_CURSO”, “Cota Chamado”, “NOME\_CURSO”, “CPF”,
+    “NOME\_CAMPUS”, “DATA\_INGRESSO\_CURSO”.
+
 ## Generic datasets
 
 If your institute is not fully integrated with the package, you can

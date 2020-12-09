@@ -92,6 +92,16 @@ do Sigaa. Certifique-se que seus dados possuem as colunas: “Matricula”,
 “Nome”, “Situacao Matricula”, “Curso”, “Cpf”, “Instituicao”,
 “ano\_ingresso”, “semestre\_ingresso” and “Cota”.
 
+## Dados do Conecta
+
+Para baixar os dados da base de dados do Conecta siga os passos abaixo:
+
+  - Acesse “Currículo e Oferta” -\> “Matrizes Curriculares” - \>
+    “Anexos” -\> “Consulta SQL”;
+  - Selecione uma visualização que contenha as variáveis: “RA”,
+    “NOME\_ALUNO”, “STATUS\_NO\_CURSO”, “Cota Chamado”, “NOME\_CURSO”,
+    “CPF”, “NOME\_CAMPUS”, “DATA\_INGRESSO\_CURSO”.
+
 ## Dados genéricos
 
 Se o seu instituto ainda não foi completamente integrado ao pacote, você
