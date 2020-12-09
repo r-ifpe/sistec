@@ -17,7 +17,7 @@ test_that("detect_sep works", {
   expect_error(read_generic_rfept(
     system.file("extdata/test_datasets/generic_rfept/wrong_separator",
                 package = "sistec")),
-    "Separador diferente de , ou ;")
+    "Separador diferente de tab ou ; ou ,")
 }) 
 
 test_that("check_rfept_header works", {

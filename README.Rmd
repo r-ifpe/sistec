@@ -81,6 +81,13 @@ For the complete dataset, you have to download directly from the Sigaa database.
 sure that your data has the variables: "Matricula", "Nome", "Situacao Matricula", 
 "Curso", "Cpf", "Instituicao", "ano_ingresso", "semestre_ingresso" and "Cota". 
 
+## Conecta datasets
+
+To download Conecta datasets from the database follow these steps:
+
+ - Access "Curr\u00edculo e Oferta" -> "Matrizes Curriculares" -> "Anexos" -> "Consulta SQL";
+ - Select a view that contains the variables: "RA", "NOME_ALUNO", "STATUS_NO_CURSO", "Cota Chamado", "NOME_CURSO", "CPF", "NOME_CAMPUS", "DATA_INGRESSO_CURSO". 
+
 ## Generic datasets
 
 If your institute is not fully integrated with the package, you can transform your 

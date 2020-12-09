@@ -20,7 +20,8 @@ Além dos dados de comparação, o ARIA também detecta inconsistências como, p
 
 Verifique se seu instituto já está integrado ao ARIA na lista abaixo:
 
- - Pernambuco: IFPE.
+ - Minas Gerais: IFMG.
+ - Pernambuco: IFPE e IFSertão.
  - Santa Catarina: IFC e IFSC.
  
 Caso o seu instituto não esteja nesta lista, você ainda pode usar o ARIA convertendo sua base de dados a um [layout genérico](#generic_rfept). Qualquer dúvida, entre em contato com tiago.spiandorello@ifsc.edu.br ou samuelmacedo@recife.ifpe.edu.br.
@@ -48,6 +49,13 @@ Certifique-se que as seguintes colunas se encontram na sua base de dados:
  - Pela web: "NO_ALUNO", "NU_CPF", "CO_CICLO_MATRICULA", "NO_STATUS_MATRICULA", "NO_CICLO_MATRICULA", "DT_DATA_INICIO" e "CO_UNIDADE_ENSINO".
 
  - Pela setec: "Nome Aluno", "Numero Cpf", "Co Ciclo Matricula", "Situacao Matricula", "No Curso", "Dt Data Inicio" e "Unidade Ensino".
+
+### Conecta 
+
+Para baixar os dados da base de dados do Conecta siga os passos abaixo:
+
+ - Acesse "Currículo e Oferta" -> "Matrizes Curriculares" - > "Anexos" -> "Consulta SQL";
+ - Selecione uma visualização que contenha as variáveis: "RA", "NOME_ALUNO", "STATUS_NO_CURSO", "Cota Chamado", "NOME_CURSO", "CPF", "NOME_CAMPUS", "DATA_INGRESSO_CURSO". 
 
 ### Qacademico
 
@@ -86,6 +94,7 @@ NO_CURSO, DT_INICIO_CURSO, NO_CAMPUS e NO_COTA;
 - A data de início do curso deve estar no formato aaaa.s. Ex.: 2020.1. Use 1 para o primeiro semestre e 2 para o segundo. 
 - Converta o status dos alunos para um dos status do Sistec, use: ABANDONO, EM_CURSO,
 CONCLUÍDA, DESLIGADO, INTEGRALIZADA, REPROVADA and TRANSF_EXT;
+- Converta o tipo de cota para uma dessas três possibilidades: COTISTA, NÃO COTISTA e SEM INFORMAÇÃO;
 - Salve seus dados em um arquivo único em formato csv separado por vírgula e com encode latin1. Separadores de ponto e vírgula e encode UTF-8 também podem ser usados. 
 
 ## Interpretação das saídas do ARIA

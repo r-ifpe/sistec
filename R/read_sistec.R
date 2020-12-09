@@ -87,8 +87,7 @@ read_sistec_web <- function(path, encoding, sep){
   temp <- paste0(path, "/", temp)
 
   co_unidade_ensino <- co_unidade_ensino()
-  classes <- c(NU_CPF = "character", CO_UNIDADE_ENSINO = "character",
-               DS_EMAIL = "character")
+  classes <- "character"
 
   sistec <- lapply(temp, utils::read.csv,
                    sep = sep,  stringsAsFactors = FALSE, 

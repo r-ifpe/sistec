@@ -2,16 +2,16 @@
 
 ### ARIA
 
-- The download button is `shiny::DownloadHandler()` for all version of ARIA. (#90) 
 - Fix bug in download button for windows. (#90)
 
 ### Functions
 
 - Implemented `read_generic_rfept()` and it was wrapped into `read_rfept()`. Now, an institute that was not fully integrated to ARIA can use the app converting your databate to a generic layout. (#92)
+- Implemented `read_conecta()`. (#97)
+- Implemented `read_suap()`. (#99)
 
 ### Refactoring
 
-- Remove tcltk dependencies. (#90)
 - Split ui and server of ARIA. (#89)
 
 ### Security

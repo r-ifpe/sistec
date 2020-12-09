@@ -15,12 +15,15 @@ detect_sep <- function(x){
   header <- readLines(x, n = 1, encoding = "UTF-8")
   comma_sep <- stringr::str_detect(header, ",")
   semicolon_sep <- stringr::str_detect(header, ";")
+  tab_sep <- stringr::str_detect(header, "\t")
   if(comma_sep){
     sep = ","
   } else if (semicolon_sep){
     sep = ";" 
+  } else if (tab_sep){
+    sep = "\t"
   } else {
-    stop("Separador diferente de , ou ;")
+    stop("Separador diferente de tab ou ; ou ,")
   }
   
   sep
