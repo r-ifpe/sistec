@@ -79,3 +79,13 @@ status_rfept.conecta_table <- function(x){
        transferido = "Externa",
        reprovada = "Reprovada")
 }
+
+status_rfept.suap_table <- function(x){
+  list(concluido = "Conclu\u00eddo", 
+       integralizada = "Institucional", 
+       abandono = "Evas\u00e3o",
+       desligado = "Cancelamento",
+       em_curso = "Matriculado|N\u00e3o conclu\u00eddo|Trancado",
+       transferido = "Transferido Externo",
+       reprovada = "Reprovada")
+}

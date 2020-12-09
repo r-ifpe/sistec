@@ -35,9 +35,10 @@ read_rfept <- function(path = "", start = NULL){
   files <- list.files(path = path, pattern = "*.csv")
   file <- paste0(path , "/", files[1])
   
-  qacademico <- stringr::str_detect(readLines(file, n = 1), "Per. Letivo Inicial")
-  sigaa <- stringr::str_detect(readLines(file, n = 1), "semestre_ingresso")
-  conecta <- stringr::str_detect(readLines(file, n = 1), "Cota Chamado")
+  qacademico <- identify_qacademico(file)
+  sigaa <- identify_sigaa(file)
+  conecta <- identify_conecta(file)
+  suap <- identify_suap(file)
 
   if(qacademico){
     rfept <- read_qacademico(path, start)
@@ -45,6 +46,8 @@ read_rfept <- function(path = "", start = NULL){
     rfept <- read_sigaa(path, start)
   } else if(conecta){
     rfept <- read_conecta(path, start)
+  } else if(suap){
+    rfept <- read_suap(path, start)
   } else {
     rfept <- read_generic_rfept(path, start)
   }
@@ -62,4 +65,21 @@ filter_rfept_date <- function(x, start){
 
   x %>% 
     dplyr::filter(!!sym("R_DT_INICIO_CURSO") >= start)
+}
+
+identify_suap <- function(file){
+  # suap files skips the first line
+  stringr::str_detect(readLines(file, n = 2)[2], "Situa\u00e7\u00e3o no Curso")
+}
+
+identify_qacademico <- function(file){
+  stringr::str_detect(readLines(file, n = 1), "Per. Letivo Inicial")
+}
+
+identify_sigaa <- function(file){
+  stringr::str_detect(readLines(file, n = 1), "semestre_ingresso")
+}
+
+identify_conecta <- function(file){
+  stringr::str_detect(readLines(file, n = 1), "Cota Chamado")
 }
