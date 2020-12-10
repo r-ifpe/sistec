@@ -79,6 +79,6 @@ conecta_convert_beginning_date <- function(date){
 
 conecta_cota <- function(cota){
   dplyr::if_else(grepl("A0|AC", cota) | cota == "",
-                 "SEM COTA",
+                 "N\u00c3O COTISTA",
                  "COTISTA")
 }

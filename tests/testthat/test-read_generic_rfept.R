@@ -62,5 +62,13 @@ test_that("check_rfept_status works", {
           "INTEGRALIZADA, REPROVADA ou TRANSF_EXT"))
 })
 
-
-
+test_that("check_rfept_cota works", {
+  skip_on_cran()
+  
+  expect_error(read_generic_rfept(
+    system.file("extdata/test_datasets/generic_rfept/wrong_cota",
+                package = "sistec")),
+    paste("Sistema acad\u00eamico: As cotas dos alunos precisam estar",
+          "em um desses formatos:",
+          "COTISTA, N\u00c3O COTISTA ou SEM INFORMA\u00c7\u00c3O"))
+})

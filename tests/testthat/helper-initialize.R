@@ -96,33 +96,33 @@ download_test_datasets <- function(test_datasets_folder = NULL){
     datasets_path <- paste0(system.file(package = "sistec"), "/",
                             test_datasets_folder, "/")
     
-    dir.create(paste0(datasets_path, "qacademico/"), recursive = TRUE)
-    dir.create(paste0(datasets_path, "sistec/"), recursive = TRUE)
-    dir.create(paste0(datasets_path, "sistec_encoding/latin1/"), recursive = TRUE)
-    dir.create(paste0(datasets_path, "sistec_encoding/utf8/"), recursive = TRUE)
-    dir.create(paste0(datasets_path, "generic_rfept/rfept/"), recursive = TRUE)
-    dir.create(paste0(datasets_path, "generic_rfept/sistec/"), recursive = TRUE)
-    dir.create(paste0(datasets_path, "generic_rfept/wrong_beginning_date/"), recursive = TRUE)
-    dir.create(paste0(datasets_path, "generic_rfept/wrong_cpf/"), recursive = TRUE)
-    dir.create(paste0(datasets_path, "generic_rfept/wrong_header/"), recursive = TRUE)
-    dir.create(paste0(datasets_path, "generic_rfept/wrong_separator/"), recursive = TRUE)
-    dir.create(paste0(datasets_path, "generic_rfept/wrong_status/"), recursive = TRUE)
+    dir_test <- c("qacademico/", "sistec/",
+                  "sistec_encoding/latin1/", "sistec_encoding/utf8/", 
+                  "generic_rfept/rfept/", "generic_rfept/sistec/",
+                  "generic_rfept/wrong_beginning_date/", "generic_rfept/wrong_cota/",
+                  "generic_rfept/wrong_cpf/", "generic_rfept/wrong_header/",
+                  "generic_rfept/wrong_separator/", "generic_rfept/wrong_status/")
+     
+    invisible(lapply(paste0(datasets_path, dir_test),
+                     dir.create, recursive = TRUE))  
     
-    destfile <- c(paste0(datasets_path, "qacademico/fake_data_qacademico_2019_1.csv"),
-                  paste0(datasets_path, "qacademico/fake_data_qacademico_2019_2.csv"),
-                  paste0(datasets_path, "qacademico/fake_data_qacademico_2020_1.csv"),
-                  paste0(datasets_path, "sistec/fake_data_sistec_2019.1_2020.1.csv"),
-                  paste0(datasets_path, "sistec_encoding/latin1/fake_data_sistec_latin1.csv"),
-                  paste0(datasets_path, "sistec_encoding/utf8/fake_data_sistec_utf8.csv"),
-                  paste0(datasets_path, "generic_rfept/rfept/rfept.csv"),                  
-                  paste0(datasets_path, "generic_rfept/sistec/sistec.csv"),
-                  paste0(datasets_path, "generic_rfept/wrong_beginning_date/fake_generic_rfept.csv"),
-                  paste0(datasets_path, "generic_rfept/wrong_cpf/fake_generic_rfept.csv"),
-                  paste0(datasets_path, "generic_rfept/wrong_header/fake_generic_rfept.csv"),
-                  paste0(datasets_path, "generic_rfept/wrong_separator/fake_generic_rfept.csv"),
-                  paste0(datasets_path, "generic_rfept/wrong_status/fake_generic_rfept.csv"))
+    test_files <- c("qacademico/fake_data_qacademico_2019_1.csv",
+                    "qacademico/fake_data_qacademico_2019_2.csv",
+                    "qacademico/fake_data_qacademico_2020_1.csv",
+                    "sistec/fake_data_sistec_2019.1_2020.1.csv",
+                    "sistec_encoding/latin1/fake_data_sistec_latin1.csv",
+                    "sistec_encoding/utf8/fake_data_sistec_utf8.csv", 
+                    "generic_rfept/rfept/rfept.csv",
+                    "generic_rfept/sistec/sistec.csv", 
+                    "generic_rfept/wrong_beginning_date/fake_generic_rfept.csv",
+                    "generic_rfept/wrong_cota/fake_generic_rfept.csv",
+                    "generic_rfept/wrong_cpf/fake_generic_rfept.csv", 
+                    "generic_rfept/wrong_header/fake_generic_rfept.csv", 
+                    "generic_rfept/wrong_separator/fake_generic_rfept.csv",
+                    "generic_rfept/wrong_status/fake_generic_rfept.csv")
     
-    
+    destfile <- paste0(datasets_path, test_files)
+
     datasests_paths <- c("https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/qacademico/fake_data_qacademico_2019_1.csv",
                          "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/qacademico/fake_data_qacademico_2019_2.csv",
                          "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/qacademico/fake_data_qacademico_2020_1.csv",
@@ -131,7 +131,8 @@ download_test_datasets <- function(test_datasets_folder = NULL){
                          "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/sistec_encoding/utf8/fake_data_sistec_utf8.csv",
                          "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/generic_rfept/rfept/rfept.csv",    
                          "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/generic_rfept/sistec/sistec.csv",  
-                         "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/generic_rfept/wrong_beginning_date/fake_generic_rfept.csv",  
+                         "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/generic_rfept/wrong_beginning_date/fake_generic_rfept.csv", 
+                         "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/generic_rfept/wrong_cota/fake_generic_rfept.csv",
                          "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/generic_rfept/wrong_cpf/fake_generic_rfept.csv",  
                          "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/generic_rfept/wrong_header/fake_generic_rfept.csv",  
                          "https://raw.githubusercontent.com/r-ifpe/sistec/master/inst/extdata/test_datasets/generic_rfept/wrong_separator/fake_generic_rfept.csv",  

@@ -1,3 +1,31 @@
+
+
+read_rfept("inst/extdata/test_datasets/generic_rfept/wrong_cota/")
+
+
+
+
+
+
+
+
+
+library(sistec)
+
+ifc <- read_rfept("C:/Users/dmmad/Desktop/ARIA-testes/ifc/luzerna/sigaa/") 
+
+sistec <- read_sistec("C:/Users/dmmad/Desktop/ARIA-testes/ifc/luzerna/sistec/")
+
+d <- compare_sistec(sistec, ifc)
+
+write_output(d, "C:/Users/dmmad/Desktop/ARIA2/")
+
+
+
+
+
+
+
 a <- read_rfept("C:/Users/dmmad/Desktop/ARIA-testes/ifmg/conecta/")
 a1 <- a %>%
   filter(R_NO_CAMPUS == "Congonhas",

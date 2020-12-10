@@ -85,5 +85,5 @@ suap_course_name <- function(course){
 
 suap_cota <- function(cota){
   dplyr::if_else(stringr::str_detect(cota, "Renda|Qualquer|Autodeclarados"),
-                 "COTA", "N\u00c3O COTISTA")
+                 "COTISTA", "N\u00c3O COTISTA")
 }
