@@ -122,9 +122,9 @@ check_rfept_course_beginning_date <- function(x){
 }
 
 check_rfept_status <- function(x){
- all_true <- all(x$R_NO_STATUS_MATRICULA %in% c("ABANDONO", "EM_CURSO",
-      "CONCLU\u00cdDA", "DESLIGADO", "INTEGRALIZADA", "REPROVADA", "TRANSF_EXT"))
- 
+ all_true <- all(stringr::str_detect(x$R_NO_STATUS_MATRICULA,
+                   "ABANDONO|EM_CURSO|CONCLU.DA|DESLIGADO|INTEGRALIZADA|REPROVADA|TRANSF_EXT"))
+
  if(!all_true){
    stop(paste("Sistema acad\u00eamico: Os status dos alunos n\u00e3o est\u00e3o",
               "no formato do Sistec.",
@@ -135,8 +135,8 @@ check_rfept_status <- function(x){
 }
 
 check_rfept_cota <- function(x){
-  all_true <- all(x$R_NO_COTA %in% c("COTISTA", "N\u00c3O COTISTA",
-                                     "SEM INFORMA\u00c7\u00c3O"))
+  all_true <- all(stringr::str_detect(x$R_NO_COTA, 
+                                      "N.O COTISTA|COTISTA|SEM INFORMA..O"))
   
   if(!all_true){
     stop(paste("Sistema acad\u00eamico: As cotas dos alunos precisam estar",
