@@ -5,7 +5,6 @@ library(sistec)
 library(utils)
 
 options(shiny.maxRequestSize =  as.integer(100*1024^2)) 
-ui <- aria_ui()
+ui <- aria_ui(version = "online")
 server <- aria_server(version = "online")
 shinyApp(ui, server)
-
