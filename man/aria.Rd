@@ -10,12 +10,13 @@ aria(
   max_file_size = 100,
   options_port = 8888,
   options_launch_browser = TRUE,
-  version = "test"
+  version = "test",
+  logs = TRUE
 )
 
-aria_server(version = "test")
+aria_server(version = "test", logs = TRUE)
 
-aria_ui(version)
+aria_ui(version = "test")
 }
 \arguments{
 \item{max_file_size}{The maximum file size in megabytes.}
@@ -27,6 +28,8 @@ launched automatically after the app is started.}
 
 \item{version}{Use "test" to run locally, "online" to run in the server
 or "desktop" to build the desktop version.}
+
+\item{logs}{Use FALSE if you don't want to retrieve the logs in your R session.}
 }
 \value{
 A web application.
@@ -34,8 +37,8 @@ A web application.
 \description{
 This is the web application using the sistec package. It was created to ease the
 work using the package, but you can have the same results reading the
-files (read_rfept()), comparing the results with (compare_sistec()) and write
-the outputs (write_output()).
+files (\code{read_rfept()}), comparing the results with (\code{compare_sistec()}) and write
+the outputs (\code{write_output()}).
 }
 \examples{
 \dontrun{
@@ -45,7 +48,7 @@ library(sistec)
 aria()
 
 # use this if you want to run the aria in a server
-ui <- aria_ui()
+ui <- aria_ui(version = "online")
 server <- aria_server(version = "online")
 shiny::shinyApp(ui, server)
 }
