@@ -1,4 +1,4 @@
-context("sistec compare")
+context("compare_sistec")
 
 test_that("compare_sistec qacademico works", {
   skip_on_cran()

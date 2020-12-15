@@ -6,13 +6,19 @@
 
 ### Functions
 
-- Implemented `read_generic_rfept()` and it was wrapped into `read_rfept()`. Now, an institute that was not fully integrated to ARIA can use the app converting your databate to a generic layout. (#92)
-- Implemented `read_conecta()`. (#97)
 - Implemented `read_suap()`. (#99)
+- Implemented `read_conecta()`. (#97)
+- Implemented `read_generic_rfept()` and it was wrapped into `read_rfept()`. Now, an institute that was not fully integrated to ARIA can use the app converting your databate to a generic layout. (#92)
+
+### Tests
+
+- CI tests for `write_output()`. (#104)
+- CI tests for `aria_server()`. (#103)
 
 ### Refactoring
 
-- Split ui and server of ARIA. (#89)
+- `write_output()` now writes only non blanked tables. (#104)
+- Split ARIA code in `aria_ui()` and `aria_server()`. (#89)
 
 ### Security
 
