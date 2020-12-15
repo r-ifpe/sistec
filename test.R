@@ -1,5 +1,17 @@
+library(sistec)
 
+ifsertao <- read_rfept("C:/Users/dmmad/Desktop/ARIA-testes/ifsertao/salgueiro/suap/", start = "2020.2") 
+sistec <- read_sistec("C:/Users/dmmad/Desktop/ARIA-testes/ifsertao/salgueiro/sistec/", start = "2020.2")
+d <- compare_sistec(sistec, ifsertao)
+write_output(d, "C:/Users/dmmad/Desktop/ARIA2/")
 
+t <- lapply(d, function(e){
+  if(nrow(e) == 0) {
+    NULL
+  } else {e}
+})
+
+write_output(t, "C:/Users/dmmad/Desktop/ARIA2/")
 read_rfept("inst/extdata/test_datasets/generic_rfept/wrong_cota/")
 
 

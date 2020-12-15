@@ -32,19 +32,11 @@ using \code{linked_courses} parameter or using ARIA estimation.
 \examples{
 # these datasets are not real. It is just for test purpose.
 
-# using ARIA estimation for relation between courses 
 sistec <- read_sistec(system.file("extdata/examples/sistec",
                                   package = "sistec"))
                                   
-qacademico <- read_qacademico(system.file("extdata/examples/qacademico",
-                                          package = "sistec"))
+rfept <- read_rfept(system.file("extdata/examples/qacademico",
+                                package = "sistec"))
                                           
-compare_sistec(sistec, qacademico) 
-
-# using linked courses file
-
-linked_courses <- read_linked_courses(system.file("extdata/examples/linked_courses",
-                                                  package = "sistec"), "csv")  
- 
-compare_sistec(sistec, qacademico, linked_courses)   
+compare_sistec(sistec, rfept) 
 }

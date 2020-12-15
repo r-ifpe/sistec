@@ -4,12 +4,16 @@ test_that("beginning buttons are blanked", {
   skip_on_cran()
 
   server <- test_aria_server(logs = FALSE)
-  shiny::testServer(server, {
-    expect_null(input$rfept)
-    expect_null(input$sistec)
-    expect_null(output$compare_button$html)
-    expect_null(output$download_button$html)
-  })
+  
+  # suppress just a shiny warning
+  suppressWarnings(
+    shiny::testServer(server, {
+      expect_null(input$rfept)
+      expect_null(input$sistec)
+      expect_null(output$compare_button$html)
+      expect_null(output$download_button$html)
+    })
+  )
 })
 
 test_that("compare_button only appears after upload the files", {
