@@ -1,9 +1,9 @@
 library(sistec)
 
-rfept <- read_rfept("~/Documents/Pesquisa/aria_tests/ifmg/conecta/") 
-sistec <- read_sistec("~/Documents/Pesquisa/aria_tests/ifmg/sistec/")
-d <- compare_sistec(sistec, rfept)
-write_output(d, "~/Documents/Pesquisa/aria_tests/ifmg")
+ifsertao <- read_rfept("C:/Users/dmmad/Desktop/ARIA-testes/ifmg/conecta/") 
+sistec <- read_sistec("C:/Users/dmmad/Desktop/ARIA-testes/ifmg/sistec/")
+d <- compare_sistec(sistec, ifsertao)
+write_output(d, "C:/Users/dmmad/Desktop/ARIA2/")
 
 
 library(sistec)

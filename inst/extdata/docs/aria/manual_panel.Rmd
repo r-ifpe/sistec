@@ -83,6 +83,18 @@ Para baixar os dados parciais do Sigaa, vá na sua conta siga esses passos:
 Para os dados completos, você precisa baixar os arquivos direto da base do Sigaa. Certifique-se que seus dados possuem as colunas: "Matricula", "Nome", "Situacao Matricula", 
 "Curso", "Cpf", "Instituicao", "ano_ingresso", "semestre_ingresso" and "Cota". 
 
+### Suap
+
+Para os dados do Suap utilize os seguintes passos:
+
+- Módulo Ensino -> Relatório -> Listagem de Alunos;
+- Utilizando os Filtros de Pesquisa:
+    -  Selecione o campus
+    -  Em exibição marque as opções: Ano de Ingresso, CPF,Data de Matrícula, Descrição do Curso, Forma de Ingresso e Situação no Curso; 
+    -  Clique em pesquisar.
+    
+Observação: o arquivo é baixado do sistema em XLS, salve como na extensão tipo CSV.
+
 ### Layout genérico{#generic_rfept}
 
 Se o seu instituto ainda não foi completamente integrado ao ARIA, você pode converter os dados do seu sistema acadêmico para um layout genérico e usar o programa normalmente. Para que esta conversão seja realizada com sucesso siga os requerimentos abaixo:  
