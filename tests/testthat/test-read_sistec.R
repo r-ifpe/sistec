@@ -13,26 +13,28 @@ test_that("read_sistec works", {
 
 test_that("encoding and sep work", {
   skip_on_cran()
-
+  
+  latin1_characters <- "\xc9|\xc7|\xd5|\xca|\xda|\xc2|\xc1|\xcd" # bug in \xc3
+  utf_8_characters <- "\u00c9|\u00c7|\u00d5|\u00ca|\u00da|\u00c2|\u00c1|\u00cd"
+  windows <- grepl("windows", tolower(Sys.getenv("SystemRoot")))
+  
   # latin1 and ,
   sistec <- read_sistec(system.file("extdata/test_datasets/sistec_encoding/latin1",
     package = "sistec"
   ))
 
-  expect_true(any(stringr::str_detect(
-    sistec$S_NO_CURSO,
-    "\xc9|\xc7|\xd5|\xca|\xda|\xc2|\xc1|\xcd"
-  )))
+  if (windows) {
+    expect_true(any(stringr::str_detect(sistec$S_NO_CURSO, latin1_characters)))
+  } else {
+    expect_true(any(stringr::str_detect(sistec$S_NO_CURSO, utf_8_characters)))
+  }
 
   # UTF-8 and ;
   sistec <- read_sistec(system.file("extdata/test_datasets/sistec_encoding/utf8",
     package = "sistec"
   ))
 
-  expect_true(any(stringr::str_detect(
-    sistec$S_NO_CURSO,
-    "\u00c9|\u00c7|\u00d5|\u00ca|\u00da|\u00c2|\u00c1|\u00cd"
-  )))
+  expect_true(any(stringr::str_detect(sistec$S_NO_CURSO, utf_8_characters)))
 })
 
 test_that("co_unidade_ensino works", {
