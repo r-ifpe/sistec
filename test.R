@@ -1,5 +1,13 @@
 library(sistec)
 
+rfept <- read_rfept("~/Documents/Pesquisa/aria_tests/ifmg/conecta/") 
+sistec <- read_sistec("~/Documents/Pesquisa/aria_tests/ifmg/sistec/")
+d <- compare_sistec(sistec, rfept)
+write_output(d, "~/Documents/Pesquisa/aria_tests/ifmg")
+
+
+library(sistec)
+
 ifsertao <- read_rfept("C:/Users/dmmad/Desktop/ARIA-testes/ifsertao/salgueiro/suap/", start = "2020.2") 
 sistec <- read_sistec("C:/Users/dmmad/Desktop/ARIA-testes/ifsertao/salgueiro/sistec/", start = "2020.2")
 d <- compare_sistec(sistec, ifsertao)
