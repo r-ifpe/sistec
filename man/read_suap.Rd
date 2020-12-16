@@ -20,3 +20,17 @@ A data frame.
 This function supports two kinds of schemas: from the api and the website. See Details
 if you need help to download the Suap data.
 }
+\details{
+For Suap datasets follow these steps:
+\itemize{
+\item "Modulo Ensino" -> "Relatorio" -> "Listagem de Alunos";
+\item In "Filtros de Pesquisa":
+\itemize{
+\item Select the campus;
+\item In "exibicao" mark the options: Ano de Ingresso, CPF,Data de Matricula, Descricao do Curso, Forma de Ingresso and Situacao no Curso;
+\item Cliqk on "pesquisar".
+}
+}
+
+Save your file in CSV format.
+}
