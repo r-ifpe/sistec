@@ -6,6 +6,7 @@
 
 ### Functions
 
+- Fixed a bug in `read_sistec()` encode for linux. (#105)
 - Implemented `read_suap()`. (#99)
 - Implemented `read_conecta()`. (#97)
 - Implemented `read_generic_rfept()` and it was wrapped into `read_rfept()`. Now, an institute that was not fully integrated to ARIA can use the app converting your databate to a generic layout. (#92)
