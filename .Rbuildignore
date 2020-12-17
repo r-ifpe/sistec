@@ -21,3 +21,4 @@
 ^\.github$
 ^appveyor\.yml$
 ^test\.R$
+^extract_co_unidade_ensino\.R$
