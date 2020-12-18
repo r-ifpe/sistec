@@ -7,7 +7,6 @@ num_para_cpf <- function(cpf) {
   )
 }
 
-
 co_unidade_ensino <- function() {
   co_unidade_ensino <- utils::read.csv(system.file(
     "extdata/co_unidade_ensino/co_unidade_ensino.csv",
@@ -40,16 +39,24 @@ detect_sep <- function(x) {
   sep
 }
 
-detect_encoding <- function(x, sep) {
-  rfept <- utils::read.csv(x, header = TRUE, sep = sep, encoding = "latin1", nrows = 300)
-
+detect_encoding <- function(x, sep, col) {
+  latin1_characters <- paste0(
+    "\xc9|\xc7|\xd5|\xca|\xda|\xc2|\xc1|\xcd", # upper
+    "\xe9|\xe7|\xf5|\xea|\xfa|\xe2|\xe1|\xed" # lower
+  )  # bug in \xc3
+  
+  windows <- grepl("windows", tolower(Sys.getenv("SystemRoot")))
+  if (windows) {
+    x <- utils::read.csv(x, header = TRUE, sep = sep, encoding = "latin1", nrows = 300)
+  } else {
+    x <- utils::read.csv(x, header = TRUE, sep = sep, encoding = "UTF-8", nrows = 300)
+  }
+  
   latin1 <- any(stringr::str_detect(
-    rfept$NO_CURSO,
-    "\xc9|\xc7|\xd5|\xca|\xda|\xc2|\xc1|\xcd"
-  )) # bug in \xc3
-
-  # latin1 <- any(stringr::str_detect(sistec$NO_CICLO_MATRICULA,
-  #                                "\u00cd|\u00c9|\u00ca|\u00c3|\u00c7|\u00c1|\u00c2"))
+    x[[col]],
+    latin1_characters
+  ))
+  
   encoding <- if (latin1) {
     "latin1"
   } else {

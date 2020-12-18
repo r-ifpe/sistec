@@ -34,10 +34,10 @@ Be sure that your data has the variables: "Matricula", "Nome", "Situacao Matricu
 "Curso", "Cpf", "Instituicao", "Per. Letivo Inicial" and "Cota".
 }
 \examples{
- 
 # this dataset is not a real one. It is just for test purpose.
 qacademico <- read_qacademico(system.file("extdata/examples/qacademico",
-                                          package = "sistec"))
+  package = "sistec"
+))
 
 qacademico
 }

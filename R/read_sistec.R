@@ -30,7 +30,8 @@
 #' sistec
 #'
 #' # example selecting the period
-#' sistec_2019_2 <- read_sistec(system.file("extdata/examples/sistec", package = "sistec"),
+#' sistec_2019_2 <- read_sistec(
+#'   system.file("extdata/examples/sistec", package = "sistec"),
 #'   start = "2019.2"
 #' )
 #'
@@ -75,7 +76,7 @@ read_sistec <- function(path = "", start = NULL) {
         "Not found:", paste(vars_web[!vars_web %in% vars_sistec], collapse = ", ")
       ))
     } else {
-      encoding <- sistec_web_encoding(temp[1], sep)
+      encoding <- detect_encoding(temp[1], sep, "NO_CICLO_MATRICULA")
       sistec <- read_sistec_web(path, encoding, sep)
     }
   } else {
@@ -166,28 +167,6 @@ sistec_campus_name <- function(campus) {
 
 sistec_correct_campus_name <- function(campus) {
   stringr::str_replace(campus, "REU E LIMA", "ABREU E LIMA")
-}
-
-sistec_web_encoding <- function(x, sep) {
-  latin1_characters <- "\xc9|\xc7|\xd5|\xca|\xda|\xc2|\xc1|\xcd" # bug in \xc3
-  windows <- grepl("windows", tolower(Sys.getenv("SystemRoot")))
-  if (windows) {
-    sistec <- utils::read.csv(x, header = TRUE, sep = sep, encoding = "latin1", nrows = 300)
-  } else {
-    sistec <- utils::read.csv(x, header = TRUE, sep = sep, encoding = "UTF-8", nrows = 300)
-  }
-
-  latin1 <- any(stringr::str_detect(
-    sistec$NO_CICLO_MATRICULA,
-    latin1_characters
-  ))
-
-  encoding <- if (latin1) {
-    "latin1"
-  } else {
-    "UTF-8"
-  }
-  encoding
 }
 
 filter_sistec_date <- function(x, start) {
