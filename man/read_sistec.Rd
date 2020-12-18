@@ -43,7 +43,8 @@ sistec <- read_sistec(system.file("extdata/examples/sistec",
 sistec
 
 # example selecting the period
-sistec_2019_2 <- read_sistec(system.file("extdata/examples/sistec", package = "sistec"),
+sistec_2019_2 <- read_sistec(
+  system.file("extdata/examples/sistec", package = "sistec"),
   start = "2019.2"
 )
 
