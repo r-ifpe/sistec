@@ -1,3 +1,5 @@
+library(dplyr)
+
 extract_co_unidade_ensino <- function() {
   states <- sistec_extract_states() 
   cities <- lapply(states$Sigla, sistec_extract_cities) %>% 
@@ -14,8 +16,6 @@ extract_co_unidade_ensino <- function() {
     utils::write.table("co_unidade_ensino.csv", row.names = FALSE, 
                        sep = ",", fileEncoding = "UTF-8")
 }
-
-
 
 get_sistec_website <- function(sistec_url){
   httr::GET(sistec_url) %>% 
@@ -113,12 +113,4 @@ sistec_extract_co_unidade_ensino <- function(city_id) {
   }
 }
 
-
-
-
-
-
-
-
-
-
+extract_co_unidade_ensino()
