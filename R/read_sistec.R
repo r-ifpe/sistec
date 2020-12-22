@@ -48,6 +48,12 @@ read_sistec <- function(path = "", start = NULL) {
     "No Curso", "Dt Data Inicio", "Unidade Ensino"
   )
 
+  # using this while there is no CO_UNIDADE_ENSINO in sistec file
+  vars_web_without_unidade_ensino <- c(
+    "NO_ALUNO", "NU_CPF", "CO_CICLO_MATRICULA", "NO_STATUS_MATRICULA",
+    "NO_CICLO_MATRICULA", "DT_DATA_INICIO"
+  )
+  
   vars_web <- c(
     "NO_ALUNO", "NU_CPF", "CO_CICLO_MATRICULA", "NO_STATUS_MATRICULA",
     "NO_CICLO_MATRICULA", "DT_DATA_INICIO", "CO_UNIDADE_ENSINO"
@@ -61,6 +67,11 @@ read_sistec <- function(path = "", start = NULL) {
 
   num_vars_setec <- sum(vars_sistec %in% vars_setec)
   num_vars_web <- sum(vars_sistec %in% vars_web)
+  num_vars_web_without_unidade_ensino <- sum(
+    vars_sistec %in% vars_web_without_unidade_ensino
+  )
+  
+  co_unidade_ensino_exist <- any(grepl("CO_UNIDADE_ENSINO$", vars_sistec))
 
   if (num_vars_setec > 0) {
     if (num_vars_setec < 7) {
@@ -70,14 +81,29 @@ read_sistec <- function(path = "", start = NULL) {
     } else {
       sistec <- read_sistec_setec(path)
     }
-  } else if (num_vars_web > 0) {
-    if (num_vars_web < 7) {
+  } else if(co_unidade_ensino_exist){
+    if (num_vars_web > 0) { 
+      if (num_vars_web < 7) {
+        stop(paste(
+          "Not found:", paste(vars_web[!vars_web %in% vars_sistec], collapse = ", ")
+        ))
+      } else {
+        encoding <- detect_encoding(temp[1], sep, "NO_CICLO_MATRICULA")
+        sistec <- read_sistec_web(path, encoding, sep)
+      }
+    }
+  } else if (num_vars_web_without_unidade_ensino > 0) {
+    if (num_vars_web_without_unidade_ensino < 6) {
       stop(paste(
-        "Not found:", paste(vars_web[!vars_web %in% vars_sistec], collapse = ", ")
+        "Not found:",
+        paste(
+          vars_web_without_unidade_ensino[!vars_web_without_unidade_ensino %in% vars_sistec],
+          collapse = ", "
+        )
       ))
     } else {
       encoding <- detect_encoding(temp[1], sep, "NO_CICLO_MATRICULA")
-      sistec <- read_sistec_web(path, encoding, sep)
+      sistec <- read_sistec_web_without_unidade_ensino(path, encoding, sep)
     }
   } else {
     stop("Not found Sistec variables in your file.")
@@ -110,6 +136,31 @@ read_sistec_web <- function(path, encoding, sep) {
       S_NO_CAMPUS = !!sym("S_NO_CAMPUS")
     )
 
+  class(sistec) <- c("sistec_data_frame", class(sistec))
+  sistec
+}
+
+#' @importFrom dplyr %>% sym
+read_sistec_web_without_unidade_ensino <- function(path, encoding, sep) {
+  temp <- list.files(path = path, pattern = "*.csv")
+  temp <- paste0(path, "/", temp)
+
+  classes <- "character"
+  
+  sistec <- lapply(temp, utils::read.csv,
+    sep = sep, stringsAsFactors = FALSE, colClasses = classes, encoding = encoding
+  ) %>%
+    dplyr::bind_rows() %>%
+    dplyr::transmute(
+      S_NO_ALUNO = !!sym("NO_ALUNO"),
+      S_NU_CPF = num_para_cpf(!!sym("NU_CPF")),
+      S_CO_CICLO_MATRICULA = !!sym("CO_CICLO_MATRICULA"),
+      S_NO_STATUS_MATRICULA = !!sym("NO_STATUS_MATRICULA"),
+      S_NO_CURSO = sistec_course_name(!!sym("NO_CICLO_MATRICULA")),
+      S_DT_INICIO_CURSO = sistec_convert_beginning_date(!!sym("DT_DATA_INICIO")),
+      S_NO_CAMPUS = "SEM_CODIGO"
+    )
+  
   class(sistec) <- c("sistec_data_frame", class(sistec))
   sistec
 }
