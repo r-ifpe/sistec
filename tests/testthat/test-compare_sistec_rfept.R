@@ -31,9 +31,9 @@ test_that("compare_sistec generic rfept works", {
   sistec <- read_sistec(sistec_path)
   comparison <- compare_sistec(sistec, rfept)
   rows <- c(
-    44, 0, 0, 0, 0, 0, 0, # sistec
-    45, 0, 1, 0, 0, 0, 0, # rfept
-    0, 19, 25, 1
+    44, 0, 3, 0, 0, 0, 0, # sistec
+    45, 3, 1, 0, 0, 0, 0, # rfept
+    0, 18, 23, 1
   ) # error, situation and linked courses
   check_comparison(comparison, rows)
 })

@@ -131,7 +131,7 @@ read_sistec_web <- function(path, encoding, sep) {
       S_NU_CPF = num_para_cpf(!!sym("NU_CPF")),
       S_CO_CICLO_MATRICULA = !!sym("CO_CICLO_MATRICULA"),
       S_NO_STATUS_MATRICULA = !!sym("NO_STATUS_MATRICULA"),
-      S_NO_CURSO = sistec_course_name(!!sym("NO_CICLO_MATRICULA")),
+      S_NO_CURSO = correct_course_name(!!sym("NO_CICLO_MATRICULA")),
       S_DT_INICIO_CURSO = sistec_convert_beginning_date(!!sym("DT_DATA_INICIO")),
       S_NO_CAMPUS = !!sym("S_NO_CAMPUS")
     )
@@ -156,7 +156,7 @@ read_sistec_web_without_unidade_ensino <- function(path, encoding, sep) {
       S_NU_CPF = num_para_cpf(!!sym("NU_CPF")),
       S_CO_CICLO_MATRICULA = !!sym("CO_CICLO_MATRICULA"),
       S_NO_STATUS_MATRICULA = !!sym("NO_STATUS_MATRICULA"),
-      S_NO_CURSO = sistec_course_name(!!sym("NO_CICLO_MATRICULA")),
+      S_NO_CURSO = correct_course_name(!!sym("NO_CICLO_MATRICULA")),
       S_DT_INICIO_CURSO = sistec_convert_beginning_date(!!sym("DT_DATA_INICIO")),
       S_NO_CAMPUS = "SEM_CODIGO"
     )
@@ -181,7 +181,7 @@ read_sistec_setec <- function(path, encoding = "UTF-8") {
       S_NU_CPF = num_para_cpf(!!sym("Numero.Cpf")),
       S_CO_CICLO_MATRICULA = !!sym("Co.Ciclo.Matricula"),
       S_NO_STATUS_MATRICULA = !!sym("Situa\u00e7\u00e3o.Matricula"), # Situação.Matricula
-      S_NO_CURSO = sistec_course_name(!!sym("No.Curso")),
+      S_NO_CURSO = correct_course_name(!!sym("No.Curso")),
       S_DT_INICIO_CURSO = sistec_convert_beginning_date(!!sym("Dt.Data.Inicio")),
       S_NO_CAMPUS = sistec_campus_name(!!sym("Unidade.Ensino"))
     )
@@ -206,10 +206,11 @@ sistec_convert_beginning_date <- function(date) {
   }
 }
 
-sistec_course_name <- function(course) {
-  course <- stringr::str_remove(course, " - .*$")
-  course <- stringr::str_replace_all(course, "\\\\|\"|/|:|\\?|\\.", "_")
-}
+## It will be deprecated
+# sistec_course_name <- function(course) {
+#   course <- stringr::str_remove(course, " - .*$")
+#   course <- stringr::str_replace_all(course, "\\\\|\"|/|:|\\?|\\.", "_")
+# }
 
 sistec_campus_name <- function(campus) {
   campus <- stringr::str_sub(campus, 42)
