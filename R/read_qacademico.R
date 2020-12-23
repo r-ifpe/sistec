@@ -77,7 +77,7 @@ read_qacademico_web <- function(path) {
       R_CO_MATRICULA = !!sym("Matr\u00edcula"),
       R_CO_CICLO_MATRICULA = "", # unitl now a RFEPT doesn't have ciclo
       R_NO_STATUS_MATRICULA = !!sym("Situa\u00e7\u00e3o Matr\u00edcula"),
-      R_NO_CURSO = qacademico_course_name(!!sym("Curso")),
+      R_NO_CURSO = correct_course_name(!!sym("Curso")),
       R_DT_INICIO_CURSO = qacademico_convert_beginning_date(!!sym("Per. Letivo Inicial")),
       R_NO_CAMPUS = qacademico_campus_name(!!sym("Institui\u00e7\u00e3o")),
       R_NO_COTA = qacademico_cota(!!sym("Cota"))
@@ -113,7 +113,8 @@ qacademico_cota <- function(cota) {
   )
 }
 
-qacademico_course_name <- function(course) {
-  course <- stringr::str_replace_all(course, "/|:|\\?|\\.", "_")
-  dplyr::if_else(course == "", "SEM CURSO", course)
-}
+## This will be deprecated
+# qacademico_course_name <- function(course) {
+#   course <- stringr::str_replace_all(course, "/|:|\\?|\\.", "_")
+#   dplyr::if_else(course == "", "SEM CURSO", course)
+# }

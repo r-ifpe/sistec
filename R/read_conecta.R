@@ -53,7 +53,7 @@ read_conecta_web <- function(path){
                      R_CO_MATRICULA = !!sym("RA"),
                      R_CO_CICLO_MATRICULA = "", # unitl now a RFEPT doesn't have ciclo
                      R_NO_STATUS_MATRICULA = !!sym("STATUS_NO_CURSO"),
-                     R_NO_CURSO = conecta_convert_course_name(!!sym("NOME_CURSO")),
+                     R_NO_CURSO = correct_course_name(!!sym("NOME_CURSO")),
                      R_DT_INICIO_CURSO = conecta_convert_beginning_date(!!sym("DATA_INGRESSO_CURSO")),
                      R_NO_CAMPUS = !!sym("NOME_CAMPUS"),
                      R_NO_COTA = conecta_cota(!!sym("Cota Chamado")))
@@ -63,9 +63,10 @@ read_conecta_web <- function(path){
   conecta
 }
 
-conecta_convert_course_name <- function(course){
-  stringr::str_trim(course)
-}
+## This will be deprecated
+# conecta_convert_course_name <- function(course){
+#   stringr::str_trim(course)
+# }
 
 conecta_convert_beginning_date <- function(date){
   

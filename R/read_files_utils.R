@@ -43,24 +43,32 @@ detect_encoding <- function(x, sep, col) {
   latin1_characters <- paste0(
     "\xc9|\xc7|\xd5|\xca|\xda|\xc2|\xc1|\xcd", # upper
     "\xe9|\xe7|\xf5|\xea|\xfa|\xe2|\xe1|\xed" # lower
-  )  # bug in \xc3
-  
+  ) # bug in \xc3
+
   windows <- grepl("windows", tolower(Sys.getenv("SystemRoot")))
   if (windows) {
     x <- utils::read.csv(x, header = TRUE, sep = sep, encoding = "latin1", nrows = 300)
   } else {
     x <- utils::read.csv(x, header = TRUE, sep = sep, encoding = "UTF-8", nrows = 300)
   }
-  
+
   latin1 <- any(stringr::str_detect(
     x[[col]],
     latin1_characters
   ))
-  
+
   encoding <- if (latin1) {
     "latin1"
   } else {
     "UTF-8"
   }
   encoding
+}
+
+#' @importFrom dplyr %>%
+correct_course_name <- function(courses) {
+  dplyr::if_else(courses == "", "SEM CURSO", courses) %>%
+    stringr::str_remove(" - .*$") %>%
+    stringr::str_replace_all("\\\\|\"|/|:|\\?|\\.", "_") %>%
+    stringr::str_trim("both")
 }

@@ -97,7 +97,7 @@ read_sigaa_complete <- function(path, sep){
                      R_CO_MATRICULA = !!sym("Matricula"),
                      R_CO_CICLO_MATRICULA = "", # unitl now a RFEPT doesn't have ciclo
                      R_NO_STATUS_MATRICULA = !!sym("Situacao Matricula"),
-                     R_NO_CURSO = sigaa_course_name(!!sym("Curso")),
+                     R_NO_CURSO = correct_course_name(!!sym("Curso")),
                      R_DT_INICIO_CURSO = sigaa_complete_convert_beginning_date(!!sym("ano_ingresso"), !!sym("semestre_ingresso")),
                      R_NO_CAMPUS = sigaa_campus_name(!!sym("Instituicao")),
                      R_NO_COTA = sigaa_cota(!!sym("Cota")))
@@ -141,7 +141,7 @@ read_sigaa_partial <- function(path){
                      R_CO_MATRICULA = !!sym("Matr\u00edcula"),
                      R_CO_CICLO_MATRICULA = "", # unitl now a RFEPT doesn't have ciclo
                      R_NO_STATUS_MATRICULA = !!sym("Status"),
-                     R_NO_CURSO = sigaa_course_name(!!sym("Curso")),
+                     R_NO_CURSO = correct_course_name(!!sym("Curso")),
                      R_DT_INICIO_CURSO = sigaa_partial_convert_beginning_date(!!sym("Matr\u00edcula")),
                      R_NO_CAMPUS = "SEM CAMPUS", # until now SIGAA doesn't have campus information
                      R_NO_COTA = "SEM INFORMA\u00c7\u00c3O")
@@ -181,10 +181,11 @@ sigaa_correct_campus_name <- function(campus){
   dplyr::if_else(campus == "", "SEM CAMPUS", campus)
 }
 
-sigaa_course_name <- function(course){ 
-  course <- stringr::str_replace_all(course,"/|:|\\?|\\.", "_" )
-  dplyr::if_else(course == "", "SEM CURSO", course)
-}
+## This will be deprecated
+# sigaa_course_name <- function(course){ 
+#   course <- stringr::str_replace_all(course,"/|:|\\?|\\.", "_" )
+#   dplyr::if_else(course == "", "SEM CURSO", course)
+# }
 
 #' @importFrom dplyr %>% 
 sigaa_convert_unidade_ensino <- function(x){
