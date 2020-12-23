@@ -1,3 +1,5 @@
+options(shiny.sanitize.errors = TRUE)
+
 sistec <- read_sistec("C:/Users/dmmad/Desktop/ARIA-testes/sem_unidade_ensino/")
 
 
