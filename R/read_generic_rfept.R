@@ -93,18 +93,18 @@ check_rfept_header <- function(x) {
     )
 
     if (sum(columns) == 1) {
-      stop(paste0(
+      stop(shiny::safeError(paste0(
         "Sistema acad\u00eamico: A coluna ",
         rfept_header[!columns], " est\u00e1 faltando."
-      ),
+      )),
       call. = FALSE
       )
     } else {
-      stop(paste0(
+      stop(shiny::safeError(paste0(
         "Sistema acad\u00eamico: As colunas ",
         paste0(rfept_header[!columns], collapse = ", "),
         " est\u00e3o faltando."
-      ),
+      )),
       call. = FALSE
       )
     }
@@ -113,18 +113,21 @@ check_rfept_header <- function(x) {
 
 check_rfept_variable_class <- function(x) {
   if (!all(unlist(lapply(x, class)) == "character")) {
-    stop("Sistema acad\u00eamico: Todas as classes precisam ser do tipo texto (string).",
-      call. = FALSE
+    stop(shiny::safeError(
+      "Sistema acad\u00eamico: Todas as classes precisam ser do tipo texto (string)."
+    ),
+    call. = FALSE
     )
   }
 }
 
 check_rfept_cpf <- function(x) {
-  all_true <- all(grepl("([0-9]{3}[.][0-9]{3}[.][0-9]{3}[-][0-9]{2})", x$R_NU_CPF))
+  cpfs <- x$R_NU_CPF[!x$R_NU_CPF %in% c("", "   .   .   -  ", "___.___.___-__")]
+  all_true <- all(grepl("([0-9]{3}[.][0-9]{3}[.][0-9]{3}[-][0-9]{2})", cpfs))
+
   if (!all_true) {
-    stop(paste(
-      "Sistema acad\u00eamico: Os CPF's n\u00e3o est\u00e3o no formato",
-      "xxx.xxx.xxx-xx."
+    stop(shiny::safeError(
+      "Sistema acad\u00eamico: Os CPF's n\u00e3o est\u00e3o no formato xxx.xxx.xxx-xx."
     ), call. = FALSE)
   }
 }
@@ -132,12 +135,14 @@ check_rfept_cpf <- function(x) {
 check_rfept_course_beginning_date <- function(x) {
   all_true <- all(grepl("([19|20][0-9]{2}[.][12])", x$R_DT_INICIO_CURSO))
   if (!all_true) {
-    stop(paste(
+    stop(shiny::safeError(paste(
       "Sistema acad\u00eamico: A data de in\u00edcio n\u00e3o est\u00e1",
       "no formato aaaa.s. Ex.: 2020.1.",
       "Verifique tamb\u00e9m se o per\u00edodo est\u00e1 correto: 1 para",
       "o primeiro semestre e 2 para o segundo."
-    ), call. = FALSE)
+    )),
+    call. = FALSE
+    )
   }
 }
 
@@ -148,12 +153,12 @@ check_rfept_status <- function(x) {
   ))
 
   if (!all_true) {
-    stop(paste(
+    stop(shiny::safeError(paste(
       "Sistema acad\u00eamico: Os status dos alunos n\u00e3o est\u00e3o",
       "no formato do Sistec.",
       "Utilize: ABANDONO, CONCLU\u00cdDA, DESLIGADO, EM_CURSO,",
       "INTEGRALIZADA, REPROVADA ou TRANSF_EXT"
-    ),
+    )),
     call. = FALSE
     )
   }
@@ -166,11 +171,11 @@ check_rfept_cota <- function(x) {
   ))
 
   if (!all_true) {
-    stop(paste(
+    stop(shiny::safeError(paste(
       "Sistema acad\u00eamico: As cotas dos alunos precisam estar",
       "em um desses formatos:",
       "COTISTA, N\u00c3O COTISTA ou SEM INFORMA\u00c7\u00c3O"
-    ),
+    )),
     call. = FALSE
     )
   }
