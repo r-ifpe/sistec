@@ -1,3 +1,56 @@
+
+rfept<- read_rfept("C:/Users/dmmad/Desktop/ARIA-testes/formiga/conecta/") 
+sistec <- read_sistec("C:/Users/dmmad/Desktop/ARIA-testes/formiga/sistec/")
+d <- compare_sistec(sistec, rfept)
+write_output(d, "C:/Users/dmmad/Desktop/ARIA2/")
+
+
+a <- read.csv("C:/Users/dmmad/Desktop/ARIA-testes/sistec_csv_COM_cpf.csv", sep = ";")
+
+a %>%
+  select(NO_CICLO_MATRICULA, DT_DATA_INICIO, DT_DATA_FIM_PREVISTO, NO_STATUS_MATRICULA) %>% 
+  mutate(NO_CURSO = sistec:::sistec_course_name(NO_CICLO_MATRICULA),
+         DT_RETENCAO_ANO = 1 + as.numeric(substr(DT_DATA_FIM_PREVISTO, 1,4)),
+         DT_RETENCAO_MES = as.numeric(substr(DT_DATA_FIM_PREVISTO, 6,7)),
+         DT_ATUAL_ANO = as.numeric(substr(Sys.Date(), 1,4)),
+         DT_ATUAL_MES = as.numeric(substr(Sys.Date(), 6,7))) %>% 
+  mutate(TEMPO_EM_CURSO = 12 * (DT_ATUAL_ANO - DT_RETENCAO_ANO) + DT_ATUAL_MES - DT_RETENCAO_MES) %>% 
+  filter(TEMPO_EM_CURSO >= 12, NO_STATUS_MATRICULA == "EM_CURSO") %>% 
+  select(-DT_DATA_INICIO, -DT_DATA_FIM_PREVISTO, -NO_CICLO_MATRICULA) %>% 
+  mutate(STATUS = "RETIDO") 
+
+
+
+sigaa <- read.csv("C:/Users/dmmad/Desktop/ARIA-testes/ifsulminas/sigaa/SIGAA (teste1) samuel.csv",
+              sep = ";")
+class(sigaa) <- c("rfept_data_frame", "generic_rfept_table", class(sigaa))
+names(sigaa) <- paste0("R_",names(sigaa)) 
+sigaa$R_NU_CPF <- paste0("000.000.000-", sigaa$R_NU_CPF)
+sigaa$R_CO_CICLO_MATRICULA <- ""
+
+
+sigaa$R_DT_INICIO_CURSO <- as.character(sigaa$R_DT_INICIO_CURSO)
+sigaa$R_CO_MATRICULA <- as.character(sigaa$R_CO_MATRICULA)
+
+sistec <- read.csv("C:/Users/dmmad/Desktop/ARIA-testes/ifsulminas/sistec/SISTEC (teste 1) samuel.csv",
+              sep = ";")
+sistec$NO_ALUNO <- rep("aaaaa", nrow(sistec))
+sistec$NU_CPF <- floor(runif(nrow(sistec), 0, 1) * 100)
+write.table(sistec, "sistec.csv", row.names = FALSE, sep = ";")
+
+sistec <- read_sistec("C:/Users/dmmad/Desktop/ARIA-testes/ifsulminas/sistec")
+
+names(sistec) <- paste0("S_",names(sistec)) 
+sistec <- sistec %>% 
+  mutate()
+
+
+d <- compare_sistec(sistec, sigaa)
+
+
+caminho <- paste0("C:/Users/dmmad/Desktop/ARIA-testes/ifsulminas/",
+                  a$NO_CAMPUS %>% unique())
+
 options(shiny.sanitize.errors = TRUE)
 
 sistec <- read_sistec("C:/Users/dmmad/Desktop/ARIA-testes/sem_unidade_ensino/")
