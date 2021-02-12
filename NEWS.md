@@ -2,6 +2,7 @@
 
 ### ARIA
 
+- Aria was completely refactored to be an interface to receive another apps. Now, the comparison between Sistec and academic registration is a standalone app inside Aria. (#115) 
 - Fix bug in download button for windows. (#90)
 
 ### Functions
