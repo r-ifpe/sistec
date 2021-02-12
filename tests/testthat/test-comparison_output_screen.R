@@ -1,17 +1,45 @@
-context("output_screen")
+context("comparison_output_screen")
 
-test_that("compare_screen works", {
+test_that("comparison_output_screen works ", {
   skip_on_cran()
 
   sistec_path <- system.file("extdata/test_datasets/sistec", package = "sistec")
-  qacademico_path <- system.file("extdata/test_datasets/qacademico", package = "sistec")
+  rfept_path <- system.file("extdata/test_datasets/qacademico", package = "sistec")
 
-  qacademico <- read_rfept(qacademico_path)
+  rfept <- read_rfept(rfept_path)
   sistec <- read_sistec(sistec_path)
+  comparison <- compare_sistec(sistec, rfept)
 
-  comparison <- compare_sistec(sistec, qacademico)
+  # both input paths are NULL
+  output_screen <- comparison_output_screen(NULL, NULL, NULL)
+  expect_equal(
+    "Selecione os arquivos do Sistec e do sistema acad\u00eamico.",
+    output_screen
+  )
 
-  output_screen <- sistec:::compare_screen(comparison)
+  # only rfept path input is available
+  output_screen <- comparison_output_screen(NULL, NULL, rfept_path)
+  expect_equal(
+    "Selecione os arquivos do sistec.",
+    output_screen
+  )
+
+  # only sistec path input is available
+  output_screen <- comparison_output_screen(NULL, sistec_path, NULL)
+  expect_equal(
+    "Selecione os arquivos do sistema acad\u00eamico.",
+    output_screen
+  )  
+  
+  # both input paths are available and compare button was not clicked yet
+  output_screen <- comparison_output_screen(NULL, sistec_path, rfept_path)
+  expect_equal(
+    "Aperte o bot\u00e3o \"Comparar\" para executar as compara\u00e7\u00f5es.",
+    output_screen
+  )  
+  
+  # both input paths are available and compare button was cliked
+  output_screen <- comparison_output_screen(comparison, sistec_path, rfept_path)
 
   expect_true(grepl(
     "Compara\u00e7\u00e3o entre Sistec e Qacademico realizada com sucesso!",

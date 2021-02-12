@@ -11,3 +11,5 @@ aria_logs <- function(session_id, rfept, sistec, comparison, temp_dir, download_
 print_logs <- function(id, text, x){
   cat(file = stderr(), id , ": ", text, x, "\n")
 }
+
+
