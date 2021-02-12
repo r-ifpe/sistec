@@ -30,7 +30,7 @@ comparison_server <- function(id, version = "test", logs = TRUE) {
     output$download_online <- shiny::downloadHandler(
       filename = "ARIA.zip",
       content = function(file) {
-        if (isolate(comparison_values$download_count == 0)) {
+        if (shiny::isolate(comparison_values$download_count == 0)) {
           comparison_values$download_count <- 1
           create_zipped_file(file, comparison_values)
         } else {
@@ -41,7 +41,7 @@ comparison_server <- function(id, version = "test", logs = TRUE) {
     
     output$download_offline <- shiny::renderText({
       input$download_offline
-      aria_desktop_download_files(isolate(comparison_values))
+      aria_desktop_download_files(shiny::isolate(comparison_values))
     })
 
     output$comparison_main_screen <- shiny::renderText({
@@ -55,7 +55,7 @@ comparison_server <- function(id, version = "test", logs = TRUE) {
         input$compare_button,
         input$sistec$datapath[1],
         input$rfept$datapath[1],
-        isolate(input$year)
+        shiny::isolate(input$year)
       )
 
       comparison_output_screen(
