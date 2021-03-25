@@ -29,6 +29,7 @@ rename_sistec_data_frame <- function(x){
                   CPF = !!sym("S_NU_CPF"),
                   CICLO = !!sym("S_CO_CICLO_MATRICULA"),
                   INICIO = !!sym("S_DT_INICIO_CURSO"),
+                  STATUS = !!sym("S_NO_STATUS_MATRICULA"),
                   CAMPUS = !!sym("S_NO_CAMPUS"),
                   CURSO = !!sym("S_NO_CURSO"))
 }
@@ -40,6 +41,7 @@ rename_rfept_data_frame <- function(x){
                   CPF = !!sym("R_NU_CPF"),
                   MATRICULA = !!sym("R_CO_MATRICULA"),
                   INICIO = !!sym("R_DT_INICIO_CURSO"),
+                  STATUS =!!sym("R_NO_STATUS_MATRICULA"),
                   CAMPUS = !!sym("R_NO_CAMPUS"),
                   CURSO = !!sym("R_NO_CURSO"))
 }
