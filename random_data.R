@@ -1,4 +1,4 @@
-
+ 
 # read files to copy
 a <- sistec::read_qacademico("C:/Pesquisa/dados/sistec_app/arquivos/")
 b <- sistec::read_sistec("C:/Pesquisa/dados/sistec_app/arquivos/")
