@@ -1,10 +1,39 @@
 ##################################
-## done 
+## done  
 ##################################
 
-# ciclo <- read_ciclo("inst/extdata/test_datasets/pnp_critics/ciclo/")
-# students <- read_sistec_students("inst/extdata/test_datasets/pnp_critics/students/")
+#' @importFrom dplyr %>%
+#' @export 
+pnp_critics <- function(students, ciclo, start = NULL){
+  create_pnp_critics_list(students, ciclo, start) %>% 
+    pnp_beginning_date_gt_beginning_ciclo_date() 
+}
 
+#' @importFrom dplyr %>% sym
+create_pnp_critics_list <- function(students, ciclo, start) {
+  sistec <- dplyr::full_join(students, ciclo,
+    by = c("S_CO_CICLO_MATRICULA" = "C_CO_CICLO_MATRICULA"))
+
+  if (!is.null(start)) {
+    sistec <- sistec %>% 
+      dplyr::mutate(
+        DT_YEAR_SEMESTER = sistec_convert_beginning_date(!!sym("C_DT_INICIO"))
+      ) %>% 
+      dplyr::filter(DT_YEAR_SEMESTER >= start) 
+    
+    sistec$DT_YEAR_SEMESTER <- NULL
+  }
+  
+  list(
+    sistec = sistec,
+    pnp_student_critics = data.frame(),
+    pnp_ciclo_critics = data.frame()
+  )
+}
+
+####################
+# in progess
+#####################
 
 
 #' @importFrom dplyr %>% 
@@ -30,46 +59,42 @@ pnp_wrong_course_name <- function(x){
   x
 }
 
-
-
-####################
-# in progess
-#####################
-
+#' @importFrom dplyr %>% 
 pnp_students_in_course_yet <- function(x) {
   critic <- x$sistec %>%
-    filter(NO_STATUS_MATRICULA == "EM_CURSO") %>%
-    mutate(DAYS = difftime(
+    dplyr::filter(NO_STATUS_MATRICULA == "EM_CURSO") %>%
+    dplyr::mutate(DAYS = difftime(
       as.Date(Sys.time()),
-      as.Date(DATA.FIM.PREVISTO.DO.CURSO),
+      as.Date(!!sym("C_DT_FIM")),
       units = "days"
     )) %>%
-    mutate(Critica = case_when(
-      grepl("FORMAÇÃO CONTINUADA|FORMAÇÃO INICIAL", SUBTIPO.CURSOS) & DAYS > 0 ~
+    dplyr::mutate(CRITICA = dplyr::case_when(
+      grepl("FORMAÇÃO CONTINUADA|FORMAÇÃO INICIAL", !!sym("C_NO_SUBTIPO")) & DAYS > 0 ~
         paste0("Aluno retido: ", DAYS, " dias."),
-      !grepl("FORMAÇÃO CONTINUADA|FORMAÇÃO INICIAL", SUBTIPO.CURSOS) & DAYS > 365 ~
+      !grepl("FORMAÇÃO CONTINUADA|FORMAÇÃO INICIAL", !!sym("C_NO_SUBTIPO")) & DAYS > 365 ~
         paste0("Aluno retido: ", DAYS, " dias."),
       TRUE ~ "OK"
     )) %>%
-    filter(Critica != "OK") %>%
-    select(MUNICIPIO, NO_CICLO_MATRICULA, NO_ALUNO, NU_CPF, Critica)
+    dplyr::filter(CRITICA != "OK") %>%
+    dplyr::select(C_NO_CAMPUS , S_NO_CICLO_MATRICULA, S_NO_ALUNO, S_NU_CPF, CRITICA)
 
   x$pnp_student_critics <- rbind(x$pnp_student_critics, critic)
   x
 }
 
-
+#' @importFrom dplyr %>% sym
 pnp_beginning_date_gt_beginning_ciclo_date <- function(x){
   critic <- x$sistec %>% 
-    filter(
-      format(as.Date(DATA_CRIACAO), "%Y-%m") <
-        format(as.Date(DATA.INÍCIO.DO.CURSO), "%Y-%m")
+    dplyr::filter(
+      format(as.Date(!!sym("C_DT_CRIACAO")), "%Y-%m") <
+        format(as.Date(!!sym("C_DT_INICIO")), "%Y-%m")
     ) %>% 
-    transmute(MUNICIPIO, 
-              NO_CICLO_MATRICULA, 
-              NO_ALUNO, 
-              NU_CPF, 
-              Critica = "Aluno com data de matrícula anterior a data do início do ciclo"
+    dplyr::transmute(
+      !!sym("C_NO_CAMPUS"),
+      !!sym("S_NO_CICLO_MATRICULA"),
+      !!sym("S_NO_ALUNO"),
+      !!sym("S_NU_CPF"),
+      CRITICA = "Aluno com data de matrícula anterior a data do início do ciclo"
     ) 
   
   x$pnp_student_critics <- rbind(x$pnp_student_critics, critic)
