@@ -1,6 +1,6 @@
 #' @importFrom dplyr %>% 
 #' @export
-read_ciclo <- function(path = "", start = NULL) {
+read_ciclo <- function(path = "") {
   if (path == "") stop("You need to specify the path.")
   
   temp <- paste0(path, "/", list.files(path = path, pattern = "*.csv"))
@@ -41,10 +41,6 @@ read_ciclo <- function(path = "", start = NULL) {
        )
     }
   
-  if (!is.null(start)){
-    ciclo <- dplyr::filter(ciclo, C_DT_INICIO >= start )
-  }
-
   class(ciclo) <- c("sistec_ciclo_data_frame", class(ciclo))
   ciclo
 }
