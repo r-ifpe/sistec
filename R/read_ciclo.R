@@ -6,9 +6,10 @@ read_ciclo <- function(path = "") {
   temp <- paste0(path, "/", list.files(path = path, pattern = "*.csv"))
   sep <- detect_sep(temp[1])
   vars_ciclo <- c(
-    "CÓDIGO CICLO DE MATRÍCULA" , "MUNICIPIO", "CARGA HORÁRIA TOTAL", "NOME DO CURSO",
-    "DATA FIM PREVISTO DO CURSO", "DATA INÍCIO DO CURSO", "SUBTIPO CURSOS", 
-    "QTD DE MATRICULAS", "QTD DE VAGAS", "QTD DE INSCRITOS", "DATA_CRIACAO"
+    "C\u00d3DIGO CICLO DE MATR\u00cdCULA" , "MUNICIPIO", "CARGA HOR\u00c1RIA TOTAL", 
+    "NOME DO CURSO",  "DATA FIM PREVISTO DO CURSO", "DATA IN\u00cdCIO DO CURSO",
+    "SUBTIPO CURSOS", "QTD DE MATRICULAS", "QTD DE VAGAS", "QTD DE INSCRITOS",
+    "DATA_CRIACAO"
   )
   
   vars_ciclo_file <- names(utils::read.csv(temp[1],
