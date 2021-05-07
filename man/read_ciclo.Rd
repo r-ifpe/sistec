@@ -2,17 +2,21 @@
 % Please edit documentation in R/read_ciclo.R
 \name{read_ciclo}
 \alias{read_ciclo}
-\title{Read ciclo
+\title{Read ciclo files from sistec
 
-I'll write this in another time}
+This function provides support to read ciclo files that can be extarct from sistec website.}
 \usage{
-read_ciclo(path = "")
+read_ciclo(path = "", start = NULL)
 }
 \arguments{
-\item{path}{The ciclo folder's path}
+\item{path}{The folder's path to ciclo files.}
+
+\item{start}{A character with the date to start the comparison. The default is the minimum
+value found in the data. The date has to be in this format: "yyyy.semester".
+Ex.: "2019.1" or "2019.2".}
 }
 \description{
-Read ciclo
+Read ciclo files from sistec
 
-I'll write this in another time
+This function provides support to read ciclo files that can be extarct from sistec website.
 }
