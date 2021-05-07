@@ -1,3 +1,18 @@
+# fake
+ciclo <- read_ciclo("inst/extdata/test_datasets/pnp_critics/ciclo/")
+students <- read_sistec_students("inst/extdata/test_datasets/pnp_critics/students/")
+pnp_critics_f <- pnp_critics(students, ciclo)
+
+# real
+ciclo <- read_ciclo("inst/extdata/test_datasets/depois_tira/ciclo/")
+students <- read_sistec_students("inst/extdata/test_datasets/depois_tira/students/")
+pnp_critics_r <- pnp_critics(students, ciclo)
+
+is.na.data.frame(ciclo) %>% apply(1, any) %>% 
+ciclo[apply(is.na.data.frame(ciclo), 1, any),]
+
+#########################################################
+
 library(dplyr)
 library(stringr)
 library(stringi)
