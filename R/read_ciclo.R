@@ -1,16 +1,20 @@
-#' Read ciclo
+#' Read ciclo files from sistec
 #'  
-#' I'll write this in another time
+#' This function provides support to read ciclo files that can be extarct from sistec website.
 #' 
-#' @param path The ciclo folder's path
+#' @param path The folder's path to ciclo files. 
+#' @param start A character with the date to start the comparison. The default is the minimum
+#' value found in the data. The date has to be in this format: "yyyy.semester".
+#' Ex.: "2019.1" or "2019.2".
 #'
 #' @importFrom dplyr %>% 
 #' @export
-read_ciclo <- function(path = "") {
+read_ciclo <- function(path = "", start = NULL) {
   if (path == "") stop("You need to specify the path.")
   
   temp <- paste0(path, "/", list.files(path = path, pattern = "*.csv"))
   sep <- detect_sep(temp[1])
+  
   vars_ciclo <- c(
     "C\u00d3DIGO CICLO DE MATR\u00cdCULA" , "MUNICIPIO", "CARGA HOR\u00c1RIA TOTAL", 
     "NOME DO CURSO",  "DATA FIM PREVISTO DO CURSO", "DATA IN\u00cdCIO DO CURSO",
@@ -44,9 +48,14 @@ read_ciclo <- function(path = "") {
           C_DT_CRIACAO = !!sym("DATA_CRIACAO"),
           C_NU_QTD_MATRICULAS = !!sym("QTD DE MATRICULAS"), 
           C_NU_QTD_VAGAS = !!sym("QTD DE VAGAS"),
-          C_NU_QTD_INSCRITOS = !!sym("QTD DE INSCRITOS")
+          C_NU_QTD_INSCRITOS = !!sym("QTD DE INSCRITOS"),
+          C_DT_INICIO_ANO_SEMESTRE = sistec_convert_beginning_date(!!sym("C_DT_INICIO"))
        )
     }
+  
+  if (!is.null(start)) {
+    ciclo <- dplyr::filter(ciclo, !!sym("C_DT_INICIO_ANO_SEMESTRE") >= start)
+  }
   
   class(ciclo) <- c("sistec_ciclo_data_frame", class(ciclo))
   ciclo
