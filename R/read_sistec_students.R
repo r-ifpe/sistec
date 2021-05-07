@@ -1,3 +1,9 @@
+#' Read students
+#'  
+#' I'll write this in another time
+#' 
+#' @param path The student folder's path
+#'
 #' @importFrom dplyr %>% 
 #' @export
 read_sistec_students <- function(path = "") {

@@ -1,3 +1,9 @@
+#' Read ciclo
+#'  
+#' I'll write this in another time
+#' 
+#' @param path The ciclo folder's path
+#'
 #' @importFrom dplyr %>% 
 #' @export
 read_ciclo <- function(path = "") {
