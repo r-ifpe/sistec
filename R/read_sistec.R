@@ -206,12 +206,6 @@ sistec_convert_beginning_date <- function(date) {
   }
 }
 
-## It will be deprecated
-# sistec_course_name <- function(course) {
-#   course <- stringr::str_remove(course, " - .*$")
-#   course <- stringr::str_replace_all(course, "\\\\|\"|/|:|\\?|\\.", "_")
-# }
-
 sistec_campus_name <- function(campus) {
   campus <- stringr::str_sub(campus, 42)
   sistec_correct_campus_name(campus)

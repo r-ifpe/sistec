@@ -23,3 +23,4 @@
 ^test\.R$
 ^extract_co_unidade_ensino\.R$
 ^pnp\.R$
+^pnp_tests\.R$

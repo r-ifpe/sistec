@@ -47,9 +47,13 @@ detect_encoding <- function(x, sep, col) {
 
   windows <- grepl("windows", tolower(Sys.getenv("SystemRoot")))
   if (windows) {
-    x <- utils::read.csv(x, header = TRUE, sep = sep, encoding = "latin1", nrows = 300)
+    x <- utils::read.csv(x,
+      header = TRUE, sep = sep, encoding = "latin1", nrows = 300, check.names = FALSE
+    )
   } else {
-    x <- utils::read.csv(x, header = TRUE, sep = sep, encoding = "UTF-8", nrows = 300)
+    x <- utils::read.csv(x,
+      header = TRUE, sep = sep, encoding = "UTF-8", nrows = 300, check.names = FALSE
+    )
   }
 
   latin1 <- any(stringr::str_detect(
