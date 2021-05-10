@@ -4,7 +4,7 @@
 #' be extarct from sistec website.
 #' 
 #' @param path The folder's path to students files.
-#'  @param start A character with the date to start the comparison. The default is the minimum
+#' @param start A character with the date to start the comparison. The default is the minimum
 #' value found in the data. The date has to be in this format: "yyyy.semester".
 #' Ex.: "2019.1" or "2019.2".
 #'
