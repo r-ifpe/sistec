@@ -7,7 +7,7 @@
 read_sistec(path = "", start = NULL)
 }
 \arguments{
-\item{path}{The sistec file's path.}
+\item{path}{The sistec folder's path.}
 
 \item{start}{A character with the date to start the comparison. The default is the minimum
 value found in the data. The date has to be in this format: "yyyy.semester".

@@ -7,7 +7,7 @@
 read_rfept(path = "", start = NULL)
 }
 \arguments{
-\item{path}{The file's path to Qacademico or Sigaa folder.}
+\item{path}{The folder's path to Qacademico, Sigaa, Conecta or Suap files.}
 
 \item{start}{A character with the date to start the comparison. The default is the minimum
 value found in the data. The date has to be in this format: "yyyy.semester".

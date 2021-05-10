@@ -4,15 +4,21 @@
 \alias{read_sistec_students}
 \title{Read students
 
-I'll write this in another time}
+This function provides support to read sistec students files that can
+be extarct from sistec website.}
 \usage{
-read_sistec_students(path = "")
+read_sistec_students(path = "", start = NULL)
 }
 \arguments{
-\item{path}{The student folder's path}
+\item{path}{The folder's path to students files.}
+
+\item{start}{A character with the date to start the comparison. The default is the minimum
+value found in the data. The date has to be in this format: "yyyy.semester".
+Ex.: "2019.1" or "2019.2".}
 }
 \description{
 Read students
 
-I'll write this in another time
+This function provides support to read sistec students files that can
+be extarct from sistec website.
 }

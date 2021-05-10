@@ -7,6 +7,7 @@
 
 ### Functions
 
+- Created `read_ciclo()`and `read_sistec_students()`. (#120)
 - `inst/extdata/co_unidade_ensino/co_unidade_ensino.csv` now has the code of all Brazilian federal institutes. (#107)
 - Fixed a bug in `read_sistec()` encode for linux. (#105)
 - Implemented `read_suap()`. (#99)

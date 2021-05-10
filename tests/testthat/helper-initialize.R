@@ -23,6 +23,33 @@ check_rfept_table <- function(x, expect_nrow) {
   expect_equal(nrow(x), expect_nrow)
 }
 
+check_sistec_students_table <- function(x, expect_nrow) {
+  expect_equal(
+    colnames(x),
+    c(
+      "S_CO_CICLO_MATRICULA", "S_NO_ALUNO", "S_NU_CPF",                
+      "S_NO_STATUS_MATRICULA", "S_NO_CICLO_MATRICULA", "S_DT_INICIO_ANO_SEMESTRE"
+    )
+  )
+  
+  expect_equal(nrow(x), expect_nrow)
+  expect_true(inherits(x, "sistec_students_data_frame"))
+}
+
+check_ciclo_table <- function(x, expect_nrow) {
+  expect_equal(
+    colnames(x),
+    c(
+      "C_CO_CICLO_MATRICULA", "C_NO_CAMPUS", "C_NO_SUBTIPO", "C_NU_CARGA_HORARIA",
+      "C_DT_FIM", "C_DT_INICIO", "C_DT_CRIACAO", "C_NU_QTD_MATRICULAS", "C_NU_QTD_VAGAS",
+      "C_NU_QTD_INSCRITOS", "C_DT_INICIO_ANO_SEMESTRE"
+    )
+  )
+  
+  expect_equal(nrow(x), expect_nrow)
+  expect_true(inherits(x, "sistec_ciclo_data_frame"))
+}
+
 check_wrong_registration <- function(x, expect_nrow) {
   expect_equal(
     colnames(x),

@@ -5,7 +5,7 @@
 #' or [web](https://sistec.mec.gov.br/). You just need to pass the folder's path were are your files.
 #' See Details if you need help to download the data from Sistec.
 #'
-#' @param path The sistec file's path.
+#' @param path The sistec folder's path.
 #' @param start A character with the date to start the comparison. The default is the minimum
 #' value found in the data. The date has to be in this format: "yyyy.semester".
 #' Ex.: "2019.1" or "2019.2".

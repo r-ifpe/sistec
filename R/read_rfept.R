@@ -4,7 +4,7 @@
 #' you just need to specify the folder path and `read_rfept()` identifies if it is a 
 #' qacademico or sigaa file and then read it.
 #'
-#' @param path The file's path to Qacademico or Sigaa folder. 
+#' @param path The folder's path to Qacademico, Sigaa, Conecta or Suap files. 
 #' @param start A character with the date to start the comparison. The default is the minimum 
 #' value found in the data. The date has to be in this format: "yyyy.semester".
 #' Ex.: "2019.1" or "2019.2".
