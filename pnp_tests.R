@@ -1,8 +1,13 @@
 # complete dataset (fake)
-students <- read_sistec_students("inst/extdata/test_datasets/pnp_critics/students/")
-ciclo <- read_ciclo("inst/extdata/test_datasets/pnp_critics/ciclo/")
-sistec:::create_pnp_critics_list(students, ciclo)
+students <- read_sistec_students("inst/extdata/test_pnp_critics/students/")
+ciclo <- read_ciclo("inst/extdata/test_pnp_critics/ciclo/")
 pnp_critics_f <- pnp_critics(students, ciclo)
+
+
+
+students <- read_sistec_students("sistec/")
+ciclo <- read_ciclo("ciclo/")
+
 
 # partial dataset (fake)
 students <- read_sistec_students(
@@ -10,7 +15,6 @@ students <- read_sistec_students(
 )
 ciclo <- read_ciclo("inst/extdata/test_datasets/pnp_critics/ciclo/", start = "2020.1")
 sistec:::create_pnp_critics_list(students, ciclo)
-
 
 
 # real
