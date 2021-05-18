@@ -50,6 +50,31 @@ check_ciclo_table <- function(x, expect_nrow) {
   expect_true(inherits(x, "sistec_ciclo_data_frame"))
 }
 
+check_students_critics_table <- function(x, expect_nrow) {
+  expect_equal(
+    colnames(x),
+    c(
+      "C_NO_CAMPUS", "S_NO_CICLO_MATRICULA", "S_NO_ALUNO", 
+      "S_NU_CPF",  "CRITICA"
+    )
+  )
+  
+  expect_equal(nrow(x), expect_nrow)
+}
+
+check_ciclo_critics_table <- function(x, expect_nrow) {
+  expect_equal(
+    colnames(x),
+    c(
+      "C_NO_CAMPUS", "S_NO_CICLO_MATRICULA", "S_NO_ALUNO", 
+      "S_NU_CPF",  "CRITICA"
+    )
+  )
+  
+  expect_equal(nrow(x), expect_nrow)
+}
+
+
 check_wrong_registration <- function(x, expect_nrow) {
   expect_equal(
     colnames(x),

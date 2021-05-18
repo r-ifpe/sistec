@@ -1,25 +1,47 @@
-##################################
-# ## done  
-# ##################################
-# 
-# # @importFrom dplyr %>%
-# pnp_critics <- function(students, ciclo, start = NULL){
-#   create_pnp_critics_list(students, ciclo, start) %>% 
-#     remove_na_in_ciclo() 
-#    # pnp_beginning_date_gt_beginning_ciclo_date() %>% 
-#    # pnp_duplicated_registry()
-#     # pnp_students_in_course_yet() %>% 
-#     # pnp_wrong_course_name() %>% 
-#     # pnp_zero_dropout() %>% 
-#     # pnp_insufficient_time() %>% 
-#     # pnp_wrong_ciclo_duration() %>% 
-#     # pnp_newcomers_gt_enrolled() %>% 
-#     # pnp_newcomers_gt_places()
-# 
-# }
-# 
-# 
-# 
+#' Make the pnp critics from sistec files
+#'
+#' This function gives the pnp critics that can be retrive using sistec information.
+#' 
+#' @param students A sistec students data frame from `read_sistec_student()`.
+#' @param ciclo A sistec ciclo data frame from `read_ciclo()`.
+#' 
+#' @return A list with the critics
+#' 
+#' @importFrom dplyr %>%
+#' @export
+pnp_critics <- function(students, ciclo){
+  create_pnp_critics_list(students, ciclo) %>%
+    pnp_beginning_date_gt_beginning_ciclo_date()
+   # pnp_duplicated_registry()
+    # pnp_students_in_course_yet() %>%
+    # pnp_wrong_course_name() %>%
+    # pnp_zero_dropout() %>%
+    # pnp_insufficient_time() %>%
+    # pnp_wrong_ciclo_duration() %>%
+    # pnp_newcomers_gt_enrolled() %>%
+    # pnp_newcomers_gt_places()
+
+}
+
+#' @importFrom dplyr %>% sym
+pnp_beginning_date_gt_beginning_ciclo_date <- function(x){
+  critic <- x$sistec %>%
+    dplyr::filter(
+      format(as.Date(!!sym("C_DT_CRIACAO")), "%Y-%m-%d") <
+        format(as.Date(!!sym("C_DT_INICIO")), "%Y-%m-%d")
+    ) %>%
+    dplyr::transmute(
+      !!sym("C_NO_CAMPUS"),
+      !!sym("S_NO_CICLO_MATRICULA"),
+      !!sym("S_NO_ALUNO"),
+      !!sym("S_NU_CPF"),
+      CRITICA = "Aluno com data de matr\u00edcula anterior a data do in\u00edcio do ciclo"
+    )
+
+  x$pnp_student_critics <- rbind(x$pnp_student_critics, critic)
+  x
+}
+
 # # @importFrom dplyr %>% sym
 # create_pnp_critics_list <- function(students, ciclo, start) {
 # 
@@ -94,24 +116,7 @@
 # #   x
 # # }
 # # 
-# # # @importFrom dplyr %>% sym
-# # pnp_beginning_date_gt_beginning_ciclo_date <- function(x){
-# #   critic <- x$sistec %>%
-# #     dplyr::filter(
-# #       format(as.Date(!!sym("C_DT_CRIACAO")), "%Y-%m") <
-# #         format(as.Date(!!sym("C_DT_INICIO")), "%Y-%m")
-# #     ) %>%
-# #     dplyr::transmute(
-# #       !!sym("C_NO_CAMPUS"),
-# #       !!sym("S_NO_CICLO_MATRICULA"),
-# #       !!sym("S_NO_ALUNO"),
-# #       !!sym("S_NU_CPF"),
-# #       CRITICA = "Aluno com data de matrícula anterior a data do início do ciclo"
-# #     )
-# # 
-# #   x$pnp_student_critics <- rbind(x$pnp_student_critics, critic)
-# #   x
-# # }
+
 # # 
 # # 
 # # 
